@@ -1,0 +1,26 @@
+# Dependencies and build output
+node_modules/
+coverage/
+dist/
+*.tsbuildinfo
+
+# Personal data must never be committed (see CLAUDE.md, "Privacy").
+# The data folder lives in ~/JobHunter/, outside the repo; these catch accidents.
+JobHunter/
+data/
+*.pdf
+*.docx
+*.doc
+!templates/**
+!tests/fixtures/**
+
+# Secrets and local settings
+.env
+.env.*
+.claude/settings.local.json
+
+# OS / editor
+.DS_Store
+*.log
+.vscode/
+.idea/
