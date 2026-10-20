@@ -84,6 +84,19 @@ tests/                            mirrors plugin/src and tools; fixtures/ = fake
 specs/                            spec → plan → tasks
 ```
 
+## Data folder access
+
+- Skills never read or write data files directly. They run plugin scripts through
+  the launcher, which finds a Node ≥ 22.18 even if the user's default `node` is older:
+  `sh ${CLAUDE_PLUGIN_ROOT}/scripts/run.sh ${CLAUDE_PLUGIN_ROOT}/scripts/<script>.ts …`.
+  Scripts print one JSON object and exit non-zero on error (3 = no suitable Node).
+- All file I/O goes through `plugin/src/store/`: `writeJsonAtomic`/`readJson` (atomic,
+  `.bak` recovery), `appendJsonLine`/`readJsonLines` (streamed), `logEvent`, settings.
+- Changing a file's shape means bumping `CURRENT_SCHEMA_VERSION` and appending a
+  migration to `MIGRATIONS`. Never edit a released migration.
+- Tests use a temp folder (`tests/store/helpers.ts`) or `JOB_HUNTER_HOME`, never the real
+  `~/JobHunter/`.
+
 ## Code conventions
 
 - **Small units.** Lint enforces: complexity ≤ 12, nesting ≤ 4, ≤ 4 params, ≤ 80 lines per
@@ -109,8 +122,8 @@ specs/                            spec → plan → tasks
   depend on the user. Compute them once per job.
 - **Be polite to sites.** One request at a time per host, with a delay. Respect
   `robots.txt` for public HTML. Prefer official APIs and feeds over HTML.
-  (`no-await-in-loop` is on. Disable it only for deliberate per-host pacing, with a
-  comment.)
+  (`no-await-in-loop` is on. Disable it only for work that must be sequential, such as
+  per-host pacing or migrations, and say why in a comment.)
 - **Concurrency across hosts:** fetch different platforms in parallel, the same platform
   sequentially.
 - **Dependencies need a reason.** Prefer the standard library (`fetch`, `node:fs`,

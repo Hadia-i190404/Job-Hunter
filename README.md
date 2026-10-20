@@ -243,22 +243,27 @@ job-alert emails. The dashboard shows how each site is working: **working**,
 
 - **Everything about you stays on your computer**, in `~/JobHunter/`: your profile,
   CVs, answers, matches and log. It's never uploaded to GitHub or any server.
+- The folder and its files can only be opened by you. To keep it somewhere else, set
+  `JOB_HUNTER_HOME` to that path.
+- If a file gets damaged (for example by a crash), Job Hunter restores the last good copy
+  and keeps the damaged one beside it as `<name>.corrupt-<time>`.
 - Back it up by copying the folder. Delete the folder and everything about you is gone.
 - **Shared with the group** (in the repo's `plugin/shared/` folder): only job sites someone
   added, notes on which employers hire from Pakistan, and scam reports. Never CVs,
   profiles or answers.
 - Your Claude conversations are covered by your own Claude account's privacy settings.
 
-| File in `~/JobHunter/`            | Holds                                                     |
-| --------------------------------- | --------------------------------------------------------- |
-| `profile.json`                    | Your master profile, the only source of facts it uses     |
-| `searches.json`                   | What you're looking for                                   |
-| `answers.json`                    | Your saved screening-question answers                     |
-| `jobs.jsonl`, `assessments.jsonl` | Jobs found, and how each was judged                       |
-| `pipeline.json`, `cards.json`     | Where each application is; action cards                   |
-| `cv/`                             | Tailored CVs (PDF and Word) and what changed in each      |
-| `log.jsonl`                       | Everything Job Hunter did, and everything you marked done |
-| `settings.json`                   | Paused, sites on/off, usage setting                       |
+| File in `~/JobHunter/`            | Holds                                                         |
+| --------------------------------- | ------------------------------------------------------------- |
+| `profile.json`                    | Your master profile, the only source of facts it uses         |
+| `searches.json`                   | What you're looking for                                       |
+| `answers.json`                    | Your saved screening-question answers                         |
+| `jobs.jsonl`, `assessments.jsonl` | Jobs found, and how each was judged                           |
+| `pipeline.json`, `cards.json`     | Where each application is; action cards                       |
+| `cv/`                             | Tailored CVs (PDF and Word) and what changed in each          |
+| `log.jsonl`                       | Everything Job Hunter did, and everything you marked done     |
+| `settings.json`                   | Paused, sites on/off, usage setting                           |
+| `meta.json`                       | Data-folder version, so updates can upgrade your files safely |
 
 ## Usage settings (Pro vs Max)
 
@@ -368,7 +373,7 @@ Phase **P0 (spike)**. See [tasks.md](specs/0001-job-hunter/tasks.md).
 - [x] Repo foundation: checks, privacy guard, pre-commit hook, CI
 - [x] Plugin skeleton installable from GitHub (`/job-hunter:status`)
 - [x] Plugin ships with zero dependencies
-- [ ] Data folder and store
+- [x] Data folder and store (safe writes, recovery, upgrades, pause/resume)
 - [ ] First three job sources (Remotive, Greenhouse, Rozee.pk)
 - [ ] Eligibility and scam rules
 - [ ] CV read → tailored PDF/Word round trip

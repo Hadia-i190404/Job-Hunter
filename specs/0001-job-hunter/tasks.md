@@ -25,10 +25,15 @@
       in plugin code; `tsx` dropped for Node's type stripping (Node 22.18+); README
       install/update steps use the `claude plugin` CLI (no `/plugin` in the desktop app).
       _Done when:_ a fresh install has no `node_modules` and `/job-hunter:status` works.
-- [ ] `[core]` **T3 Store.** `~/JobHunter/` layout, hand-written validators for every
-      file (`plugin/src/schema/`), atomic writes, schema version + migration hook,
-      append-only log, `paused` check, and a launcher that finds Node ≥ 22.18.
-      _Done when:_ unit tests cover read/write/migrate/corrupt-file recovery.
+- [x] `[core]` **T3 Store.** `~/JobHunter/` (or `JOB_HUNTER_HOME`) created private
+      (0700/0600); hand-written validators (`plugin/src/schema/`); atomic writes with a
+      `.bak` copy and recovery from it (damaged file kept as `.corrupt-<time>`); schema
+      version in `meta.json` + ordered migrations (refuses a folder from a newer plugin);
+      append-only `log.jsonl`; settings + `paused`; `run.sh` launcher that finds
+      Node ≥ 22.18; `store.ts` CLI (`status|init|pause|resume`) used by the status skill.
+      Schemas for jobs, profile, searches, answers, cards and pipeline are added by the
+      tasks that design them (T4, T7, P1, P2).
+      _Done when:_ unit tests cover read/write/migrate/corrupt-file recovery. ✔ 52 tests.
 - [ ] `[core]` **T4 Job model + normalise.** Canonical `Job`; title/company clean-up;
       Pakistani city + work-mode parsing; salary → PKR and USD per month.
       _Done when:_ unit tests on 40 real-world strings pass.

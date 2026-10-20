@@ -63,7 +63,7 @@ Job-Hunter/
 - DOCX output needs a zip writer. Node's `zlib` can do it, so decide in T7 whether DOCX is
   worth it or PDF is enough.
 - The plugin's scripts find a Node ≥ 22.18 even when the user's default `node` is older
-  (the owner's is v20). A small launcher in `plugin/scripts/` does this (T3).
+  (the owner's is v20). `plugin/scripts/run.sh` does this (T3).
 
 ## Data folder (`~/JobHunter/`, per user, never committed)
 
@@ -79,6 +79,7 @@ Job-Hunter/
 | `cv/`               | Tailored CVs (PDF/DOCX) + their diffs vs the master profile    |
 | `log.jsonl`         | Every agent action and every user "done"                       |
 | `settings.json`     | Paused?, platform on/off, per-search mode, follow-up wait      |
+| `meta.json`         | Schema version + created date; drives migrations (T3)          |
 
 Plain JSON so Claude can read it directly and the user can back it up by copying the
 folder.
