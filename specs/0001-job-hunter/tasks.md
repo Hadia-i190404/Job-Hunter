@@ -23,6 +23,10 @@
 - [ ] `[core]` **T3 Store.** `~/JobHunter/` layout, zod schemas for every file, atomic
       writes, schema version + migration hook, append-only log, `paused` check.
       _Done when:_ unit tests cover read/write/migrate/corrupt-file recovery.
+      _Check first:_ whether Claude Code's install of the plugin's `package-lock.json`
+      includes devDependencies (eslint, vitest…). If it does, and it's slow, scripts must
+      run with zero runtime deps (Node's built-in type stripping) or deps move to a
+      `${CLAUDE_PLUGIN_DATA}` install.
 - [ ] `[core]` **T4 Job model + normalise.** Canonical `Job`; title/company clean-up;
       Pakistani city + work-mode parsing; salary → PKR and USD per month.
       _Done when:_ unit tests on 40 real-world strings pass.

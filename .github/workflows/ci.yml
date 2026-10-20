@@ -16,4 +16,6 @@ jobs:
           node-version-file: .nvmrc
           cache: npm
       - run: npm ci
+      # Only for `claude plugin validate`; no sign-in needed.
+      - run: npm install -g @anthropic-ai/claude-code@2.1.266
       - run: npm run check

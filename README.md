@@ -167,12 +167,11 @@ Nothing else. No servers, no subscriptions, no API keys.
    asks what you're looking for, and shows you a read-back to confirm.
 4. Say yes when it offers to create the **daily 9:00 run**.
 
-> The repo is private while in development. Ask the owner to add you as a collaborator
-> first.
+To check it installed, run `/job-hunter:status`.
 
 ## Getting updates
 
-Turn on auto-update once: type `/plugin` → **Marketplaces** → **Job-Hunter** → **Enable
+Turn on auto-update once: type `/plugin` → **Marketplaces** → **job-hunter** → **Enable
 auto-update**. Every improvement the owner pushes then reaches you on its own. Updates
 never touch your data.
 
@@ -348,7 +347,7 @@ Phase **P0 (spike)**. See [tasks.md](specs/0001-job-hunter/tasks.md).
 
 - [x] Spec, plan and task list agreed
 - [x] Repo foundation: checks, privacy guard, pre-commit hook, CI
-- [ ] Plugin skeleton installable from GitHub
+- [ ] Plugin skeleton installable from GitHub (`/job-hunter:status` works; awaiting install test)
 - [ ] Data folder and store
 - [ ] First three job sources (Remotive, Greenhouse, Rozee.pk)
 - [ ] Eligibility and scam rules

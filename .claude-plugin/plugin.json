@@ -1,0 +1,7 @@
+{
+  "name": "job-hunter",
+  "description": "Finds jobs a person in Pakistan can actually take (on-site/hybrid in Pakistan, remote anywhere), tailors a truthful CV and prepares each application. Never acts on your logged-in accounts.",
+  "author": { "name": "Hadia Noor", "url": "https://github.com/Hadia-i190404" },
+  "homepage": "https://github.com/Hadia-i190404/Job-Hunter",
+  "repository": "https://github.com/Hadia-i190404/Job-Hunter"
+}

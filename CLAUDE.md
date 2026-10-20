@@ -45,7 +45,16 @@ to users.
 - **Node 22.12+**, **TypeScript** (strict) run directly with `tsx`. No build step.
 - **Vitest** for tests, **ESLint** (typescript-eslint, type-aware), **Prettier**, **Knip**.
 - **zod** at every boundary (files, fetched data, skill input/output). Added in T3.
-- Claude Code **plugin**: skills in `skills/<name>/SKILL.md`. Added in T2.
+- Claude Code **plugin**: the repo is both the plugin and its own marketplace
+  (`.claude-plugin/plugin.json` + `marketplace.json`, `"source": "."`). **No `version`
+  field**: each commit on `main` counts as an update (spec D10). `npm run plugin:validate`
+  checks both manifests and every skill's frontmatter. The version warning is expected.
+- **Skills** live in `skills/<name>/SKILL.md` and become `/job-hunter:<name>`. Each needs
+  a `description` that says when to use it, and an `allowed-tools` list kept as narrow
+  as the skill needs. Bundled scripts are referenced as `${CLAUDE_PLUGIN_ROOT}/scripts/…`.
+- **Runtime dependencies:** when a user installs or updates the plugin, Claude Code
+  installs it from `package-lock.json`. It skips lifecycle scripts and gives up after
+  60 seconds. Keep runtime `dependencies` tiny, and keep tooling in `devDependencies`.
 
 ## Structure
 

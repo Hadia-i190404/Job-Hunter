@@ -1,0 +1,15 @@
+{
+  "name": "job-hunter",
+  "description": "Job Hunter: a job-search agent for job seekers in Pakistan.",
+  "owner": {
+    "name": "Hadia Noor",
+    "url": "https://github.com/Hadia-i190404"
+  },
+  "plugins": [
+    {
+      "name": "job-hunter",
+      "source": ".",
+      "description": "Job search agent for job seekers in Pakistan."
+    }
+  ]
+}
