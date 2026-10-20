@@ -11,7 +11,7 @@ data/
 *.pdf
 *.docx
 *.doc
-!templates/**
+!plugin/templates/**
 !tests/fixtures/**
 
 # Secrets and local settings

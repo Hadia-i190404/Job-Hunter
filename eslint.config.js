@@ -61,8 +61,27 @@ export default tseslint.config(
     },
   },
   {
+    // The plugin ships with zero runtime dependencies (spec D14): only node: built-ins
+    // and relative imports, so installs and updates download nothing extra.
+    files: ['plugin/**/*.ts'],
+    rules: {
+      'no-restricted-imports': [
+        'error',
+        {
+          paths: bannedImports,
+          patterns: [
+            {
+              regex: '^(?!node:|\\.)',
+              message: 'The plugin has no dependencies: use node: built-ins or local files.',
+            },
+          ],
+        },
+      ],
+    },
+  },
+  {
     // CLIs may print; tests may be long.
-    files: ['scripts/**/*.ts'],
+    files: ['tools/*.ts', 'plugin/scripts/**/*.ts'],
     rules: { 'no-console': 'off' },
   },
   {

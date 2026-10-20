@@ -1,5 +1,5 @@
 // Privacy guard: stops personal data from reaching the git repo (spec R9).
-// Pure functions only; the CLI that feeds it files is scripts/privacy-guard.ts.
+// Pure functions only; the CLI that feeds it files is tools/privacy-guard.ts.
 
 export interface Finding {
   path: string;
@@ -63,7 +63,7 @@ const DATA_FILE_NAMES = new Set([
   'log.jsonl',
 ]);
 const DOCUMENT_EXTENSIONS = ['.pdf', '.doc', '.docx'];
-const DOCUMENT_ALLOWED_DIRS = ['templates/', 'tests/fixtures/'];
+const DOCUMENT_ALLOWED_DIRS = ['plugin/templates/', 'tests/fixtures/'];
 
 export function checkPath(path: string): Finding[] {
   const name = path.slice(path.lastIndexOf('/') + 1).toLowerCase();
@@ -84,7 +84,8 @@ export function checkPath(path: string): Finding[] {
         path,
         line: 0,
         rule: 'document',
-        message: 'CVs and documents stay in ~/JobHunter/. Only templates/ and tests/fixtures/.',
+        message:
+          'CVs and documents stay in ~/JobHunter/. Only plugin/templates/ and tests/fixtures/.',
       },
     ];
   }

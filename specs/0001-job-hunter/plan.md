@@ -29,30 +29,41 @@ each friend run it on their own laptop with their own data.
 ## Repo layout (`github.com/Hadia-i190404/Job-Hunter`)
 
 ```
-job-hunter/
-├── .claude-plugin/plugin.json      # plugin manifest
-├── skills/
-│   ├── setup/        SKILL.md      # CV → profile, searches, read-back, confirm gate
-│   ├── hunt/         SKILL.md      # daily run: fetch → score → prepare → notify
-│   ├── review/       SKILL.md      # walk through new matches in chat
-│   ├── tailor/       SKILL.md      # tailored CV + honesty check + ATS check
-│   ├── apply/        SKILL.md      # level B fill / level C card
-│   ├── linkedin/     SKILL.md      # profile rewrite → cards
-│   ├── outreach/     SKILL.md      # hiring team + message cards + follow-ups
-│   ├── add-site/     SKILL.md      # paste a URL → generic connector
-│   └── status/       SKILL.md      # "what's waiting for me?", mark done, pause
-├── src/                            # TypeScript, run with tsx (no build step)
-│   ├── connectors/                 # one file per platform + generic.ts
-│   ├── pipeline/                   # normalize, dedup, salary, location, rules
-│   ├── cv/                         # render HTML→PDF, DOCX, text-back ATS check
-│   ├── dashboard/                  # tiny localhost server + page
-│   └── store/                      # read/write the data folder
-├── templates/                      # cv.html, cover-letter.html (ATS-safe)
-├── shared/                         # group-shared, no personal data (D13)
-│   ├── sites.json  employers.json  scams.json  companies-watchlist.json
+Job-Hunter/
+├── .claude-plugin/marketplace.json # marketplace → "./plugin"
+├── plugin/                         # the only folder users install (D14: zero deps)
+│   ├── .claude-plugin/plugin.json  # no "version" → every commit is an update
+│   ├── skills/
+│   │   ├── status/       SKILL.md  # what's waiting, pause/resume, dashboard (T2)
+│   │   ├── setup/        SKILL.md  # CV → profile, searches, read-back, confirm gate
+│   │   ├── hunt/         SKILL.md  # daily run: fetch → score → prepare → notify
+│   │   ├── review/       SKILL.md  # walk through new matches in chat
+│   │   ├── tailor/       SKILL.md  # tailored CV + honesty check + ATS check
+│   │   ├── apply/        SKILL.md  # level B fill / level C card
+│   │   ├── linkedin/     SKILL.md  # profile rewrite → cards
+│   │   ├── outreach/     SKILL.md  # hiring team + message cards + follow-ups
+│   │   └── add-site/     SKILL.md  # paste a URL → generic connector
+│   ├── src/                        # TypeScript run by Node's type stripping, no build
+│   │   ├── schema/                 # hand-written validators (no zod: D14)
+│   │   ├── store/  connectors/  pipeline/  cv/  dashboard/
+│   ├── scripts/                    # CLI entry points the skills run
+│   ├── templates/                  # cv.html, cover-letter.html (ATS-safe)
+│   └── shared/                     # group-shared, no personal data (D13)
+├── tools/                          # dev-only: privacy guard
 ├── tests/                          # vitest
 └── specs/
 ```
+
+**Consequences of D14 (zero dependencies):**
+
+- Validation is hand-written in `plugin/src/schema/`, not zod.
+- PDF CVs come from headless Chrome (`--print-to-pdf`). The ATS "text-back" check is done
+  by Claude reading the PDF (Claude Code reads PDFs natively), which is close to what an
+  ATS parser does.
+- DOCX output needs a zip writer. Node's `zlib` can do it, so decide in T7 whether DOCX is
+  worth it or PDF is enough.
+- The plugin's scripts find a Node ≥ 22.18 even when the user's default `node` is older
+  (the owner's is v20). A small launcher in `plugin/scripts/` does this (T3).
 
 ## Data folder (`~/JobHunter/`, per user, never committed)
 
@@ -124,7 +135,7 @@ directly. These are the best jobs to apply to (level B, real employer, no middle
 2. Honesty check (separate step): every bullet/skill is compared to its cited source;
    anything new (number, tool, title, date, employer, degree) is removed and listed.
 3. Script renders HTML → PDF (headless Chrome `--print-to-pdf`, already installed) and
-   DOCX (`docx` npm).
+   DOCX (decided in T7, see D14).
 4. ATS check: extract text back from the PDF and confirm sections, dates and contact
    info come out cleanly; keyword coverage vs the job.
 5. Show diff vs base CV + gaps; save to `cv/`.
@@ -162,16 +173,17 @@ also work on a phone. Decide after the spike based on what it needs to store the
 ## Installing (per user) and getting updates
 
 1. Claude desktop app, signed in with **their own** Claude plan (Pro or higher).
-2. In the desktop app: **+ → Add plugins**, or in a session
-   `/plugin marketplace add Hadia-i190404/Job-Hunter` then `/plugin install job-hunter@job-hunter`.
-3. Turn on **auto-update** for the marketplace (`/plugin` → Marketplaces → Enable
-   auto-update). It's off by default for GitHub marketplaces.
-4. Node 22.12+ (`npm install` once — setup checks and walks them through it).
-5. Run `/job-hunter:setup`, give the CV, add searches, confirm.
-6. Setup creates the 9:00 PKT daily scheduled task.
+2. In Terminal: `claude plugin marketplace add Hadia-i190404/Job-Hunter`, then
+   `claude plugin install job-hunter@job-hunter`. The `/plugin` command isn't available in
+   the desktop app (found in T2).
+3. Node 22.18+ installed. Nothing else: there is no `npm install` for users.
+4. New session → `/job-hunter:setup`, give the CV, add searches, confirm.
+5. Setup creates the 9:00 PKT daily scheduled task.
 
 **Updates:** the plugin manifest has **no `version` field**, so every commit pushed to
-`main` is picked up by auto-update. The owner builds; friends do nothing. Breaking
+`main` is a new version. For now users update with `claude plugin marketplace update
+job-hunter` + `claude plugin update job-hunter@job-hunter`. T9 tests whether auto-update
+can replace that. The owner builds; friends do nothing. Breaking
 changes to the data folder come with a migration the skills run on first use.
 
 **Usage setting:** `settings.json.usage` = `light` (default, for Pro: ~25 jobs judged

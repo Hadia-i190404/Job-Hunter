@@ -23,7 +23,8 @@
 | D10 | Each friend uses **their own Claude account, Pro or higher** (Claude Code is not on the Free plan; sharing one login breaks Anthropic's terms). They install the plugin from the GitHub repo once and get the owner's updates automatically.                                                       |
 | D11 | Works on **Pro**: a "light" usage setting (fewer jobs judged by Claude per day, more left to the free scripts) is the default; Max users can raise it.                                                                                                                                             |
 | D12 | Daily run 9:00 PKT + catch-up when the app opens.                                                                                                                                                                                                                                                  |
-| D13 | Group-shared items (added sites, employer learnings, scam reports, company watch-list) live in the GitHub repo's `shared/` folder. Code on GitHub is fine; no hosting or database.                                                                                                                 |
+| D13 | Group-shared items (added sites, employer learnings, scam reports, company watch-list) live in the GitHub repo's `plugin/shared/` folder. Code on GitHub is fine; no hosting or database.                                                                                                          |
+| D14 | The plugin ships with **zero runtime dependencies** (decided 21 Oct 2026, T2). Installing or updating downloads only Job Hunter's own files, never a `node_modules`. Found in T2: otherwise every install pulled 131 MB of dev tools, with a 60-second limit.                                      |
 
 ## Problem / motivation
 

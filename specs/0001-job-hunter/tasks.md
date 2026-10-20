@@ -16,17 +16,19 @@
       `.gitignore`, local git identity.
       _Done when:_ `npm run check` passes on a clean install; the pre-commit hook blocks
       a staged file with a fake CNIC.
-- [ ] `[repo]` **T2 Plugin skeleton.** `.claude-plugin/plugin.json` (no `version`
+- [x] `[repo]` **T2 Plugin skeleton.** `.claude-plugin/plugin.json` (no `version`
       field) + `marketplace.json`; one working skill `/job-hunter:status` that reads the
       data folder and says "not set up yet".
       _Done when:_ installed from GitHub in the desktop app on the owner's account.
-- [ ] `[core]` **T3 Store.** `~/JobHunter/` layout, zod schemas for every file, atomic
-      writes, schema version + migration hook, append-only log, `paused` check.
+- [x] `[repo]` **T2b Zero-dependency plugin.** Plugin moved into `plugin/` (marketplace
+      `source: ./plugin`); dev tools to repo root / `tools/`; lint blocks package imports
+      in plugin code; `tsx` dropped for Node's type stripping (Node 22.18+); README
+      install/update steps use the `claude plugin` CLI (no `/plugin` in the desktop app).
+      _Done when:_ a fresh install has no `node_modules` and `/job-hunter:status` works.
+- [ ] `[core]` **T3 Store.** `~/JobHunter/` layout, hand-written validators for every
+      file (`plugin/src/schema/`), atomic writes, schema version + migration hook,
+      append-only log, `paused` check, and a launcher that finds Node ≥ 22.18.
       _Done when:_ unit tests cover read/write/migrate/corrupt-file recovery.
-      _Check first:_ whether Claude Code's install of the plugin's `package-lock.json`
-      includes devDependencies (eslint, vitest…). If it does, and it's slow, scripts must
-      run with zero runtime deps (Node's built-in type stripping) or deps move to a
-      `${CLAUDE_PLUGIN_DATA}` install.
 - [ ] `[core]` **T4 Job model + normalise.** Canonical `Job`; title/company clean-up;
       Pakistani city + work-mode parsing; salary → PKR and USD per month.
       _Done when:_ unit tests on 40 real-world strings pass.
@@ -38,7 +40,8 @@
       _Done when:_ report shows rule-only precision/recall; ambiguous ones listed for
       the Claude step.
 - [ ] `[core]` `[skill]` **T7 CV round trip.** Skill reads a CV → master profile (schema
-      validated); render ATS-safe HTML → PDF (headless Chrome) and DOCX; text-back check.
+      validated); render ATS-safe HTML → PDF (headless Chrome); Claude reads the PDF back as the
+      ATS check; decide on DOCX (D14).
       _Done when:_ 3 real CVs (kept in the data folder, never committed) round-trip with
       ≥ 90% fields right.
 - [ ] `[spike]` **T8 Level-B fill.** Fill one public Greenhouse test application in the

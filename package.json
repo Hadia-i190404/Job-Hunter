@@ -4,7 +4,7 @@
   "description": "A Claude Code plugin that finds, judges and prepares job applications for job seekers in Pakistan.",
   "type": "module",
   "engines": {
-    "node": ">=22.12.0"
+    "node": ">=22.18.0"
   },
   "scripts": {
     "prepare": "git config core.hooksPath .githooks || true",
@@ -15,10 +15,10 @@
     "test": "vitest run --coverage",
     "test:quick": "vitest run",
     "knip": "knip",
-    "privacy": "tsx scripts/privacy-guard.ts --all",
-    "privacy:staged": "tsx scripts/privacy-guard.ts --staged",
+    "privacy": "node tools/privacy-guard.ts --all",
+    "privacy:staged": "node tools/privacy-guard.ts --staged",
     "check": "npm run typecheck && npm run lint && npm run format:check && npm run test && npm run knip && npm run privacy && npm run plugin:validate",
-    "plugin:validate": "claude plugin validate ."
+    "plugin:validate": "claude plugin validate . && claude plugin validate plugin"
   },
   "devDependencies": {
     "@eslint/js": "10.0.1",
@@ -27,7 +27,6 @@
     "eslint": "10.13.0",
     "knip": "6.42.1",
     "prettier": "3.9.10",
-    "tsx": "4.23.15",
     "typescript": "5.9.3",
     "typescript-eslint": "8.72.0",
     "vitest": "5.0.5"

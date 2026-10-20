@@ -8,7 +8,7 @@
   "plugins": [
     {
       "name": "job-hunter",
-      "source": ".",
+      "source": "./plugin",
       "description": "Job search agent for job seekers in Pakistan."
     }
   ]

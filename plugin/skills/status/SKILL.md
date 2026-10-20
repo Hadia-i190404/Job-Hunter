@@ -10,7 +10,7 @@ reads; it never writes, fetches or opens anything.
 
 ## Steps
 
-1. **Node.js.** Run `node --version`. Job Hunter needs **22.12 or newer**.
+1. **Node.js.** Run `node --version`. Job Hunter needs **22.18 or newer**.
    - If it's missing or older, say so and point the user to https://nodejs.org/ (the
      "LTS" download). Continue with the other steps anyway.
 2. **Data folder.** The data folder is `~/JobHunter/` (unless the user has told you

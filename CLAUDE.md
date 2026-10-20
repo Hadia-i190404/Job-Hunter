@@ -42,47 +42,56 @@ to users.
 
 ## Stack
 
-- **Node 22.12+**, **TypeScript** (strict) run directly with `tsx`. No build step.
-- **Vitest** for tests, **ESLint** (typescript-eslint, type-aware), **Prettier**, **Knip**.
-- **zod** at every boundary (files, fetched data, skill input/output). Added in T3.
-- Claude Code **plugin**: the repo is both the plugin and its own marketplace
-  (`.claude-plugin/plugin.json` + `marketplace.json`, `"source": "."`). **No `version`
-  field**: each commit on `main` counts as an update (spec D10). `npm run plugin:validate`
-  checks both manifests and every skill's frontmatter. The version warning is expected.
-- **Skills** live in `skills/<name>/SKILL.md` and become `/job-hunter:<name>`. Each needs
-  a `description` that says when to use it, and an `allowed-tools` list kept as narrow
-  as the skill needs. Bundled scripts are referenced as `${CLAUDE_PLUGIN_ROOT}/scripts/…`.
-- **Runtime dependencies:** when a user installs or updates the plugin, Claude Code
-  installs it from `package-lock.json`. It skips lifecycle scripts and gives up after
-  60 seconds. Keep runtime `dependencies` tiny, and keep tooling in `devDependencies`.
+- **Node 22.18+**, **TypeScript** (strict), run directly by Node's built-in type
+  stripping. No build step and no `tsx`. Write only erasable syntax (no `enum`, no
+  `namespace`, no parameter properties); `erasableSyntaxOnly` enforces it.
+- **The plugin has zero runtime dependencies** (spec D14). Plugin code imports only
+  `node:` built-ins and local files, and lint enforces it. The reason: when a user
+  installs or updates the plugin, Claude Code installs everything in a `package.json`
+  it finds there, which first time round was 131 MB of dev tools. Validation is
+  hand-written (`plugin/src/schema/`, from T3), not zod.
+- **Dev tooling** (repo root only, never shipped): Vitest, ESLint (typescript-eslint,
+  type-aware), Prettier, Knip, TypeScript.
+- **Claude Code plugin:** the repo is the marketplace (`.claude-plugin/marketplace.json`,
+  `"source": "./plugin"`). The plugin is the `plugin/` folder, and only that folder is
+  installed on users' machines. **No `version` field**: each commit on `main` counts
+  as an update (spec D10). `npm run plugin:validate` checks both manifests and every
+  skill. The "no version" warning is expected.
+- **Skills** live in `plugin/skills/<name>/SKILL.md` and become `/job-hunter:<name>`. Each
+  needs a `description` that says when to use it, and an `allowed-tools` list kept as
+  narrow as the skill needs. Bundled scripts are referenced as
+  `${CLAUDE_PLUGIN_ROOT}/scripts/…`.
 
 ## Structure
 
 ```
-.claude-plugin/     plugin + marketplace manifests (T2)
-skills/<name>/      SKILL.md per slash command: setup, hunt, review, tailor, apply, …
-src/
-  guard/            privacy guard (pure functions)
-  store/            the ~/JobHunter/ data folder: schemas, read/write, migrations
-  connectors/       one file per platform + generic.ts; all implement `Connector`
-  pipeline/         normalise, dedup, salary, location, eligibility/scam rules
-  cv/               render HTML→PDF/DOCX, text-back ATS check
-  dashboard/        localhost dashboard
-scripts/            CLI entry points (the only place console output is allowed)
-templates/          ATS-safe CV / cover letter HTML
-shared/             group-shared data, no personal data (D13)
-tests/              mirrors src/; fixtures/ holds fake or scrubbed data only
-specs/              spec → plan → tasks
+.claude-plugin/marketplace.json   marketplace → ./plugin
+plugin/                           everything users install (nothing else ships)
+  .claude-plugin/plugin.json
+  skills/<name>/SKILL.md          one per slash command: status, setup, hunt, tailor, …
+  src/
+    schema/                       hand-written validators for every data file
+    store/                        the ~/JobHunter/ data folder: read/write, migrations
+    connectors/                   one file per platform + generic.ts; all implement `Connector`
+    pipeline/                     normalise, dedup, salary, location, eligibility/scam rules
+    cv/                           render HTML→PDF, ATS checks
+    dashboard/                    localhost dashboard
+  scripts/                        CLI entry points the skills run (console output allowed)
+  templates/                      ATS-safe CV / cover letter HTML
+  shared/                         group-shared data, no personal data (D13)
+tools/                            dev-only tools (privacy guard); never shipped
+tests/                            mirrors plugin/src and tools; fixtures/ = fake/scrubbed only
+specs/                            spec → plan → tasks
 ```
 
 ## Code conventions
 
 - **Small units.** Lint enforces: complexity ≤ 12, nesting ≤ 4, ≤ 4 params, ≤ 80 lines per
   function, ≤ 300 lines per file. If you hit a limit, split the code. Don't disable the rule.
-- **Pure core, thin edges.** `pipeline/`, `guard/` and the CV logic are pure functions
-  (data in, data out) and fully unit tested. I/O lives in `store/`, `connectors/` and
-  `scripts/`.
-- **Types:** no `any`, no non-null `!`. Parse unknown data with zod. Exported functions
+- **Pure core, thin edges.** `pipeline/`, `schema/`, the CV logic and `tools/privacy/`
+  are pure functions (data in, data out) and fully unit tested. I/O lives in `store/`,
+  `connectors/` and `scripts/`.
+- **Types:** no `any`, no non-null `!`. Parse unknown data with the `schema/` validators. Exported functions
   declare return types. Use `import type` for types. Import local files with `.ts`.
 - **Errors:** connectors never throw past their boundary. They return a status
   (`ok | fallback | broken`) so one broken site never stops a run.
@@ -125,8 +134,10 @@ and tests. **CI** (GitHub Actions) runs `npm run check` on every push and PR.
 
 ## Testing
 
-- Tests in `tests/` mirror `src/` (`src/pipeline/salary.ts` → `tests/pipeline/salary.test.ts`).
-- Coverage threshold is 80% (lines, branches, functions) on `src/`.
+- Tests in `tests/` mirror the code (`plugin/src/pipeline/salary.ts` →
+  `tests/pipeline/salary.test.ts`; `tools/privacy/guard.ts` → `tests/tools/…`).
+- Coverage threshold is 80% (lines, branches, functions) on `plugin/src/` and
+  `tools/privacy/`.
 - Connector parsers are tested against saved HTML/JSON in `tests/fixtures/`, scrubbed of
   any real person's contact details. The privacy guard checks fixtures too.
 - Labelled sets (eligibility, scams) live in `tests/fixtures/labelled/`.

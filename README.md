@@ -146,7 +146,7 @@ It turns a 15-minute task into about a minute, and your account only ever sees y
 | ---------------------- | -------------------------------------------------------------------------------------------------------------------------------------- |
 | **Claude plan**        | **Pro or higher**, on _your own_ account. The Free plan doesn't include Claude Code, and accounts can't be shared (Anthropic's terms). |
 | **Claude desktop app** | Latest version, on macOS or Windows                                                                                                    |
-| **Node.js**            | 22.12 or newer ([download](https://nodejs.org/), pick "LTS")                                                                           |
+| **Node.js**            | 22.18 or newer ([download](https://nodejs.org/), pick "LTS")                                                                           |
 | **Google Chrome**      | Used to make PDF CVs                                                                                                                   |
 | **Your CV**            | PDF or Word                                                                                                                            |
 
@@ -154,26 +154,39 @@ Nothing else. No servers, no subscriptions, no API keys.
 
 ## Install
 
-1. Open the Claude desktop app and go to the **Code** tab.
-2. Add the plugin. Either:
-   - click **+** next to the prompt box → **Add plugins** → add the marketplace
-     `Hadia-i190404/Job-Hunter` → install **job-hunter**; or
-   - type in a session:
-     ```
-     /plugin marketplace add Hadia-i190404/Job-Hunter
-     /plugin install job-hunter@job-hunter
-     ```
-3. Run `/job-hunter:setup`. It checks Node.js, creates your data folder, reads your CV,
+1. Open **Terminal** (any folder) and run these two commands:
+   ```bash
+   claude plugin marketplace add Hadia-i190404/Job-Hunter
+   ```
+   ```bash
+   claude plugin install job-hunter@job-hunter
+   ```
+   (`claude` comes with Claude Code. If Terminal says "command not found", install
+   Claude Code first: <https://claude.com/claude-code>.)
+2. Open the Claude desktop app, go to the **Code** tab and start a **new session**.
+   Plugins only load in new sessions.
+3. Run `/job-hunter:status` to check it's installed.
+4. Run `/job-hunter:setup`. It checks Node.js, creates your data folder, reads your CV,
    asks what you're looking for, and shows you a read-back to confirm.
-4. Say yes when it offers to create the **daily 9:00 run**.
+5. Say yes when it offers to create the **daily 9:00 run**.
 
-To check it installed, run `/job-hunter:status`.
+Installing downloads only the plugin's own files (a few hundred KB). Job Hunter has no
+other dependencies.
 
 ## Getting updates
 
-Turn on auto-update once: type `/plugin` → **Marketplaces** → **job-hunter** → **Enable
-auto-update**. Every improvement the owner pushes then reaches you on its own. Updates
-never touch your data.
+When the owner says there's an update, run these in Terminal, then start a new session:
+
+```bash
+claude plugin marketplace update job-hunter
+```
+
+```bash
+claude plugin update job-hunter@job-hunter
+```
+
+Updates never touch your data. _(Automatic updates are being tested; this section will
+change once they're confirmed.)_
 
 ## Daily use
 
@@ -231,7 +244,7 @@ job-alert emails. The dashboard shows how each site is working: **working**,
 - **Everything about you stays on your computer**, in `~/JobHunter/`: your profile,
   CVs, answers, matches and log. It's never uploaded to GitHub or any server.
 - Back it up by copying the folder. Delete the folder and everything about you is gone.
-- **Shared with the group** (in the repo's `shared/` folder): only job sites someone
+- **Shared with the group** (in the repo's `plugin/shared/` folder): only job sites someone
   added, notes on which employers hire from Pakistan, and scam reports. Never CVs,
   profiles or answers.
 - Your Claude conversations are covered by your own Claude account's privacy settings.
@@ -315,15 +328,15 @@ npm run check
 
 ### Checks
 
-| Check     | Command                | Enforces                                                                                                                         |
-| --------- | ---------------------- | -------------------------------------------------------------------------------------------------------------------------------- |
-| Types     | `npm run typecheck`    | Strict TypeScript (`noUncheckedIndexedAccess`, `exactOptionalPropertyTypes`, …)                                                  |
-| Lint      | `npm run lint`         | Type-aware typescript-eslint, size/complexity limits, banned imports (browser automation, paid AI SDKs, heavy utility libraries) |
-| Format    | `npm run format:check` | Prettier                                                                                                                         |
-| Tests     | `npm run test`         | Vitest, coverage ≥ 80% on `src/`                                                                                                 |
-| Dead code | `npm run knip`         | No unused files, exports or dependencies                                                                                         |
-| Privacy   | `npm run privacy`      | No emails, phone numbers, CNICs, home paths, CVs or data files in the repo                                                       |
-| **All**   | `npm run check`        | Everything above. CI runs this on every push and PR                                                                              |
+| Check     | Command                | Enforces                                                                                                                                                     |
+| --------- | ---------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Types     | `npm run typecheck`    | Strict TypeScript (`noUncheckedIndexedAccess`, `exactOptionalPropertyTypes`, …)                                                                              |
+| Lint      | `npm run lint`         | Type-aware typescript-eslint, size/complexity limits, banned imports (browser automation, paid AI SDKs, heavy utility libraries), no packages in plugin code |
+| Format    | `npm run format:check` | Prettier                                                                                                                                                     |
+| Tests     | `npm run test`         | Vitest, coverage ≥ 80% on `plugin/src/` and `tools/privacy/`                                                                                                 |
+| Dead code | `npm run knip`         | No unused files, exports or dependencies                                                                                                                     |
+| Privacy   | `npm run privacy`      | No emails, phone numbers, CNICs, home paths, CVs or data files in the repo                                                                                   |
+| **All**   | `npm run check`        | Everything above. CI runs this on every push and PR                                                                                                          |
 
 The **pre-commit hook** runs the privacy guard on staged files, then typecheck, lint,
 format and tests. A failing check blocks the commit.
@@ -331,15 +344,21 @@ format and tests. A failing check blocks the commit.
 ### Layout
 
 ```
-.claude-plugin/   plugin + marketplace manifests
-skills/           one folder per slash command (SKILL.md)
-src/              guard/, store/, connectors/, pipeline/, cv/, dashboard/
-scripts/          command-line entry points
-templates/        ATS-safe CV and cover-letter templates
-shared/           group-shared data (no personal data)
-tests/            mirrors src/; fixtures/ = fake or scrubbed data only
+.claude-plugin/   marketplace manifest → ./plugin
+plugin/           the plugin itself: the only folder users install
+  skills/         one folder per slash command (SKILL.md)
+  src/            schema/, store/, connectors/, pipeline/, cv/, dashboard/
+  scripts/        command-line entry points the skills run
+  templates/      ATS-safe CV and cover-letter templates
+  shared/         group-shared data (no personal data)
+tools/            dev-only tools (privacy guard)
+tests/            mirrors plugin/src and tools; fixtures/ = fake or scrubbed data only
 specs/            spec → plan → tasks
 ```
+
+The plugin has **no dependencies**: it runs on Node's built-in TypeScript support, and
+lint stops plugin code from importing packages. Dev tools live at the repo root and are
+never shipped.
 
 ## Status
 
@@ -347,7 +366,8 @@ Phase **P0 (spike)**. See [tasks.md](specs/0001-job-hunter/tasks.md).
 
 - [x] Spec, plan and task list agreed
 - [x] Repo foundation: checks, privacy guard, pre-commit hook, CI
-- [ ] Plugin skeleton installable from GitHub (`/job-hunter:status` works; awaiting install test)
+- [x] Plugin skeleton installable from GitHub (`/job-hunter:status`)
+- [x] Plugin ships with zero dependencies
 - [ ] Data folder and store
 - [ ] First three job sources (Remotive, Greenhouse, Rozee.pk)
 - [ ] Eligibility and scam rules

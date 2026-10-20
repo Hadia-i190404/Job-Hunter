@@ -1,8 +1,8 @@
-// Usage: tsx scripts/privacy-guard.ts --staged | --all
+// Usage: node tools/privacy-guard.ts --staged | --all
 // --staged checks what is about to be committed (pre-commit hook).
 // --all checks every tracked file (CI).
 import { execFileSync } from 'node:child_process';
-import { checkFile, type Finding } from '../src/guard/privacy.ts';
+import { checkFile, type Finding } from './privacy/guard.ts';
 
 const mode = process.argv[2];
 if (mode !== '--staged' && mode !== '--all') {

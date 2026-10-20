@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { checkContent, checkFile, checkPath } from '../../src/guard/privacy.ts';
+import { checkContent, checkFile, checkPath } from '../../tools/privacy/guard.ts';
 
 // Samples are built from parts so this file never contains a real-looking value itself.
 const join = (...parts: string[]): string => parts.join('');
@@ -57,7 +57,7 @@ describe('checkPath', () => {
   it('blocks documents outside templates and fixtures', () => {
     expect(checkPath('Ali-CV.pdf')[0]?.rule).toBe('document');
     expect(checkPath('docs/cv.DOCX')[0]?.rule).toBe('document');
-    expect(checkPath('templates/sample.pdf')).toEqual([]);
+    expect(checkPath('plugin/templates/sample.pdf')).toEqual([]);
     expect(checkPath('tests/fixtures/cv.docx')).toEqual([]);
   });
 
