@@ -500,6 +500,16 @@
    "location": "Hyderabad, Telangana, India",
    "description": "",
    "label": "not-eligible"
+  },
+  {
+   "location": "Atlanta, Georgia",
+   "description": "Remote-friendly team. We serve customers worldwide.",
+   "label": "not-eligible"
+  },
+  {
+   "location": "Philadelphia, Pennsylvania",
+   "description": "This role can be remote.",
+   "label": "not-eligible"
   }
  ]
 }

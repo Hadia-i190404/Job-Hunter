@@ -3,6 +3,7 @@
 // only on the job, never on the user, so it's computed once per job (CLAUDE.md).
 import type { Job } from './job.ts';
 import { findPlaces, type RegionFit } from './places.ts';
+import { detectWorkMode } from './work-mode.ts';
 
 export type Verdict = 'eligible' | 'likely' | 'unclear' | 'not-eligible';
 
@@ -50,9 +51,18 @@ interface Outcome {
 
 // Remote feeds often give only a region ("Worldwide", "LATAM") with no word "remote".
 function isRemote(job: JobFacts): boolean {
-  if (job.workMode === 'remote') return true;
+  if (job.workMode === 'remote') return !namesPlaceWithoutRemote(job.locationText);
   if (job.workMode !== 'unknown' || job.cities.length > 0) return false;
   return findPlaces(job.locationText).regions.length > 0;
+}
+
+// "Atlanta, Georgia" with "remote" only somewhere in the description is an office job
+// in Atlanta: the location field is the employer's own answer to "where" (found 22 Oct
+// with two US-based Databricks roles).
+function namesPlaceWithoutRemote(locationText: string): boolean {
+  const text = locationText.trim();
+  if (text === '' || detectWorkMode({ location: text }) !== 'unknown') return false;
+  return findPlaces(text).regions.length === 0;
 }
 
 function localVerdict(job: JobFacts): Outcome {

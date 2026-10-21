@@ -23,7 +23,7 @@ describe('eligibility on the labelled set (rules only)', () => {
   const report = evaluateLabelled(labelled);
 
   it('meets the spec targets', () => {
-    expect(labelled).toHaveLength(100);
+    expect(labelled.length).toBeGreaterThanOrEqual(100);
     expect(report.positivePrecision).toBeGreaterThanOrEqual(0.9);
     expect(report.negativeRecall).toBeGreaterThanOrEqual(0.85);
   });
@@ -92,6 +92,6 @@ describe('findPlaces', () => {
 
   it('does not match a country inside another word', () => {
     expect(findPlaces('Americas').countries).toEqual([]);
-    expect(findPlaces('Indiana Jones').countries).toEqual([]);
+    expect(findPlaces('Indians').countries).toEqual([]);
   });
 });

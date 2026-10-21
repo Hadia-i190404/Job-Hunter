@@ -65,6 +65,9 @@
       "not eligible" recall 100%, 15/100 sent to Claude. Scams 20/20 caught, ordinary
       20/20 passed. Live 21 Oct: 180 GitLab + Canonical engineering jobs → 56 open to
       Pakistan, 90 ruled out with reasons, 34 for Claude. 223 tests.
+      Fix 22 Oct: a named office city plus "remote" only in the description (two
+      Databricks FDE roles in Atlanta/Philadelphia) was rated eligible; the location
+      field now wins, and US states/cities were added. Labelled set 102, still 100%/100%.
 - [ ] `[core]` `[skill]` **T7 CV round trip.** ✔ Built: `/job-hunter:cv` skill (PDF via
       Read, Word via `cv.ts docx-text`; copy facts, never improve; drops CNIC/DOB/etc.),
       `profileSchema` with ids for citations, `cv.ts save-profile|render`, ATS-safe
