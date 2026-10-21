@@ -219,15 +219,24 @@ changes to the data folder come with a migration the skills run on first use.
 by Claude per run, tailoring only on request) or `full` (Max: ~60 per run, auto-prepares
 top matches).
 
-## Phases
+## Delivery: product slices (D22)
 
-| Phase                        | Ships                                                                                                                                                                                                                                                                             | Done when                              |
-| ---------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------- |
-| **P0 — Spike**               | Plugin skeleton, data folder, 3 connectors (Remotive, Greenhouse, Mustakbil; Rozee is blocked, see connectors table), rule eligibility on 100 jobs, CV parse → render → text-back on 3 real CVs, level-B fill of one Greenhouse form, scheduled run + notification, install steps | Each risky piece works once end to end |
-| **P1 — Set up & find**       | Setup skill + gate, all v1 connectors with fallbacks, dedup, eligibility, scams, matching, add-a-site, dashboard (Matches + Settings), daily run                                                                                                                                  | Owner gets a useful daily list         |
-| **P2 — Tailor & apply**      | Tailoring + honesty check + ATS check, answer bank, level B on Greenhouse/Lever/Ashby/Workable, level-C cards, pipeline                                                                                                                                                           | Owner applies to real jobs with it     |
-| **P3 — LinkedIn & outreach** | LinkedIn rewrite → cards, hiring-team finder, message cards, follow-ups                                                                                                                                                                                                           | Profile updated, messages going out    |
-| **P4 — Group**               | Shared sites/employers/scams via repo, thumbs learning, onboarding friends                                                                                                                                                                                                        | Friends running it on their machines   |
+P0 built the foundations (store, connectors, eligibility, scams, dedup, profile and CV
+rendering). From here every slice runs the **whole user flow** end to end and the next
+slice widens it.
+
+**The flow every slice follows (D20, D21):**
+setup interview (once) → daily hunt → match to the user's own targets → tailored CV per
+top job → application prepared → one daily notification ("N ready, M questions") →
+user approves the batch → Job Hunter fills and submits approved career-site forms →
+pipeline updated.
+
+| Slice                        | Ships                                                                                                                                                                                                                                                                                                                                                                                             | Done when                                                                                                 |
+| ---------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------- |
+| **S1 — First full loop**     | Setup interview; searches + answer bank + gaps; profile v2 with drafts kept apart; matching to the user's targets; daily hunt over the 3 working sources (Remotive, Mustakbil, Greenhouse watch-list); tailoring with the R5 ATS rules + honesty check; applications queue; review & batch approval; Greenhouse fill + submit after approval (respecting D19); daily scheduled run + notification | The owner gets prepared, tailored Greenhouse applications daily and submits a real one through Job Hunter |
+| **S2 — Wider net**           | All v1 sources + fallbacks (Rozee via search/paste), add-a-site, Claude eligibility step with usage caps, FX refresh, level-C action cards for logged-in sites, local dashboard, Lever/Ashby/Workable forms                                                                                                                                                                                       | Daily list covers all v1 platforms; logged-in sites arrive as cards                                       |
+| **S3 — LinkedIn & outreach** | LinkedIn rewrite → cards, hiring-team finder, message cards, follow-ups                                                                                                                                                                                                                                                                                                                           | Profile updated, messages going out                                                                       |
+| **S4 — Group**               | Friends onboarding (their CVs complete the T7 check), shared sites/employers/scams, auto-update check on a Pro account (old T9), thumbs learning                                                                                                                                                                                                                                                  | Friends running it on their machines                                                                      |
 
 ## Risks & trade-offs
 

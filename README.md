@@ -371,19 +371,16 @@ never shipped.
 
 ## Status
 
-Phase **P0 (spike)**. See [tasks.md](specs/0001-job-hunter/tasks.md).
+**Foundations done; building Slice 1, the first full loop.** See
+[tasks.md](specs/0001-job-hunter/tasks.md).
 
-- [x] Spec, plan and task list agreed
-- [x] Repo foundation: checks, privacy guard, pre-commit hook, CI
-- [x] Plugin skeleton installable from GitHub (`/job-hunter:status`)
-- [x] Plugin ships with zero dependencies
-- [x] Data folder and store (safe writes, recovery, upgrades, pause/resume)
-- [x] One job format: cities, work mode, salary in PKR and USD per month
-- [x] First three job sources (Remotive, Greenhouse career sites, Mustakbil.com)
-- [x] Pakistan-eligibility, scam and duplicate rules (`npm run report:eligibility`)
-- [x] CV read → profile → clean PDF, checked by reading it back (needs real CVs to sign off)
-- [ ] Career-site form filling (level B) test
-- [ ] Daily run and notification on Pro
+- [x] Foundations: data folder, 3 job sources, Pakistan-eligibility, scam and duplicate
+      rules, CV → profile → clean PDF
+- [ ] **Slice 1:** setup interview → daily hunt → matching → tailored CVs → prepared
+      Greenhouse applications → one daily notification → batch approval → submit
+- [ ] Slice 2: all job sites, action cards for logged-in sites, dashboard
+- [ ] Slice 3: LinkedIn and outreach
+- [ ] Slice 4: friends' onboarding and shared learning
 
 ## License
 

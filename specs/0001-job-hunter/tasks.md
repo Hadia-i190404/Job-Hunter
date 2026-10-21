@@ -6,9 +6,9 @@
 > Small, ordered, independently verifiable. Tags: `[repo]` tooling/docs, `[core]` src/
 > scripts, `[skill]` plugin skills, `[spike]` a one-off test whose result goes back
 > into the spec/plan. Each task is reviewed by the owner before the next one starts.
-> P1–P4 are broken down into tasks after P0 is reviewed.
+> From Slice 1 on, work is delivered as end-to-end product slices (D22).
 
-## P0 — Spike
+## P0 — Foundations
 
 - [x] `[repo]` **T1 Foundation.** README, agent guide (`CLAUDE.md`), strict TypeScript,
       ESLint (type-aware), Prettier, Vitest with coverage thresholds, Knip (dead code /
@@ -79,37 +79,40 @@
       (21 Oct; graduation date corrected by the owner). ⏳ 2 friends' CVs.
       Fixed after the owner's run: a long role couldn't split across pages
       (`.item` had `break-inside: avoid`); now only the title line + dates stay together.
-- [ ] `[spike]` **T8 Level-B fill.** Fill one public Greenhouse test application in the
-      built-in browser from the profile; stop before Submit; stop on a work-permission
-      question. _Done when:_ recorded walkthrough + notes.
-- [ ] `[spike]` **T9 Desktop app facts.** On the owner's account **and a friend's Pro
-      account**: scheduled task at 9:00 PKT runs `/job-hunter:status` and notifies;
-      a pushed commit reaches the friend via plugin auto-update.
-      _Done when:_ both confirmed or the plan is changed.
-- [ ] `[repo]` **T10 P0 review.** Write findings, update spec/plan, break P1 into tasks.
+- [~] `[spike]` T8, T9, T10: folded into Slice 1 (D22). T7's last two CVs move to S4
+  (friends' onboarding).
 
-## P1 — Set up & find _(to be broken down)_
+## Slice 1 — First full loop (D20, D21, D22)
 
-Includes gap questions at setup for job searches aimed at a role the CV doesn't show
-(R5b).
+Done when: the owner gets prepared, tailored Greenhouse applications daily and submits a
+real one through Job Hunter.
 
-Setup skill + gate, all v1 connectors + fallbacks (Rozee via web search / pasted
-alert links), daily FX-rate refresh from a free
-source, add-a-site, Claude eligibility/match
-step with usage caps, dashboard (Matches, Settings), daily run.
+- [ ] `[core]` **S1.1 Data for the loop.** Schemas + store for `searches.json` (targets
+      and the confirm gate), `answers.json` (answer bank), `gaps.json`, `applications.json`
+      (prepared → approved → submitted / skipped), and profile v2 (`source`, `addedAt`,
+      drafts in `profile.drafts.json`) with its migration.
+- [ ] `[skill]` **S1.2 Setup interview** (`/job-hunter:setup`): CV (reuses cv), profile
+      check incl. drafts, targets, recurring screening answers, gap questions, read-back + confirm, schedule offer. Asked once (D20).
+- [ ] `[core]` **S1.3 Matching.** Score jobs against the user's searches (titles and
+      synonyms, seniority, skills, mode, city, salary floor, skipped companies); rules
+      first, Claude for the top candidates.
+- [ ] `[core]` `[skill]` **S1.4 Daily hunt** (`hunt.ts` + `/job-hunter:hunt`): all
+      sources for confirmed searches → save → eligibility, scams, dedup, match → top jobs.
+- [ ] `[core]` `[skill]` **S1.5 Tailoring.** Per top job: tailored CV JSON citing profile
+      ids, honesty check script (no uncited claims, no new numbers), ATS rules (R5),
+      render PDF, gaps routed to questions.
+- [ ] `[core]` **S1.6 Prepared applications.** Greenhouse form questions from the public
+      API, answers from profile + answer bank, unknowns and D19 forms routed to the
+      to-do list; `applications.json`.
+- [ ] `[skill]` **S1.7 Review & apply** (`/job-hunter:review`): today's batch, one
+      approval (D21), then fill + submit each approved Greenhouse form in the browser.
+- [ ] `[skill]` **S1.8 Daily run + notification.** Scheduled task at 09:00 PKT runs the
+      hunt and notifies "N ready, M questions".
+- [ ] `[repo]` **S1.9 Slice review.** Walk the whole flow with the owner; fix what hurts.
 
-## P2 — Tailor & apply _(to be broken down)_
+## Later slices
 
-Includes gap questions while tailoring, profile schema v2 (`source`, `addedAt`) with
-its migration, and `gaps.json` (R5b, D16).
-
-Tailoring with the R5 ATS rules (D17, D18), drafts kept apart from approved facts,
-client-name check, honesty check + ATS check, answer bank, level B on Greenhouse / Lever /
-Ashby / Workable, level-C action cards, pipeline.
-
-## P3 — LinkedIn & outreach _(to be broken down)_
-
-## P4 — Group _(to be broken down)_
+S2 wider net · S3 LinkedIn & outreach · S4 group (see plan "Delivery: product slices").
 
 ## Verification (every task)
 
