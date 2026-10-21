@@ -65,11 +65,14 @@
       "not eligible" recall 100%, 15/100 sent to Claude. Scams 20/20 caught, ordinary
       20/20 passed. Live 21 Oct: 180 GitLab + Canonical engineering jobs → 56 open to
       Pakistan, 90 ruled out with reasons, 34 for Claude. 223 tests.
-- [ ] `[core]` `[skill]` **T7 CV round trip.** Skill reads a CV → master profile (schema
-      validated); render ATS-safe HTML → PDF (headless Chrome); Claude reads the PDF back as the
-      ATS check; decide on DOCX (D14).
+- [ ] `[core]` `[skill]` **T7 CV round trip.** ✔ Built: `/job-hunter:cv` skill (PDF via
+      Read, Word via `cv.ts docx-text`; copy facts, never improve; drops CNIC/DOB/etc.),
+      `profileSchema` with ids for citations, `cv.ts save-profile|render`, ATS-safe
+      HTML/CSS (A4, one column), headless Chrome with a throwaway profile, PDF 0600,
+      Claude reads the PDF back as the ATS check. PDF only (D15). Fake-profile round trip
+      reads back cleanly; 235 tests.
       _Done when:_ 3 real CVs (kept in the data folder, never committed) round-trip with
-      ≥ 90% fields right.
+      ≥ 90% fields right. **⏳ Waiting for the owner's CV (+ 2 friends').**
 - [ ] `[spike]` **T8 Level-B fill.** Fill one public Greenhouse test application in the
       built-in browser from the profile; stop before Submit; stop on a work-permission
       question. _Done when:_ recorded walkthrough + notes.

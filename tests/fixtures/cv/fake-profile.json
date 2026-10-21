@@ -1,0 +1,39 @@
+{
+  "name": "Ayesha Example",
+  "headline": "Accountant | ACCA Part-Qualified",
+  "contact": { "email": "ayesha@example.com", "city": "Lahore, Pakistan", "links": ["linkedin.com/in/ayesha-example"] },
+  "summary": "Accountant with 3 years of experience in bookkeeping, monthly closing and payroll for trading and construction companies.",
+  "experience": [
+    {
+      "id": "exp-1",
+      "title": "Accountant",
+      "company": "Example Traders (Pvt.) Ltd",
+      "location": "Lahore",
+      "start": "2023-02",
+      "end": "present",
+      "bullets": [
+        { "id": "exp-1-b1", "text": "Prepare monthly closing and bank reconciliations for 4 bank accounts." },
+        { "id": "exp-1-b2", "text": "Run payroll for 60 staff in QuickBooks." }
+      ]
+    },
+    {
+      "id": "exp-2",
+      "title": "Accounts Assistant",
+      "company": "Example Builders",
+      "start": "2021-07",
+      "end": "2023-01",
+      "bullets": [{ "id": "exp-2-b1", "text": "Tracked project expenses and vendor payments." }]
+    }
+  ],
+  "education": [
+    { "id": "edu-1", "degree": "B.Com (Hons)", "institution": "University of the Punjab", "start": "2017-09", "end": "2021-06" }
+  ],
+  "skills": [
+    { "id": "skill-1", "name": "QuickBooks" },
+    { "id": "skill-2", "name": "MS Excel" },
+    { "id": "skill-3", "name": "Payroll" }
+  ],
+  "certifications": [{ "id": "cert-1", "name": "ACCA (6 papers passed)", "issuer": "ACCA", "year": 2024 }],
+  "languages": [{ "name": "English", "level": "Fluent" }, { "name": "Urdu", "level": "Native" }],
+  "projects": []
+}

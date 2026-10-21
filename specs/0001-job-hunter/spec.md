@@ -25,6 +25,7 @@
 | D12 | Daily run 9:00 PKT + catch-up when the app opens.                                                                                                                                                                                                                                                  |
 | D13 | Group-shared items (added sites, employer learnings, scam reports, company watch-list) live in the GitHub repo's `plugin/shared/` folder. Code on GitHub is fine; no hosting or database.                                                                                                          |
 | D14 | The plugin ships with **zero runtime dependencies** (decided 21 Oct 2026, T2). Installing or updating downloads only Job Hunter's own files, never a `node_modules`. Found in T2: otherwise every install pulled 131 MB of dev tools, with a 60-second limit.                                      |
+| D15 | **CVs are made as PDF only** for now (T7). Word (.docx) CVs can be _read_, but writing them would need a hand-built zip/XML writer (D14). Revisit if a site the group uses insists on Word.                                                                                                        |
 
 ## Problem / motivation
 
@@ -209,7 +210,7 @@ Workable, SmartRecruiters, Recruitee, BambooHR and Workday.
   anything that doesn't is removed before the user sees it. Missing requirements are
   reported as gaps, never added.
 - ATS check per version: keyword coverage vs the job, parseability, with suggested fixes.
-- Output PDF + DOCX, named `Firstname-Lastname-CV-<Company>.pdf`.
+- Output PDF (D15), named `Firstname-Lastname-CV-<Company>.pdf`.
 
 ### R6 — Applying
 

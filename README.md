@@ -262,7 +262,7 @@ job-alert emails. The dashboard shows how each site is working: **working**,
 | `answers.json`                    | Your saved screening-question answers                         |
 | `jobs.jsonl`, `assessments.jsonl` | Jobs found, and how each was judged                           |
 | `pipeline.json`, `cards.json`     | Where each application is; action cards                       |
-| `cv/`                             | Tailored CVs (PDF and Word) and what changed in each          |
+| `cv/`                             | Your clean CV and tailored CVs (PDF) and what changed in each |
 | `log.jsonl`                       | Everything Job Hunter did, and everything you marked done     |
 | `settings.json`                   | Paused, sites on/off, usage setting                           |
 | `meta.json`                       | Data-folder version, so updates can upgrade your files safely |
@@ -380,7 +380,7 @@ Phase **P0 (spike)**. See [tasks.md](specs/0001-job-hunter/tasks.md).
 - [x] One job format: cities, work mode, salary in PKR and USD per month
 - [x] First three job sources (Remotive, Greenhouse career sites, Mustakbil.com)
 - [x] Pakistan-eligibility, scam and duplicate rules (`npm run report:eligibility`)
-- [ ] CV read → tailored PDF/Word round trip
+- [x] CV read → profile → clean PDF, checked by reading it back (needs real CVs to sign off)
 - [ ] Career-site form filling (level B) test
 - [ ] Daily run and notification on Pro
 
