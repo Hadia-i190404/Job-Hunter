@@ -52,6 +52,15 @@ ul {
 li {
   margin: 1pt 0;
 }
-.item {
+/* A long role may run onto the next page; only its title line and dates stay together
+   and never sit alone at the bottom of a page. Single bullets never split. */
+.item-head {
+  break-inside: avoid;
+  break-after: avoid;
+}
+h2 {
+  break-after: avoid;
+}
+li {
   break-inside: avoid;
 }

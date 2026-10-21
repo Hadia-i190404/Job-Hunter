@@ -72,7 +72,10 @@
       Claude reads the PDF back as the ATS check. PDF only (D15). Fake-profile round trip
       reads back cleanly; 235 tests.
       _Done when:_ 3 real CVs (kept in the data folder, never committed) round-trip with
-      ≥ 90% fields right. **⏳ Waiting for the owner's CV (+ 2 friends').**
+      ≥ 90% fields right. **1 of 3:** owner's CV round-trips and reads back cleanly
+      (21 Oct; graduation date corrected by the owner). ⏳ 2 friends' CVs.
+      Fixed after the owner's run: a long role couldn't split across pages
+      (`.item` had `break-inside: avoid`); now only the title line + dates stay together.
 - [ ] `[spike]` **T8 Level-B fill.** Fill one public Greenhouse test application in the
       built-in browser from the profile; stop before Submit; stop on a work-permission
       question. _Done when:_ recorded walkthrough + notes.
@@ -97,7 +100,8 @@ step with usage caps, dashboard (Matches, Settings), daily run.
 Includes gap questions while tailoring, profile schema v2 (`source`, `addedAt`) with
 its migration, and `gaps.json` (R5b, D16).
 
-Tailoring + honesty check + ATS check, answer bank, level B on Greenhouse / Lever /
+Tailoring with the R5 ATS rules (D17, D18), drafts kept apart from approved facts,
+client-name check, honesty check + ATS check, answer bank, level B on Greenhouse / Lever /
 Ashby / Workable, level-C action cards, pipeline.
 
 ## P3 — LinkedIn & outreach _(to be broken down)_

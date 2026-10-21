@@ -150,6 +150,12 @@ directly. These are the best jobs to apply to (level B, real employer, no middle
   `cv.ts save-profile` (same validation) → record in `gaps.json`.
 - **Honesty check** (below) accepts `source: 'user'` entries like any other: they are
   facts the user stated and approved.
+- **Drafts are not facts** (learned 21 Oct): an entry Claude drafted is saved to
+  `profile.drafts.json`, never `profile.json`, until the user approves it. `save-profile`
+  refuses entries marked `draft`.
+- **Client-name check** (D17): before a CV is rendered, a check flags names the user has
+  listed as clients (kept in `settings.json`, local only) so they can be replaced with
+  the client's type.
 
 ## Tailoring & honesty check (`/job-hunter:tailor`)
 

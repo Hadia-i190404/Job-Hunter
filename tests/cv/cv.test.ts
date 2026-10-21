@@ -57,6 +57,13 @@ describe('renderCvHtml', () => {
     expect(renderCvHtml(tricky, '')).toContain('A &lt;b&gt;&amp;&lt;/b&gt; &quot;B&quot;');
   });
 
+  it('lets a long role continue on the next page, keeping its title line and dates together', () => {
+    const css = readFileSync(new URL('../../plugin/templates/cv.css', import.meta.url), 'utf8');
+    expect(css).not.toMatch(/\.item\s*\{[^}]*break-inside:\s*avoid/);
+    expect(css).toMatch(/\.item-head\s*\{[^}]*break-after:\s*avoid/);
+    expect(html).toMatch(/<div class="item-head">\s*<h3>Accountant/);
+  });
+
   it('has no tables or images, which ATS parsers trip on', () => {
     expect(html).not.toMatch(/<table|<img/);
   });

@@ -56,15 +56,17 @@ function contactLine(profile: Profile): string {
 function experienceItem(item: Profile['experience'][number]): string {
   const where = [item.company, item.location].filter(Boolean).join(', ');
   return `<div class="item">
+<div class="item-head">
 <h3>${esc(item.title)} <span class="org">— ${esc(where)}</span></h3>
 <p class="dates">${dates(item.start, item.end)}</p>
+</div>
 ${list(item.bullets.map((b) => b.text))}
 </div>`;
 }
 
 function projectItem(item: Profile['projects'][number]): string {
   return `<div class="item">
-<h3>${esc(item.name)}</h3>
+<div class="item-head"><h3>${esc(item.name)}</h3></div>
 ${item.description ? `<p>${esc(item.description)}</p>` : ''}
 ${list(item.bullets.map((b) => b.text))}
 </div>`;
@@ -74,8 +76,10 @@ function educationItem(item: Profile['education'][number]): string {
   const when =
     item.start !== undefined || item.end !== undefined ? dates(item.start, item.end) : '';
   return `<div class="item">
+<div class="item-head">
 <h3>${esc(item.degree)} <span class="org">— ${esc(item.institution)}</span></h3>
 ${when ? `<p class="dates">${when}</p>` : ''}
+</div>
 ${item.details ? `<p>${esc(item.details)}</p>` : ''}
 </div>`;
 }
