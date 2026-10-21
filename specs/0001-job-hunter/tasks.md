@@ -34,9 +34,13 @@
       Schemas for jobs, profile, searches, answers, cards and pipeline are added by the
       tasks that design them (T4, T7, P1, P2).
       _Done when:_ unit tests cover read/write/migrate/corrupt-file recovery. ✔ 52 tests.
-- [ ] `[core]` **T4 Job model + normalise.** Canonical `Job`; title/company clean-up;
-      Pakistani city + work-mode parsing; salary → PKR and USD per month.
-      _Done when:_ unit tests on 40 real-world strings pass.
+- [x] `[core]` **T4 Job model + normalise.** `RawJob` → `Job` (`plugin/src/pipeline/`):
+      title clean-up (urgent/hiring/emoji/job-id noise), company display + `companyKey`
+      (Pvt Ltd, SMC, FZ-LLC…), 31 Pakistani cities with aliases (Isb/Rwp, twin cities,
+      Indian Hyderabad excluded), on-site/hybrid/remote, salary (Rs/lakh/k, $, AED, SAR,
+      €, £…; period stated or inferred, else "not stated") → PKR and USD per month.
+      FX rates are approximate and dated (`fx.ts`); refreshing them is a P1 job.
+      _Done when:_ unit tests on 40 real-world strings pass. ✔ 79 examples.
 - [ ] `[core]` **T5 Three connectors.** Remotive (API), Greenhouse (board API for a
       watch-list), Rozee.pk (public HTML, polite pacing). `npm run fetch -- --search <id>`.
       _Done when:_ each returns real jobs; parsers tested against saved fixtures.
@@ -60,7 +64,8 @@
 
 ## P1 — Set up & find _(to be broken down)_
 
-Setup skill + gate, all v1 connectors + fallbacks, add-a-site, Claude eligibility/match
+Setup skill + gate, all v1 connectors + fallbacks, daily FX-rate refresh from a free
+source, add-a-site, Claude eligibility/match
 step with usage caps, dashboard (Matches, Settings), daily run.
 
 ## P2 — Tailor & apply _(to be broken down)_

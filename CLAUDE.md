@@ -16,7 +16,10 @@ to users.
 
 - Don't write code for something that has no agreed spec and plan. New feature means a
   new `specs/NNNN-slug/` folder (next number after the highest one there).
-- Stop after each task and show the owner the result before starting the next one.
+- After each task, report the result to the owner (what changed, how it was verified,
+  anything they need to try), then go straight on to the next task. Don't wait for a
+  go-ahead (owner's preference, 21 Oct 2026). Do stop when a task needs the owner: their
+  CV, their account, a decision, or a test only they can run.
 - When reality differs from the spec or plan, update them in the same change.
 - Commit or push only when the owner asks. Never use `--no-verify`.
 

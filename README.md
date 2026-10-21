@@ -374,6 +374,7 @@ Phase **P0 (spike)**. See [tasks.md](specs/0001-job-hunter/tasks.md).
 - [x] Plugin skeleton installable from GitHub (`/job-hunter:status`)
 - [x] Plugin ships with zero dependencies
 - [x] Data folder and store (safe writes, recovery, upgrades, pause/resume)
+- [x] One job format: cities, work mode, salary in PKR and USD per month
 - [ ] First three job sources (Remotive, Greenhouse, Rozee.pk)
 - [ ] Eligibility and scam rules
 - [ ] CV read → tailored PDF/Word round trip

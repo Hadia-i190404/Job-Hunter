@@ -86,7 +86,8 @@ export default tseslint.config(
   },
   {
     files: ['tests/**/*.ts'],
-    rules: { 'max-lines-per-function': 'off' },
+    // it.each rows pass one argument per column.
+    rules: { 'max-lines-per-function': 'off', 'max-params': 'off' },
   },
   {
     files: ['**/*.js'],
