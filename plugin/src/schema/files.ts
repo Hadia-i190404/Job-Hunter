@@ -2,6 +2,7 @@
 // a later task get their schema there: jobs (T4), profile (T7), searches (P1),
 // answers, cards and pipeline (P2).
 import {
+  arrayOf,
   boolean,
   isoDate,
   number,
@@ -29,6 +30,8 @@ export const settingsSchema = object({
   followUpDays: number({ integer: true, min: 1, max: 60 }),
   // Local time of the daily run, HH:MM, 24-hour. Spec D12.
   dailyRunTime: string({ pattern: /^([01]\d|2[0-3]):[0-5]\d$/, hint: 'a time like 09:00' }),
+  // Client names that must never appear on a CV (D17). Optional so older files still load.
+  clientNames: optional(arrayOf(string())),
 });
 export type Settings = Infer<typeof settingsSchema>;
 

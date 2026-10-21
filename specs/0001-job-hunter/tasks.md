@@ -112,9 +112,15 @@ real one through Job Hunter.
       Islamabad full-stack role #3. Fixes from the live run: office/hybrid jobs with no
       Pakistani location are abroad (Cloudflare "Hybrid", MongoDB "Gurugram"); generic
       title words count half. Labelled set 105, still 100%/100%. 272 tests.
-- [ ] `[core]` `[skill]` **S1.5 Tailoring.** Per top job: tailored CV JSON citing profile
+- [x] `[core]` `[skill]` **S1.5 Tailoring.** Per top job: tailored CV JSON citing profile
       ids, honesty check script (no uncited claims, no new numbers), ATS rules (R5),
-      render PDF, gaps routed to questions.
+      render PDF, gaps routed to questions. ✔ `schema/tailored.ts`, `cv/honesty.ts`
+      (every line cites bullets of its own role; no new or inflated figures; skills
+      must be named in what they cite; headline/summary figures must exist in the
+      profile; years can't exceed the profile; client names from settings rejected),
+      `cv/tailor.ts` (apply + keyword coverage: covered / true-but-missing / gaps),
+      `tailor.ts context|render` (PDF in `cv/tailored/`, page count, gaps → `gaps.json`
+      pending), `/job-hunter:tailor` skill with the R5 rules. 285 tests.
 - [ ] `[core]` **S1.6 Prepared applications.** Greenhouse form questions from the public
       API, answers from profile + answer bank, unknowns and D19 forms routed to the
       to-do list; `applications.json`.

@@ -1,7 +1,7 @@
 // Print HTML to PDF with the user's own Chrome (or Edge/Brave/Chromium), headless and with
 // a throwaway profile so it never touches their open browser or its sign-ins.
 import { execFile } from 'node:child_process';
-import { access, chmod, mkdtemp, rm } from 'node:fs/promises';
+import { access, chmod, mkdtemp, readFile, rm } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { pathToFileURL } from 'node:url';
@@ -69,4 +69,10 @@ export async function printToPdf(chrome: string, htmlPath: string, pdfPath: stri
   } finally {
     await rm(profile, { recursive: true, force: true });
   }
+}
+
+// Page count from the PDF's own page objects; good enough to enforce the 1–2 page rule.
+export async function countPdfPages(pdfPath: string): Promise<number> {
+  const bytes = await readFile(pdfPath, 'latin1');
+  return (bytes.match(/\/Type\s*\/Page[^s]/g) ?? []).length;
 }
