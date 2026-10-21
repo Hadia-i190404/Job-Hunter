@@ -103,8 +103,15 @@ real one through Job Hunter.
       title), skills 0–25, pay 0–10; blockers (not open to Pakistan, mode, city, skip
       list, US hours) → fit `no`; bands strong ≥75, good ≥55, stretch ≥35; low pay ranks
       lower, never hidden. `bestMatch` across searches. 267 tests.
-- [ ] `[core]` `[skill]` **S1.4 Daily hunt** (`hunt.ts` + `/job-hunter:hunt`): all
+- [x] `[core]` `[skill]` **S1.4 Daily hunt** (`hunt.ts` + `/job-hunter:hunt`): all
       sources for confirmed searches → save → eligibility, scams, dedup, match → top jobs.
+      ✔ `hunt/run.ts`, `hunt.ts run|list|job|judge`, skill (Claude reads unclear jobs up
+      to the usage budget and records a quoted verdict), Greenhouse watch-list in
+      `plugin/shared/greenhouse-boards.json`, `matches.json`. Live 22 Oct (sample search,
+      temp folder): 1,537 jobs in ~20 s → 97 matches; Canonical Web Frontend #1, an
+      Islamabad full-stack role #3. Fixes from the live run: office/hybrid jobs with no
+      Pakistani location are abroad (Cloudflare "Hybrid", MongoDB "Gurugram"); generic
+      title words count half. Labelled set 105, still 100%/100%. 272 tests.
 - [ ] `[core]` `[skill]` **S1.5 Tailoring.** Per top job: tailored CV JSON citing profile
       ids, honesty check script (no uncited claims, no new numbers), ATS rules (R5),
       render PDF, gaps routed to questions.

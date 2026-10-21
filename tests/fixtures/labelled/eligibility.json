@@ -510,6 +510,21 @@
    "location": "Philadelphia, Pennsylvania",
    "description": "This role can be remote.",
    "label": "not-eligible"
+  },
+  {
+   "location": "Hybrid",
+   "description": "",
+   "label": "not-eligible"
+  },
+  {
+   "location": "Gurugram",
+   "description": "",
+   "label": "not-eligible"
+  },
+  {
+   "location": "In-Office",
+   "description": "",
+   "label": "not-eligible"
   }
  ]
 }

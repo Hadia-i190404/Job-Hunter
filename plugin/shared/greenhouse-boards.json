@@ -1,0 +1,4 @@
+{
+  "_about": "Company job boards on Greenhouse that Job Hunter checks every day (the watch-list, D13). Board ids are the part after job-boards.greenhouse.io/. Group members add companies that hire in Pakistan or remote worldwide.",
+  "boards": ["canonical", "gomotive", "careem", "gitlab", "cloudflare", "mongodb"]
+}

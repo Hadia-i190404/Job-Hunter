@@ -113,16 +113,24 @@ function placeBlockers(job: MatchJob, search: Search): string[] {
     : [];
 }
 
-// 0–50: shared role words between the job title and the user's best-matching title.
+// Words every engineering title shares: they count half, so "Golang Engineer" isn't a
+// good match for "Frontend Engineer" just because both say "engineer".
+const GENERIC = new Set(['engineer', 'software', 'specialist', 'associate', 'web', 'remote']);
+const weight = (word: string): number => (GENERIC.has(word) ? 0.5 : 1);
+
+// 0–50: weighted share of the user's title words found in the job title.
 export function titleScore(jobTitle: string, titles: readonly string[]): number {
   const job = roleWords(jobTitle);
   const best = Math.max(
     0,
     ...titles.map((title) => {
-      const wanted = roleWords(title);
-      if (wanted.size === 0) return 0;
-      const shared = [...wanted].filter((word) => job.has(word)).length;
-      return shared / wanted.size;
+      const wanted = [...roleWords(title)];
+      const total = wanted.reduce((sum, word) => sum + weight(word), 0);
+      if (total === 0) return 0;
+      const shared = wanted
+        .filter((word) => job.has(word))
+        .reduce((sum, word) => sum + weight(word), 0);
+      return shared / total;
     }),
   );
   return Math.round(best * 50);

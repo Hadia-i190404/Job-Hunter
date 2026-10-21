@@ -7,7 +7,7 @@ const HYBRID =
 const NOT_REMOTE =
   /\b(?:no|not|non)[-\s](?:an?\s+)?remote\b|\bremote (?:work )?(?:is )?not (?:available|possible|an option)\b/;
 const REMOTE =
-  /\bremote\b|\bhome[-\s]based\b|\bwork(?:ing)? from home\b|\bwfh\b|\banywhere\b|\bdistributed\b|\btelecommut/;
+  /\bremote\b|\bremoto\b|\bhome[-\s]based\b|\bwork(?:ing)? from home\b|\bwfh\b|\banywhere\b|\bdistributed\b|\btelecommut/;
 const ONSITE = /\bon[-\s]?site\b|\bin[-\s]office\b|\boffice[-\s]based\b|\bin[-\s]person\b/;
 
 // Location text speaks for the job; the description may mention modes only in passing,

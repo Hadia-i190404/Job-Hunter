@@ -4,11 +4,13 @@ import {
   applicationsSchema,
   draftsSchema,
   gapsSchema,
+  matchesSchema,
   searchesSchema,
   type AnswersFile,
   type ApplicationsFile,
   type DraftsFile,
   type GapsFile,
+  type MatchesFile,
   type SearchesFile,
 } from '../schema/loop.ts';
 import { loadDoc, saveDoc, type Doc } from './doc.ts';
@@ -38,6 +40,12 @@ export const APPLICATIONS: Doc<ApplicationsFile> = {
   file: FILES.applications,
   schema: applicationsSchema,
   empty: () => ({ applications: [] }),
+};
+
+export const MATCHES: Doc<MatchesFile> = {
+  file: FILES.matches,
+  schema: matchesSchema,
+  empty: () => ({ runAt: new Date(0).toISOString(), items: [] }),
 };
 
 // The direction gate (R1): nothing outward happens until the current searches are confirmed.

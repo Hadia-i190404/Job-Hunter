@@ -129,3 +129,29 @@ export const applicationsSchema = object({
   ),
 });
 export type ApplicationsFile = Infer<typeof applicationsSchema>;
+
+// Today's ranked list from the daily hunt (S1.4): what Claude reviews and tailors from.
+export const matchesSchema = object({
+  runAt: isoDate(),
+  items: arrayOf(
+    object({
+      jobId: text,
+      searchId: text,
+      score: number({ min: 0, max: 100 }),
+      fit: oneOf(['strong', 'good', 'stretch'] as const),
+      reasons: arrayOf(string()),
+      verdict: oneOf(['eligible', 'likely', 'unclear', 'not-eligible'] as const),
+      verdictReasons: arrayOf(string()),
+      // Rules couldn't decide; Claude reads the job and records a verdict (judge).
+      needsClaude: boolean(),
+      scam: oneOf(['ok', 'suspicious'] as const),
+      title: text,
+      company: string(),
+      location: string(),
+      url: text,
+      source: text,
+      applyLevel: oneOf(['B', 'C'] as const),
+    }),
+  ),
+});
+export type MatchesFile = Infer<typeof matchesSchema>;

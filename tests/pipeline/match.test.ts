@@ -54,7 +54,8 @@ describe('titleScore', () => {
     ['Web Frontend Engineer - JS, CSS, React, Flutter', 50],
     ['Senior Front-End Developer', 50],
     ['React Developer', 50],
-    ['Frontend Lead', 25],
+    ['Frontend Lead', 33],
+    ['Golang Engineer', 17],
     ['Accountant', 0],
   ])('%s → %i', (title, score) => {
     expect(titleScore(title, frontend.titles)).toBe(score);

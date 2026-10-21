@@ -78,6 +78,17 @@ function localVerdict(job: JobFacts): Outcome {
       reasons: [`On-site in ${countries.join(', ')}: relocating abroad isn't covered yet`],
     };
   }
+  // Pakistani posts always name the city, so an office or hybrid job (or any named place)
+  // with no Pakistani location is abroad (found 22 Oct: Cloudflare "Hybrid", MongoDB
+  // "Gurugram").
+  const place = job.locationText.trim();
+  if (job.workMode !== 'unknown' || place !== '') {
+    const where =
+      place === '' || /^(hybrid|in[-\s]?office|on[-\s]?site)$/i.test(place)
+        ? 'outside Pakistan'
+        : `in ${place}`;
+    return { verdict: 'not-eligible', reasons: [`Office or hybrid job ${where}, not in Pakistan`] };
+  }
   return { verdict: 'unclear', reasons: ['Location and work mode not stated'] };
 }
 
