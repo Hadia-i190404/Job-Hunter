@@ -13,7 +13,9 @@ function cli(home: string, ...args: string[]): { code: number | null; json: unkn
   return { code: result.status, json: JSON.parse(result.stdout) as unknown };
 }
 
-describe('store CLI via run.sh', () => {
+// These start real Node processes (the launcher probes several), which is slow on a
+// busy 2-core CI runner, so they get more than the default 5 s.
+describe('store CLI via run.sh', { timeout: 30_000 }, () => {
   it('goes from not set up to set up, paused and resumed', async () => {
     const home = await tempDir();
     expect(cli(home, 'status').json).toMatchObject({ setUp: false });
