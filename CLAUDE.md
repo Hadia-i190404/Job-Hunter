@@ -143,6 +143,7 @@ npm run check        # everything CI runs: typecheck, lint, format, tests+covera
 npm run test:quick   # tests without coverage
 npm run format       # fix formatting
 npm run privacy      # privacy guard on all tracked files
+npm run report:eligibility  # rule accuracy on tests/fixtures/labelled/eligibility.json
 ```
 
 The **pre-commit hook** runs privacy guard (staged files), typecheck, lint, format check

@@ -335,15 +335,16 @@ npm run check
 
 ### Checks
 
-| Check     | Command                | Enforces                                                                                                                                                     |
-| --------- | ---------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| Types     | `npm run typecheck`    | Strict TypeScript (`noUncheckedIndexedAccess`, `exactOptionalPropertyTypes`, …)                                                                              |
-| Lint      | `npm run lint`         | Type-aware typescript-eslint, size/complexity limits, banned imports (browser automation, paid AI SDKs, heavy utility libraries), no packages in plugin code |
-| Format    | `npm run format:check` | Prettier                                                                                                                                                     |
-| Tests     | `npm run test`         | Vitest, coverage ≥ 80% on `plugin/src/` and `tools/privacy/`                                                                                                 |
-| Dead code | `npm run knip`         | No unused files, exports or dependencies                                                                                                                     |
-| Privacy   | `npm run privacy`      | No emails, phone numbers, CNICs, home paths, CVs or data files in the repo                                                                                   |
-| **All**   | `npm run check`        | Everything above. CI runs this on every push and PR                                                                                                          |
+| Check              | Command                      | Enforces                                                                                                                                                     |
+| ------------------ | ---------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Types              | `npm run typecheck`          | Strict TypeScript (`noUncheckedIndexedAccess`, `exactOptionalPropertyTypes`, …)                                                                              |
+| Lint               | `npm run lint`               | Type-aware typescript-eslint, size/complexity limits, banned imports (browser automation, paid AI SDKs, heavy utility libraries), no packages in plugin code |
+| Format             | `npm run format:check`       | Prettier                                                                                                                                                     |
+| Tests              | `npm run test`               | Vitest, coverage ≥ 80% on `plugin/src/` and `tools/privacy/`                                                                                                 |
+| Dead code          | `npm run knip`               | No unused files, exports or dependencies                                                                                                                     |
+| Eligibility report | `npm run report:eligibility` | Rule accuracy on the 100 labelled jobs (not part of `check`)                                                                                                 |
+| Privacy            | `npm run privacy`            | No emails, phone numbers, CNICs, home paths, CVs or data files in the repo                                                                                   |
+| **All**            | `npm run check`              | Everything above. CI runs this on every push and PR                                                                                                          |
 
 The **pre-commit hook** runs the privacy guard on staged files, then typecheck, lint,
 format and tests. A failing check blocks the commit.
@@ -378,7 +379,7 @@ Phase **P0 (spike)**. See [tasks.md](specs/0001-job-hunter/tasks.md).
 - [x] Data folder and store (safe writes, recovery, upgrades, pause/resume)
 - [x] One job format: cities, work mode, salary in PKR and USD per month
 - [x] First three job sources (Remotive, Greenhouse career sites, Mustakbil.com)
-- [ ] Eligibility and scam rules
+- [x] Pakistan-eligibility, scam and duplicate rules (`npm run report:eligibility`)
 - [ ] CV read → tailored PDF/Word round trip
 - [ ] Career-site form filling (level B) test
 - [ ] Daily run and notification on Pro

@@ -52,10 +52,19 @@
       _Done when:_ each returns real jobs; parsers tested against saved fixtures.
       ✔ Live 21 Oct: Remotive 1 React job; Mustakbil 14 accountant jobs with PKR
       salaries; Greenhouse 73 GitLab engineering jobs. 164 tests.
-- [ ] `[core]` **T6 Dedup + rule eligibility + scam rules.** Plus a hand-labelled set of
-      100 remote jobs and 20 scam posts (`tests/fixtures/labelled/`, no personal data).
+- [x] `[core]` **T6 Dedup + rule eligibility + scam rules.** `pipeline/eligibility.ts` +
+      `places.ts` (60 countries, regions with how they relate to Pakistan, US-hours =
+      night-shift flag, contractor/EOR note, restriction sentences quoted as the reason);
+      `scam.ts` (weighted: a fee request alone is enough; one weak signal like WhatsApp
+      isn't); `dedup.ts` (company + title words + place; best copy wins); `store/jobs.ts`
+      (jobs.jsonl upsert, keeps first-seen, drops after 60 days unseen); `fetch.ts --save`.
+      Labelled sets in `tests/fixtures/labelled/` (100 real location fragments, 20 + 20
+      synthetic scam/ordinary posts). **Labels are Claude's: owner to review.**
       _Done when:_ report shows rule-only precision/recall; ambiguous ones listed for
-      the Claude step.
+      the Claude step. ✔ `npm run report:eligibility`: "eligible/likely" precision 100%,
+      "not eligible" recall 100%, 15/100 sent to Claude. Scams 20/20 caught, ordinary
+      20/20 passed. Live 21 Oct: 180 GitLab + Canonical engineering jobs → 56 open to
+      Pakistan, 90 ruled out with reasons, 34 for Claude. 223 tests.
 - [ ] `[core]` `[skill]` **T7 CV round trip.** Skill reads a CV → master profile (schema
       validated); render ATS-safe HTML → PDF (headless Chrome); Claude reads the PDF back as the
       ATS check; decide on DOCX (D14).

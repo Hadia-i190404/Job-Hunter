@@ -1,0 +1,207 @@
+{
+ "_about": "Synthetic posts written by Claude, 21 Oct 2026, mirroring common scam patterns in Pakistan (fees, WhatsApp-only, earn-from-home typing, investment schemes) and ordinary posts that must not be flagged. Not real postings.",
+ "scams": [
+  {
+   "title": "Data Entry Operator (Work from Home)",
+   "description": "Easy typing work from home. Earn up to Rs. 5000 daily. Registration fee Rs. 1500 only. Contact on WhatsApp.",
+   "company": ""
+  },
+  {
+   "title": "Online Earning Opportunity",
+   "description": "Students and housewives welcome! Online earning by ad posting. Pay Rs 2000 for your work kit and start today.",
+   "company": "Digital Earning Hub"
+  },
+  {
+   "title": "Office Assistant",
+   "description": "No experience required. Salary 350,000 per month. Limited seats, apply now before Friday.",
+   "company": "Confidential"
+  },
+  {
+   "title": "Customer Service Representative",
+   "description": "Join today. Processing fee of PKR 3000 is refundable after joining. Send CV on WhatsApp.",
+   "company": "Global Services"
+  },
+  {
+   "title": "Overseas Driver Job",
+   "description": "Visa fee and medical charges to be paid by candidate. Contact our agent on WhatsApp.",
+   "company": "Gulf Manpower"
+  },
+  {
+   "title": "Captcha Typing Job",
+   "description": "Captcha entry job. Daily earning guaranteed. Security deposit required.",
+   "company": ""
+  },
+  {
+   "title": "Business Partner",
+   "description": "Investment of Rs. 50,000 required. Earn 30% monthly returns from forex trading.",
+   "company": "Smart Invest"
+  },
+  {
+   "title": "Marketing Associate",
+   "description": "Network marketing opportunity. Refer 5 friends and earn bonuses. No experience required.",
+   "company": "Success Team"
+  },
+  {
+   "title": "Copy Paste Work",
+   "description": "Simple copy paste work, earn from home. Joining fee Rs 1000.",
+   "company": "Easy Jobs PK"
+  },
+  {
+   "title": "Receptionist",
+   "description": "No interview required. Salary up to 400,000. Hurry, only today!",
+   "company": "Private"
+  },
+  {
+   "title": "Crypto Trading Assistant",
+   "description": "Learn crypto trading and earn daily income. Training fee applies.",
+   "company": "CryptoPro"
+  },
+  {
+   "title": "Part Time Job for Students",
+   "description": "Earn money online in your free time. Registration charges Rs 500. WhatsApp us now.",
+   "company": "Student Jobs"
+  },
+  {
+   "title": "Airport Staff (Dubai)",
+   "description": "Visa processing fee Rs 80,000. Medical fee extra. Seats are limited.",
+   "company": "Dubai Careers"
+  },
+  {
+   "title": "Online Form Filling",
+   "description": "Form filling work from home. Refundable deposit Rs 2500.",
+   "company": "Form Works"
+  },
+  {
+   "title": "Amazon Virtual Assistant",
+   "description": "Pay $50 for training and verification fee, then earn $1000 weekly.",
+   "company": "VA Academy"
+  },
+  {
+   "title": "Telemarketing Agent",
+   "description": "No experience needed. Earn up to 500,000 per month from home. WhatsApp only.",
+   "company": ""
+  },
+  {
+   "title": "Teacher (Online)",
+   "description": "Admission fee for our teacher training program is Rs. 4000, after that you get students.",
+   "company": "Learn Online"
+  },
+  {
+   "title": "Delivery Rider",
+   "description": "Kit fee Rs 6000 to be paid before joining. Apply today before seats end.",
+   "company": "Fast Riders"
+  },
+  {
+   "title": "Bank Job",
+   "description": "Application fee Rs 1200 via EasyPaisa. Contact on WhatsApp for test date.",
+   "company": "Bank Recruitment Cell"
+  },
+  {
+   "title": "Freelance Writer",
+   "description": "Binary option promotion work. Invest required to activate account.",
+   "company": "WriteNow"
+  }
+ ],
+ "legit": [
+  {
+   "title": "Accountant",
+   "description": "Prepare monthly closing, reconciliations and payroll. 2 years experience. ACCA part-qualified preferred.",
+   "company": "Example Traders"
+  },
+  {
+   "title": "Senior React Developer",
+   "description": "Build our web app with React and TypeScript. 5+ years experience. Competitive salary and health insurance.",
+   "company": "Example Labs"
+  },
+  {
+   "title": "Customer Support Officer",
+   "description": "Handle customer calls in English and Urdu. Night shift for US clients. Pick and drop provided.",
+   "company": "Example BPO"
+  },
+  {
+   "title": "Sales Executive",
+   "description": "Field sales in Lahore. Fuel allowance and commission. Bachelor's degree required.",
+   "company": "Example Foods"
+  },
+  {
+   "title": "Data Entry Operator",
+   "description": "Enter invoices into our ERP. MS Excel required. Office in Karachi, 9 to 5.",
+   "company": "Example Logistics"
+  },
+  {
+   "title": "HR Officer",
+   "description": "Recruitment, onboarding and HR records. 3 years experience in HR.",
+   "company": "Example Textiles"
+  },
+  {
+   "title": "Graphic Designer",
+   "description": "Design social media posts and print material. Portfolio required.",
+   "company": "Example Media"
+  },
+  {
+   "title": "Teacher (Mathematics)",
+   "description": "Teach O-Level mathematics. B.Ed or MSc Math required.",
+   "company": "Example School"
+  },
+  {
+   "title": "Backend Engineer",
+   "description": "Go and PostgreSQL. We hire contractors worldwide through Deel. Apply on our careers page.",
+   "company": "ExampleCorp"
+  },
+  {
+   "title": "Marketing Associate",
+   "description": "Plan campaigns and track results. No experience required: fresh graduates welcome. Salary PKR 60,000.",
+   "company": "Example Agency"
+  },
+  {
+   "title": "Delivery Rider",
+   "description": "Own motorbike required. Fuel paid by company. Salary plus incentives.",
+   "company": "Example Express"
+  },
+  {
+   "title": "Office Assistant",
+   "description": "Filing, scheduling and admin support. Intermediate pass.",
+   "company": "Example Clinic"
+  },
+  {
+   "title": "Mobile App Developer",
+   "description": "Flutter developer, 2 years experience. Hybrid in Islamabad.",
+   "company": "Example Apps"
+  },
+  {
+   "title": "Nurse",
+   "description": "Registered nurse with PNC license for our hospital ward.",
+   "company": "Example Hospital"
+  },
+  {
+   "title": "Driver",
+   "description": "Company car driver with valid license. Overtime paid.",
+   "company": "Example Group"
+  },
+  {
+   "title": "Content Writer",
+   "description": "Write blog posts on technology. Apply via the form on our website.",
+   "company": "Example Publishing"
+  },
+  {
+   "title": "Recovery Officer",
+   "description": "Bank recovery officer for Faisalabad branch. Bike required.",
+   "company": "Example Bank"
+  },
+  {
+   "title": "Chef",
+   "description": "Continental chef for our restaurant. 3 years experience.",
+   "company": "Example Restaurant"
+  },
+  {
+   "title": "Civil Engineer",
+   "description": "Site engineer for construction projects. PEC registered.",
+   "company": "Example Builders"
+  },
+  {
+   "title": "Call Centre Agent",
+   "description": "Inbound calls. Training provided. There is no registration fee. Apply on our website or WhatsApp us your questions.",
+   "company": "Example Contact Centre"
+  }
+ ]
+}

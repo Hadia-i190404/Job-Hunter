@@ -1,0 +1,505 @@
+{
+ "_about": "Location fields and requirement sentences from public job feeds (Remote OK, Himalayas, Jobicy, Working Nomads, Remotive, Greenhouse boards), 21 Oct 2026, plus a few Pakistan-specific cases the feeds lacked (marked by mentioning Pakistan, a Pakistani city or UTC+5). Only short fragments, never whole postings. Labelled for 'can someone in Pakistan take this?' by Claude, for the owner to review. eligible/likely = yes; unclear = needs a closer look; not-eligible = no.",
+ "jobs": [
+  {
+   "location": "Worldwide",
+   "description": "",
+   "label": "eligible"
+  },
+  {
+   "location": "Global",
+   "description": "",
+   "label": "eligible"
+  },
+  {
+   "location": "Anywhere in the world",
+   "description": "",
+   "label": "eligible"
+  },
+  {
+   "location": "Remote",
+   "description": "We hire globally and work across multiple countries and time zones.",
+   "label": "eligible"
+  },
+  {
+   "location": "Home based - Worldwide",
+   "description": "",
+   "label": "eligible"
+  },
+  {
+   "location": "Remote; applicants in: Worldwide",
+   "description": "",
+   "label": "eligible"
+  },
+  {
+   "location": "Remote",
+   "description": "Location: we have remote roles open in every time zone.",
+   "label": "eligible"
+  },
+  {
+   "location": "Remote - Pakistan",
+   "description": "",
+   "label": "eligible"
+  },
+  {
+   "location": "Remote; applicants in: Pakistan, India, Bangladesh",
+   "description": "",
+   "label": "eligible"
+  },
+  {
+   "location": "Remote (Pakistan / UAE)",
+   "description": "",
+   "label": "eligible"
+  },
+  {
+   "location": "Remote, Worldwide",
+   "description": "This is a freelance, independent contractor position.",
+   "label": "eligible"
+  },
+  {
+   "location": "Home based - Worldwide",
+   "description": "Location: Worldwide - home based, except in locations where we have an office, such as London, Taipei and Beijing.",
+   "label": "eligible"
+  },
+  {
+   "location": "Remote, anywhere",
+   "description": "",
+   "label": "eligible"
+  },
+  {
+   "location": "Remote; applicants in: Europe, USA, Canada, APAC",
+   "description": "",
+   "label": "likely"
+  },
+  {
+   "location": "Home Based - APAC",
+   "description": "",
+   "label": "likely"
+  },
+  {
+   "location": "Remote",
+   "description": "Location: This team is based in the APAC region, these remote roles can be filled from anywhere in APAC time zones.",
+   "label": "likely"
+  },
+  {
+   "location": "EMEA or APAC time zones only",
+   "description": "",
+   "label": "likely"
+  },
+  {
+   "location": "Remote",
+   "description": "We are specifically looking for experienced professionals based in EMEA and APAC time zones.",
+   "label": "likely"
+  },
+  {
+   "location": "Remote, Asia",
+   "description": "",
+   "label": "likely"
+  },
+  {
+   "location": "Remote (UTC+5)",
+   "description": "",
+   "label": "likely"
+  },
+  {
+   "location": "Europe, LATAM, APAC, the U.S., Canada",
+   "description": "",
+   "label": "likely"
+  },
+  {
+   "location": "Home Based - Americas; Home Based - APAC; Home based - EMEA",
+   "description": "",
+   "label": "likely"
+  },
+  {
+   "location": "Home based - EMEA",
+   "description": "",
+   "label": "unclear"
+  },
+  {
+   "location": "EMEA",
+   "description": "",
+   "label": "unclear"
+  },
+  {
+   "location": "Remote",
+   "description": "Location: This role can be held anywhere in EMEA time zones.",
+   "label": "unclear"
+  },
+  {
+   "location": "Remote",
+   "description": "Location: This role can be filled in European, Middle East and African time zones.",
+   "label": "unclear"
+  },
+  {
+   "location": "Remote, MENA",
+   "description": "",
+   "label": "unclear"
+  },
+  {
+   "location": "Time zone: CET (+/- 3 hours)",
+   "description": "",
+   "label": "unclear"
+  },
+  {
+   "location": "CET (+/- 3 hours)",
+   "description": "",
+   "label": "unclear"
+  },
+  {
+   "location": "Remote",
+   "description": "",
+   "label": "unclear"
+  },
+  {
+   "location": "Remote",
+   "description": "This role offers flexibility (your time zone) and remote participation.",
+   "label": "unclear"
+  },
+  {
+   "location": "Remoto",
+   "description": "",
+   "label": "unclear"
+  },
+  {
+   "location": "Home based - EMEA; Office Based - London, UK",
+   "description": "",
+   "label": "unclear"
+  },
+  {
+   "location": "Remote",
+   "description": "Location: This is a remote role based in the EMEA region.",
+   "label": "unclear"
+  },
+  {
+   "location": "USA",
+   "description": "",
+   "label": "not-eligible"
+  },
+  {
+   "location": "Canada",
+   "description": "",
+   "label": "not-eligible"
+  },
+  {
+   "location": "Canada, USA",
+   "description": "",
+   "label": "not-eligible"
+  },
+  {
+   "location": "United States",
+   "description": "",
+   "label": "not-eligible"
+  },
+  {
+   "location": "Remote - US",
+   "description": "",
+   "label": "not-eligible"
+  },
+  {
+   "location": "Remote, USA Only",
+   "description": "",
+   "label": "not-eligible"
+  },
+  {
+   "location": "Remote UK",
+   "description": "",
+   "label": "not-eligible"
+  },
+  {
+   "location": "United Kingdom",
+   "description": "",
+   "label": "not-eligible"
+  },
+  {
+   "location": "LATAM",
+   "description": "",
+   "label": "not-eligible"
+  },
+  {
+   "location": "Brazil",
+   "description": "",
+   "label": "not-eligible"
+  },
+  {
+   "location": "New Zealand",
+   "description": "",
+   "label": "not-eligible"
+  },
+  {
+   "location": "Remote, Canada; Remote, United States",
+   "description": "",
+   "label": "not-eligible"
+  },
+  {
+   "location": "Remote, United States",
+   "description": "",
+   "label": "not-eligible"
+  },
+  {
+   "location": "Remote, Germany",
+   "description": "",
+   "label": "not-eligible"
+  },
+  {
+   "location": "Remote, Poland",
+   "description": "",
+   "label": "not-eligible"
+  },
+  {
+   "location": "Remote, Canada; Remote, Poland; Remote, United Kingdom",
+   "description": "",
+   "label": "not-eligible"
+  },
+  {
+   "location": "Remote Ireland; Remote, United Kingdom",
+   "description": "",
+   "label": "not-eligible"
+  },
+  {
+   "location": "Remote, Japan",
+   "description": "",
+   "label": "not-eligible"
+  },
+  {
+   "location": "Remote, Singapore",
+   "description": "",
+   "label": "not-eligible"
+  },
+  {
+   "location": "Remote, Brazil; Remote, Mexico; Remote, United States",
+   "description": "",
+   "label": "not-eligible"
+  },
+  {
+   "location": "Remote, North America",
+   "description": "",
+   "label": "not-eligible"
+  },
+  {
+   "location": "Remote, Australia; Remote, Singapore",
+   "description": "",
+   "label": "not-eligible"
+  },
+  {
+   "location": "Home Based - Americas",
+   "description": "",
+   "label": "not-eligible"
+  },
+  {
+   "location": "Home Based - Americas; Home based - EMEA",
+   "description": "",
+   "label": "unclear"
+  },
+  {
+   "location": "USA, Canada, Ireland or UK only",
+   "description": "",
+   "label": "not-eligible"
+  },
+  {
+   "location": "EU, US, Canada, UK, Australia, Singapore, Ireland, Norway, Switzerland, Iceland, and Mexico",
+   "description": "",
+   "label": "not-eligible"
+  },
+  {
+   "location": "North America",
+   "description": "",
+   "label": "not-eligible"
+  },
+  {
+   "location": "Anywhere in India",
+   "description": "",
+   "label": "not-eligible"
+  },
+  {
+   "location": "Japan - Remote",
+   "description": "",
+   "label": "not-eligible"
+  },
+  {
+   "location": "Philippines",
+   "description": "",
+   "label": "not-eligible"
+  },
+  {
+   "location": "Vietnam",
+   "description": "",
+   "label": "not-eligible"
+  },
+  {
+   "location": "Sri Lanka",
+   "description": "",
+   "label": "not-eligible"
+  },
+  {
+   "location": "South Africa",
+   "description": "",
+   "label": "not-eligible"
+  },
+  {
+   "location": "UAE",
+   "description": "",
+   "label": "not-eligible"
+  },
+  {
+   "location": "EMEA, LATAM, Canada, USA",
+   "description": "",
+   "label": "unclear"
+  },
+  {
+   "location": "Remote",
+   "description": "Work from anywhere in the Philippines.",
+   "label": "not-eligible"
+  },
+  {
+   "location": "Remote",
+   "description": "Please note: This position is open to candidates based in the United Kingdom only.",
+   "label": "not-eligible"
+  },
+  {
+   "location": "Remote",
+   "description": "This position is 100% remote and will be based in the United States and/or Canada.",
+   "label": "not-eligible"
+  },
+  {
+   "location": "Remote",
+   "description": "Must be located in Japan and have full working rights in Japan.",
+   "label": "not-eligible"
+  },
+  {
+   "location": "Remote",
+   "description": "This is a remote position that can be located anywhere in the US or Canada.",
+   "label": "not-eligible"
+  },
+  {
+   "location": "Remote",
+   "description": "Benefits include: Work from anywhere in Canada and USA.",
+   "label": "not-eligible"
+  },
+  {
+   "location": "Remote",
+   "description": "This position is 100% remote and will be based in the UK, Ireland, Spain, and France.",
+   "label": "not-eligible"
+  },
+  {
+   "location": "Remote",
+   "description": "Candidates based in the United States or Canada can apply to this posting.",
+   "label": "not-eligible"
+  },
+  {
+   "location": "Remote",
+   "description": "Location Nearshore, based in Mexico or Brazil, remote-based delivery model.",
+   "label": "not-eligible"
+  },
+  {
+   "location": "Remote",
+   "description": "You must be authorized to work in the United States without sponsorship.",
+   "label": "not-eligible"
+  },
+  {
+   "location": "Remote - California",
+   "description": "",
+   "label": "not-eligible"
+  },
+  {
+   "location": "Remote, Spain",
+   "description": "",
+   "label": "not-eligible"
+  },
+  {
+   "location": "Select USA Remote Locations",
+   "description": "",
+   "label": "not-eligible"
+  },
+  {
+   "location": "Lahore (Hybrid)",
+   "description": "",
+   "label": "eligible"
+  },
+  {
+   "location": "Karachi, Pakistan",
+   "description": "",
+   "label": "eligible"
+  },
+  {
+   "location": "Islamabad, Pakistan (On-site)",
+   "description": "",
+   "label": "eligible"
+  },
+  {
+   "location": "Rawalpindi, Pakistan",
+   "description": "",
+   "label": "eligible"
+  },
+  {
+   "location": "Faisalabad",
+   "description": "",
+   "label": "eligible"
+  },
+  {
+   "location": "Office Based - Taipei, Taiwan",
+   "description": "",
+   "label": "not-eligible"
+  },
+  {
+   "location": "Office Based - London, UK",
+   "description": "",
+   "label": "not-eligible"
+  },
+  {
+   "location": "New York, NY; Pittsburgh, PA",
+   "description": "",
+   "label": "not-eligible"
+  },
+  {
+   "location": "Bangalore, India",
+   "description": "",
+   "label": "not-eligible"
+  },
+  {
+   "location": "Boston, MA",
+   "description": "",
+   "label": "not-eligible"
+  },
+  {
+   "location": "Berlin, Germany",
+   "description": "",
+   "label": "not-eligible"
+  },
+  {
+   "location": "Dubai, UAE",
+   "description": "",
+   "label": "not-eligible"
+  },
+  {
+   "location": "Tokyo, Japan",
+   "description": "",
+   "label": "not-eligible"
+  },
+  {
+   "location": "Pakistan",
+   "description": "",
+   "label": "likely"
+  },
+  {
+   "location": "Office Based - Toronto, Canada",
+   "description": "",
+   "label": "not-eligible"
+  },
+  {
+   "location": "Beijing, China",
+   "description": "",
+   "label": "not-eligible"
+  },
+  {
+   "location": "Seoul",
+   "description": "",
+   "label": "not-eligible"
+  },
+  {
+   "location": "Hyderabad, Telangana, India",
+   "description": "",
+   "label": "not-eligible"
+  }
+ ]
+}
