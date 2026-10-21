@@ -59,6 +59,45 @@ describe('apply CLI', { timeout: 60_000 }, () => {
     expect(apply(home, 'show', 'app-1').json).toMatchObject({ status: 'submitted' });
   });
 
+  it('gives a fill plan only for approved applications, leaving the CV and to-dos to the user', async () => {
+    const home = await tempDir();
+    await initDataFolder(home);
+    await addApplication(home, {
+      jobId: 'g:2',
+      searchId: 's',
+      jobTitle: 'X',
+      company: 'Y',
+      url: 'https://example.com/apply',
+      applyLevel: 'B',
+      cvPath: '/cv.pdf',
+      prepared: {
+        noAi: false,
+        answers: [
+          { question: 'First Name', answer: 'Ayesha', from: 'profile' },
+          { question: 'Resume/CV', answer: '/cv.pdf', from: 'profile' },
+          { question: 'I agree to the privacy notice', from: 'todo' },
+        ],
+        todo: ['Tick yourself: "I agree to the privacy notice"'],
+      },
+    });
+    expect(apply(home, 'plan', 'app-1').json).toEqual({
+      error: 'not-approved',
+      status: 'needs-you',
+    });
+    apply(home, 'status', 'app-1', 'approved');
+    expect(apply(home, 'plan', 'app-1').json).toEqual({
+      id: 'app-1',
+      url: 'https://example.com/apply',
+      fill: [{ field: 'First Name', value: 'Ayesha' }],
+      userDoes: [
+        'Attach your CV: /cv.pdf',
+        'Tick yourself: "I agree to the privacy notice"',
+        'Press Submit',
+      ],
+    });
+    expect(apply(home, 'plan', 'app-9').json).toEqual({ error: 'no such application' });
+  });
+
   it('keeps Claude out of no-AI forms and rejects bad input', async () => {
     const home = await tempDir();
     await initDataFolder(home);

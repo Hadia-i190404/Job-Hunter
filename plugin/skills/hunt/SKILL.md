@@ -1,6 +1,6 @@
 ---
 description: Run Job Hunter's daily hunt now - search every job source for the user's confirmed targets, rank what fits, and check the jobs the rules weren't sure about. Use when the user says "find me jobs", "run the hunt", or for the scheduled daily run.
-allowed-tools: Bash(sh ${CLAUDE_PLUGIN_ROOT}/scripts/run.sh ${CLAUDE_PLUGIN_ROOT}/scripts/hunt.ts *), Bash(sh ${CLAUDE_PLUGIN_ROOT}/scripts/run.sh ${CLAUDE_PLUGIN_ROOT}/scripts/store.ts status)
+allowed-tools: Read, Write(~/JobHunter/**), Bash(sh ${CLAUDE_PLUGIN_ROOT}/scripts/run.sh ${CLAUDE_PLUGIN_ROOT}/scripts/hunt.ts *), Bash(sh ${CLAUDE_PLUGIN_ROOT}/scripts/run.sh ${CLAUDE_PLUGIN_ROOT}/scripts/tailor.ts *), Bash(sh ${CLAUDE_PLUGIN_ROOT}/scripts/run.sh ${CLAUDE_PLUGIN_ROOT}/scripts/apply.ts prepare *), Bash(sh ${CLAUDE_PLUGIN_ROOT}/scripts/run.sh ${CLAUDE_PLUGIN_ROOT}/scripts/setup.ts gap *), Bash(sh ${CLAUDE_PLUGIN_ROOT}/scripts/run.sh ${CLAUDE_PLUGIN_ROOT}/scripts/store.ts status)
 ---
 
 # Job Hunter: daily hunt
@@ -28,10 +28,22 @@ Exit code 3 = Node.js too old.
 3. **Report** in a few lines: jobs seen, new, matched, strong fits, any source that was
    `broken` or `fallback` (one line each), then the top matches as a short list (title,
    company, where, fit, the main reason, link).
-4. Next step: "Tailored CVs and prepared applications come next" (S1.5). Until then,
-   offer to open any job.
+4. **Prepare the best ones** (D20): for the top `strong` and `good` items whose search
+   is in `review` mode (up to 5 a day on the `light` usage setting, 10 on `full`):
+   follow the `/job-hunter:tailor` skill to make a tailored CV, then run
+   `apply.ts prepare <jobId> <pdf>`. Searches in `shortlist` mode are only listed.
+5. End with one line for the notification: **"N applications ready, M things need you.
+   Run /job-hunter:review."**
 
 ## Rules
 
 - Never invent a verdict without reading the job. Quote the deciding words.
-- Don't apply, message or fill anything here. The hunt only finds and ranks.
+- Don't submit, message or fill anything on a website here. The hunt finds, ranks and
+  prepares; submitting happens only in `/job-hunter:review`, with the user's approval.
+
+## Say only what Job Hunter does
+
+Describe only what these instructions and the scripts actually do. Never promise a
+feature, schedule, limit or behaviour that isn't written here (e.g. "your first 5
+applications will come one by one" is not a thing Job Hunter does). If the user asks
+about something that isn't here, say it isn't built yet.

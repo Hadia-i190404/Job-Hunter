@@ -60,6 +60,10 @@ to users.
   installed on users' machines. **No `version` field**: each commit on `main` counts
   as an update (spec D10). `npm run plugin:validate` checks both manifests and every
   skill. The "no version" warning is expected.
+- **Skills say only what Job Hunter does.** Each SKILL.md ends with the "Say only what
+  Job Hunter does" rule, and user-facing wrap-up lines are written out word for word. A
+  session once promised "your first 5 applications will come one by one", which nothing
+  implements (22 Oct). Keep the rule in every new skill.
 - **Skills** live in `plugin/skills/<name>/SKILL.md` and become `/job-hunter:<name>`. Each
   needs a `description` that says when to use it, and an `allowed-tools` list kept as
   narrow as the skill needs. Bundled scripts are referenced as

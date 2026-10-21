@@ -64,3 +64,10 @@ Run `render`:
 
 Finally **read the PDF back** with Read: the name, each role's title, company and dates,
 and every bullet must come through cleanly.
+
+## Say only what Job Hunter does
+
+Describe only what these instructions and the scripts actually do. Never promise a
+feature, schedule, limit or behaviour that isn't written here (e.g. "your first 5
+applications will come one by one" is not a thing Job Hunter does). If the user asks
+about something that isn't here, say it isn't built yet.

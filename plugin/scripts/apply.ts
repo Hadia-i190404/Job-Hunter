@@ -5,6 +5,7 @@
 //   show <appId>                           one application in full
 //   answer <appId> <index> <user|claude> <text…>   fill one question
 //   status <appId> <approved|submitted|skipped|failed> [note…]
+//   plan <appId>                           what to fill in the browser, field by field
 import {
   addApplication,
   setAnswer,
@@ -46,6 +47,8 @@ async function run(): Promise<unknown> {
       return answer(args[0], Number(args[1]), args[2], args.slice(3).join(' '));
     case 'status':
       return status(args[0], args[1], args.slice(2).join(' '));
+    case 'plan':
+      return plan(args[0]);
     default:
       return { error: 'usage', commands: 'prepare | list | show | answer | status' };
   }
@@ -103,6 +106,26 @@ async function prepareFor(
   const [board = '', id = ''] = job.sourceId.split(/-(?=\d+$)/);
   const questions = await greenhouseQuestions(createHttpClient(), board, id);
   return questions === undefined ? undefined : prepareAnswers(questions, profile, bank, cvPath);
+}
+
+// The fill plan for an approved application: only answered, non-file fields. The CV file,
+// declarations and anything left to the user are listed separately for them (D19, D21).
+async function plan(id: string | undefined): Promise<unknown> {
+  const app = (await loadDoc(dir, APPLICATIONS)).applications.find((a) => a.id === id);
+  if (app === undefined) return { error: 'no such application' };
+  if (app.status !== 'approved') return { error: 'not-approved', status: app.status };
+  return {
+    id: app.id,
+    url: app.url,
+    fill: app.answers
+      .filter((a) => a.from !== 'todo' && a.answer !== undefined && a.answer !== app.cvPath)
+      .map((a) => ({ field: a.question, value: a.answer })),
+    userDoes: [
+      ...(app.cvPath === undefined ? [] : [`Attach your CV: ${app.cvPath}`]),
+      ...app.todo,
+      'Press Submit',
+    ],
+  };
 }
 
 async function list(): Promise<unknown> {

@@ -99,11 +99,11 @@ Summarise in a short block: who they are (one line), each search, how many answe
 saved, what's still unanswered, gaps added. Ask: **"Shall I start hunting with this?"**
 Yes → `setup.ts confirm`. Edits → fix, save, read back again.
 
-## 6. Daily run
+## 6. What happens next
 
-Tell them: Job Hunter will search every morning at 09:00 and send one notification
-("N applications ready, M questions"), and they approve each day's batch in one step.
-(The scheduled run arrives in S1.8; until then they run `/job-hunter:hunt`.)
+Say exactly this, nothing more: "You're set up. Run `/job-hunter:hunt` to find, rank and
+prepare applications, then `/job-hunter:review` to answer what's left, approve the batch
+and submit. (The automatic 09:00 daily run isn't built yet.)"
 
 ## Rules
 
@@ -111,3 +111,10 @@ Tell them: Job Hunter will search every morning at 09:00 and send one notificati
 - Nothing goes into the profile without their approval; drafts wait in drafts.
 - Never invent target roles, skills, experience or answers.
 - Don't repeat CNIC, phone or address back in chat.
+
+## Say only what Job Hunter does
+
+Describe only what these instructions and the scripts actually do. Never promise a
+feature, schedule, limit or behaviour that isn't written here (e.g. "your first 5
+applications will come one by one" is not a thing Job Hunter does). If the user asks
+about something that isn't here, say it isn't built yet.

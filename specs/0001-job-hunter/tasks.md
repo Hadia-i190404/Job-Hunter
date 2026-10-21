@@ -132,6 +132,12 @@ real one through Job Hunter.
       no-AI spotted. 295 tests.
 - [ ] `[skill]` **S1.7 Review & apply** (`/job-hunter:review`): today's batch, one
       approval (D21), then fill + submit each approved Greenhouse form in the browser.
+      ✔ Built: review skill (batch + grouped to-dos, answers reused via the answer bank,
+      one named approval, browser fill from `apply.ts plan`, user attaches CV, ticks
+      declarations and presses Submit since the built-in browser can't attach files,
+      confirmation recorded); hunt now tailors + prepares the top 5/10 and ends with the
+      notification line. Every skill now says only what Job Hunter does.
+      ⏳ Done when the owner submits one real application through it.
 - [ ] `[skill]` **S1.8 Daily run + notification.** Scheduled task at 09:00 PKT runs the
       hunt and notifies "N ready, M questions".
 - [ ] `[repo]` **S1.9 Slice review.** Walk the whole flow with the owner; fix what hurts.
