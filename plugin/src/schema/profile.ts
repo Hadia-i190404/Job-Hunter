@@ -1,6 +1,6 @@
 // The master profile: the only source of facts for every CV, message and answer (spec R1,
 // R5). Every item has an id so a tailored CV can cite where each line came from (P2).
-import { arrayOf, number, object, optional, string, type Infer } from './core.ts';
+import { arrayOf, isoDate, number, object, oneOf, optional, string, type Infer } from './core.ts';
 
 const id = string({ pattern: /^[a-z][a-z0-9-]{0,40}$/, hint: 'an id like "exp-1"' });
 // "2024-03", or "present" for a current role.
@@ -10,7 +10,12 @@ const month = string({
 });
 const text = string({ minLength: 1 });
 
-const bullet = object({ id, text });
+// Where a fact came from (D16): read from the CV, or stated and approved by the user.
+// Schema v2; v1 profiles are migrated with every entry marked 'cv'.
+const source = oneOf(['cv', 'user'] as const);
+const provenance = { source, addedAt: optional(isoDate()) };
+
+const bullet = object({ id, text, ...provenance });
 
 export const profileSchema = object({
   name: text,
@@ -43,13 +48,14 @@ export const profileSchema = object({
       details: optional(string()),
     }),
   ),
-  skills: arrayOf(object({ id, name: text })),
+  skills: arrayOf(object({ id, name: text, ...provenance })),
   certifications: arrayOf(
     object({
       id,
       name: text,
       issuer: optional(string()),
       year: optional(number({ integer: true, min: 1950, max: 2100 })),
+      ...provenance,
     }),
   ),
   languages: arrayOf(object({ name: text, level: optional(string()) })),

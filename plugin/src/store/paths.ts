@@ -18,6 +18,9 @@ export const FILES = {
   jobs: 'jobs.jsonl',
   assessments: 'assessments.jsonl',
   pipeline: 'pipeline.json',
+  gaps: 'gaps.json',
+  drafts: 'profile.drafts.json',
+  applications: 'applications.json',
   cards: 'cards.json',
 } as const;
 

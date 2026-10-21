@@ -3,7 +3,8 @@
 // rewritten after each one so an interrupted upgrade resumes where it stopped.
 import { join } from 'node:path';
 import { metaSchema, type Meta } from '../schema/files.ts';
-import { DataFileError, readJson, writeJsonAtomic } from './json-file.ts';
+import { readFile } from 'node:fs/promises';
+import { DataFileError, isMissing, readJson, writeJsonAtomic } from './json-file.ts';
 import { logEvent } from './log.ts';
 import { FILES } from './paths.ts';
 
@@ -13,10 +14,12 @@ export interface Migration {
   up: (dir: string) => Promise<void>;
 }
 
-export const CURRENT_SCHEMA_VERSION = 1;
+export const CURRENT_SCHEMA_VERSION = 2;
 
 // Append new migrations here; never edit or reorder a released one.
-const MIGRATIONS: readonly Migration[] = [];
+const MIGRATIONS: readonly Migration[] = [
+  { to: 2, describe: 'profile: mark every entry as read from the CV', up: tagProfileSources },
+];
 
 export type MigrateResult =
   | { status: 'not-set-up' }
@@ -68,4 +71,35 @@ function pendingMigrations(
     throw new Error(`Missing migration between schema ${String(from)} and ${String(target)}`);
   }
   return pending;
+}
+
+// v1 → v2 (Slice 1, D16): entries gain `source`. Everything already in a v1 profile came
+// through CV import, so it is marked 'cv'; the setup interview's profile check reviews it.
+async function tagProfileSources(dir: string): Promise<void> {
+  const path = join(dir, FILES.profile);
+  let profile: Record<string, unknown>;
+  try {
+    profile = JSON.parse(await readFile(path, 'utf8')) as Record<string, unknown>;
+  } catch (error) {
+    if (isMissing(error)) return;
+    throw error;
+  }
+  const tag = (entry: unknown): unknown =>
+    typeof entry === 'object' && entry !== null && !('source' in entry)
+      ? { ...entry, source: 'cv' }
+      : entry;
+  const tagBullets = (item: unknown): unknown => {
+    if (typeof item !== 'object' || item === null) return item;
+    const bullets = (item as { bullets?: unknown }).bullets;
+    return Array.isArray(bullets) ? { ...item, bullets: bullets.map(tag) } : item;
+  };
+  const list = (key: string): unknown[] =>
+    Array.isArray(profile[key]) ? (profile[key] as unknown[]) : [];
+  await writeJsonAtomic(path, {
+    ...profile,
+    experience: list('experience').map(tagBullets),
+    projects: list('projects').map(tagBullets),
+    skills: list('skills').map(tag),
+    certifications: list('certifications').map(tag),
+  });
 }

@@ -55,21 +55,26 @@ Exit code 3 means Node.js is too old: tell the user to install the LTS from node
          "details": "optional"
        }
      ],
-     "skills": [{ "id": "skill-1", "name": "" }],
-     "certifications": [{ "id": "cert-1", "name": "", "issuer": "optional", "year": 2024 }],
+     "skills": [{ "id": "skill-1", "name": "", "source": "cv" }],
+     "certifications": [
+       { "id": "cert-1", "name": "", "issuer": "optional", "year": 2024, "source": "cv" }
+     ],
      "languages": [{ "name": "", "level": "optional" }],
      "projects": [
        {
          "id": "proj-1",
          "name": "",
          "description": "optional",
-         "bullets": [{ "id": "proj-1-b1", "text": "" }]
+         "bullets": [{ "id": "proj-1-b1", "text": "", "source": "cv" }]
        }
      ]
    }
    ```
    Leave optional fields out rather than empty. Ids are lowercase, unique across the
-   whole profile, and never reused for a different item later.
+   whole profile, and never reused for a different item later. Everything read from the
+   CV gets `"source": "cv"`. **Never add anything the CV doesn't say**: something you
+   think is missing or learned elsewhere (code, notes, LinkedIn) is a _draft_ for the
+   user to approve in setup, never a profile entry (D16).
 4. **Rules for extraction. These are not negotiable:**
    - **Copy facts, never improve them.** Keep numbers, titles, dates, employers and
      degrees exactly as written. Fix only obvious typos and spacing. Don't add skills

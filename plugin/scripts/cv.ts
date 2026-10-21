@@ -8,7 +8,7 @@ import { join } from 'node:path';
 import { findChrome, printToPdf } from '../src/cv/chrome.ts';
 import { docxText } from '../src/cv/docx-text.ts';
 import { renderCvHtml } from '../src/cv/render.ts';
-import { readMeta } from '../src/store/migrations.ts';
+import { openDataFolder } from '../src/store/folder.ts';
 import { dataDir } from '../src/store/paths.ts';
 import { checkProfile, loadProfile, saveProfile } from '../src/store/profile.ts';
 
@@ -16,7 +16,8 @@ const dir = dataDir();
 const [command = '', arg] = process.argv.slice(2);
 
 async function run(): Promise<unknown> {
-  if ((await readMeta(dir)) === undefined) return { error: 'not-set-up' };
+  const opened = await openDataFolder(dir);
+  if (opened !== 'ok') return { error: opened };
   switch (command) {
     case 'docx-text':
       return arg === undefined ? usage() : { text: docxText(await readFile(arg)) };

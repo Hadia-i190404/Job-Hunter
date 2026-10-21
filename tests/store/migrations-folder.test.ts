@@ -111,8 +111,21 @@ describe('folderStatus', () => {
     const dir = await tempDir();
     await initDataFolder(dir);
     const status = await folderStatus(dir);
-    expect(status).toMatchObject({ setUp: true, schemaVersion: 1, paused: false, problems: [] });
+    expect(status).toMatchObject({
+      setUp: true,
+      schemaVersion: CURRENT_SCHEMA_VERSION,
+      paused: false,
+      problems: [],
+    });
     expect(status.files).toMatchObject({ meta: true, settings: true, log: true, profile: false });
+    expect(status.loop).toEqual({
+      searches: 0,
+      searchesConfirmed: false,
+      answers: 0,
+      gapsPending: 0,
+      drafts: 0,
+      applicationsWaiting: 0,
+    });
   });
 
   it('reports damaged files instead of failing', async () => {
@@ -128,5 +141,14 @@ describe('folderStatus', () => {
     expect((await folderStatus(dir)).problems).toEqual([
       'meta.json is damaged and has no good backup',
     ]);
+  });
+
+  it('reports a damaged loop file without failing', async () => {
+    const dir = await tempDir();
+    await initDataFolder(dir);
+    await writeFile(join(dir, 'gaps.json'), 'oops');
+    const status = await folderStatus(dir);
+    expect(status.loop).toBeUndefined();
+    expect(status.problems).toEqual(['gaps.json is damaged and has no good backup']);
   });
 });

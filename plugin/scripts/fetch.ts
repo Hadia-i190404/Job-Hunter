@@ -9,7 +9,7 @@ import { groupDuplicates } from '../src/pipeline/dedup.ts';
 import { assessEligibility } from '../src/pipeline/eligibility.ts';
 import { normalizeJob } from '../src/pipeline/normalize.ts';
 import { checkScam } from '../src/pipeline/scam.ts';
-import { readMeta } from '../src/store/migrations.ts';
+import { openDataFolder } from '../src/store/folder.ts';
 import { loadJobs, saveJobs } from '../src/store/jobs.ts';
 import { dataDir } from '../src/store/paths.ts';
 
@@ -25,8 +25,9 @@ const { values } = parseArgs({
 });
 
 const dir = dataDir();
-if (values.save && (await readMeta(dir)) === undefined) {
-  console.log(JSON.stringify({ error: 'not-set-up', hint: 'run store.ts init first' }));
+const opened = values.save ? await openDataFolder(dir) : 'ok';
+if (opened !== 'ok') {
+  console.log(JSON.stringify({ error: opened, hint: 'run store.ts init first' }));
   process.exit(1);
 }
 const known = values.save ? await loadJobs(dir) : new Map();

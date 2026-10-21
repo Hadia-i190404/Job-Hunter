@@ -29,8 +29,10 @@ describe('checkProfile', () => {
     const bad = structuredClone(fake) as { experience: { start: string; id: string }[] };
     bad.experience[0] = { ...bad.experience[0], start: '2023' } as never;
     expect(checkProfile(bad)).toMatchObject({ ok: false });
-    const dup = structuredClone(fake) as { skills: { id: string; name?: string }[] };
-    dup.skills[1] = { id: 'skill-1', name: 'Excel' };
+    const dup = structuredClone(fake) as {
+      skills: { id: string; name?: string; source?: string }[];
+    };
+    dup.skills[1] = { id: 'skill-1', name: 'Excel', source: 'cv' };
     expect(checkProfile(dup)).toEqual({ ok: false, errors: ['ids used twice: skill-1'] });
   });
 });

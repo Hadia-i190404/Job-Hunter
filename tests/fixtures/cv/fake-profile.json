@@ -1,7 +1,13 @@
 {
   "name": "Ayesha Example",
   "headline": "Accountant | ACCA Part-Qualified",
-  "contact": { "email": "ayesha@example.com", "city": "Lahore, Pakistan", "links": ["linkedin.com/in/ayesha-example"] },
+  "contact": {
+    "email": "ayesha@example.com",
+    "city": "Lahore, Pakistan",
+    "links": [
+      "linkedin.com/in/ayesha-example"
+    ]
+  },
   "summary": "Accountant with 3 years of experience in bookkeeping, monthly closing and payroll for trading and construction companies.",
   "experience": [
     {
@@ -12,8 +18,16 @@
       "start": "2023-02",
       "end": "present",
       "bullets": [
-        { "id": "exp-1-b1", "text": "Prepare monthly closing and bank reconciliations for 4 bank accounts." },
-        { "id": "exp-1-b2", "text": "Run payroll for 60 staff in QuickBooks." }
+        {
+          "id": "exp-1-b1",
+          "text": "Prepare monthly closing and bank reconciliations for 4 bank accounts.",
+          "source": "cv"
+        },
+        {
+          "id": "exp-1-b2",
+          "text": "Run payroll for 60 staff in QuickBooks.",
+          "source": "cv"
+        }
       ]
     },
     {
@@ -22,18 +36,59 @@
       "company": "Example Builders",
       "start": "2021-07",
       "end": "2023-01",
-      "bullets": [{ "id": "exp-2-b1", "text": "Tracked project expenses and vendor payments." }]
+      "bullets": [
+        {
+          "id": "exp-2-b1",
+          "text": "Tracked project expenses and vendor payments.",
+          "source": "cv"
+        }
+      ]
     }
   ],
   "education": [
-    { "id": "edu-1", "degree": "B.Com (Hons)", "institution": "University of the Punjab", "start": "2017-09", "end": "2021-06" }
+    {
+      "id": "edu-1",
+      "degree": "B.Com (Hons)",
+      "institution": "University of the Punjab",
+      "start": "2017-09",
+      "end": "2021-06"
+    }
   ],
   "skills": [
-    { "id": "skill-1", "name": "QuickBooks" },
-    { "id": "skill-2", "name": "MS Excel" },
-    { "id": "skill-3", "name": "Payroll" }
+    {
+      "id": "skill-1",
+      "name": "QuickBooks",
+      "source": "cv"
+    },
+    {
+      "id": "skill-2",
+      "name": "MS Excel",
+      "source": "cv"
+    },
+    {
+      "id": "skill-3",
+      "name": "Payroll",
+      "source": "cv"
+    }
   ],
-  "certifications": [{ "id": "cert-1", "name": "ACCA (6 papers passed)", "issuer": "ACCA", "year": 2024 }],
-  "languages": [{ "name": "English", "level": "Fluent" }, { "name": "Urdu", "level": "Native" }],
+  "certifications": [
+    {
+      "id": "cert-1",
+      "name": "ACCA (6 papers passed)",
+      "issuer": "ACCA",
+      "year": 2024,
+      "source": "cv"
+    }
+  ],
+  "languages": [
+    {
+      "name": "English",
+      "level": "Fluent"
+    },
+    {
+      "name": "Urdu",
+      "level": "Native"
+    }
+  ],
   "projects": []
 }

@@ -87,10 +87,13 @@
 Done when: the owner gets prepared, tailored Greenhouse applications daily and submits a
 real one through Job Hunter.
 
-- [ ] `[core]` **S1.1 Data for the loop.** Schemas + store for `searches.json` (targets
+- [x] `[core]` **S1.1 Data for the loop.** Schemas + store for `searches.json` (targets
       and the confirm gate), `answers.json` (answer bank), `gaps.json`, `applications.json`
       (prepared → approved → submitted / skipped), and profile v2 (`source`, `addedAt`,
-      drafts in `profile.drafts.json`) with its migration.
+      drafts in `profile.drafts.json`) with its migration. ✔ `schema/loop.ts`,
+      `store/doc.ts` (validated load/save), `store/loop.ts` (gate re-opens on any edit,
+      answers keyed once), migration v1→v2 tags entries `cv`, `openDataFolder` runs
+      migrations before every writing command, status reports loop counts. 244 tests.
 - [ ] `[skill]` **S1.2 Setup interview** (`/job-hunter:setup`): CV (reuses cv), profile
       check incl. drafts, targets, recurring screening answers, gap questions, read-back + confirm, schedule offer. Asked once (D20).
 - [ ] `[core]` **S1.3 Matching.** Score jobs against the user's searches (titles and
