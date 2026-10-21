@@ -136,6 +136,21 @@ directly. These are the best jobs to apply to (level B, real employer, no middle
    Due follow-ups become cards.
 6. Script: rebuild dashboard data; desktop notification with counts.
 
+## Gap questions (D16, R5b)
+
+- **Profile change:** every experience/project bullet, skill and certification gets
+  `source: 'cv' | 'user'` and `addedAt`. Schema version 2 with a migration that tags
+  existing entries `source: 'cv'` (T3's migration mechanism).
+- **Gap detection:** Claude compares the job's or search's requirements with the profile
+  and lists missing areas as short labels ("client-facing work", "on-site deployment").
+- **`gaps.json`** in the data folder records each area asked about and the outcome
+  (`added` with entry ids, or `none`), so the same gap isn't asked twice.
+- **Flow (in the tailor and setup skills):** ask with concrete prompts → draft entries
+  from the user's words → show each for approve/edit/reject → save approved via
+  `cv.ts save-profile` (same validation) → record in `gaps.json`.
+- **Honesty check** (below) accepts `source: 'user'` entries like any other: they are
+  facts the user stated and approved.
+
 ## Tailoring & honesty check (`/job-hunter:tailor`)
 
 1. Claude writes the tailored CV as structured JSON, **each bullet citing the profile

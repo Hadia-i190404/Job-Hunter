@@ -9,23 +9,24 @@
 
 ## Decisions so far (20 Oct 2026)
 
-| #   | Decision                                                                                                                                                                                                                                                                                           |
-| --- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| D1  | Name: **Job Hunter**. Personal project, own GitHub repo, no link to any employer account or email.                                                                                                                                                                                                 |
-| D2  | Users: the owner and a few friends, using it for real job hunts. Treat them as real users.                                                                                                                                                                                                         |
-| D3  | **Hybrid actions.** Anything on a site where the user is logged in (LinkedIn, Indeed, Rozee, …) is _prepared_ by the agent and _performed_ by the user: the agent notifies, hands over ready-to-paste text, the right file and a direct link; the user clicks. This keeps accounts safe from bans. |
-| D4  | **No running cost** beyond each user's Claude plan. No servers, no paid APIs, no hosting. It runs where the user already is: the Claude desktop app.                                                                                                                                               |
-| D5  | **No platform is cut** from the first list.                                                                                                                                                                                                                                                        |
-| D6  | **Focus:** on-site and hybrid jobs **in Pakistan**, and **remote jobs from any country** that a person in Pakistan can actually take. Relocating abroad for an on-site job is not a v1 track.                                                                                                      |
-| D7  | English only.                                                                                                                                                                                                                                                                                      |
-| D8  | Local Pakistani CV extras (photo, CNIC, father's name, DOB, marital status) are not used in any CV. If a base CV has them, they are dropped.                                                                                                                                                       |
-| D9  | The owner reviews every step (spec → plan → tasks → each change).                                                                                                                                                                                                                                  |
-| D10 | Each friend uses **their own Claude account, Pro or higher** (Claude Code is not on the Free plan; sharing one login breaks Anthropic's terms). They install the plugin from the GitHub repo once and get the owner's updates automatically.                                                       |
-| D11 | Works on **Pro**: a "light" usage setting (fewer jobs judged by Claude per day, more left to the free scripts) is the default; Max users can raise it.                                                                                                                                             |
-| D12 | Daily run 9:00 PKT + catch-up when the app opens.                                                                                                                                                                                                                                                  |
-| D13 | Group-shared items (added sites, employer learnings, scam reports, company watch-list) live in the GitHub repo's `plugin/shared/` folder. Code on GitHub is fine; no hosting or database.                                                                                                          |
-| D14 | The plugin ships with **zero runtime dependencies** (decided 21 Oct 2026, T2). Installing or updating downloads only Job Hunter's own files, never a `node_modules`. Found in T2: otherwise every install pulled 131 MB of dev tools, with a 60-second limit.                                      |
-| D15 | **CVs are made as PDF only** for now (T7). Word (.docx) CVs can be _read_, but writing them would need a hand-built zip/XML writer (D14). Revisit if a site the group uses insists on Word.                                                                                                        |
+| #   | Decision                                                                                                                                                                                                                                                                                                                                       |
+| --- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| D1  | Name: **Job Hunter**. Personal project, own GitHub repo, no link to any employer account or email.                                                                                                                                                                                                                                             |
+| D2  | Users: the owner and a few friends, using it for real job hunts. Treat them as real users.                                                                                                                                                                                                                                                     |
+| D3  | **Hybrid actions.** Anything on a site where the user is logged in (LinkedIn, Indeed, Rozee, …) is _prepared_ by the agent and _performed_ by the user: the agent notifies, hands over ready-to-paste text, the right file and a direct link; the user clicks. This keeps accounts safe from bans.                                             |
+| D4  | **No running cost** beyond each user's Claude plan. No servers, no paid APIs, no hosting. It runs where the user already is: the Claude desktop app.                                                                                                                                                                                           |
+| D5  | **No platform is cut** from the first list.                                                                                                                                                                                                                                                                                                    |
+| D6  | **Focus:** on-site and hybrid jobs **in Pakistan**, and **remote jobs from any country** that a person in Pakistan can actually take. Relocating abroad for an on-site job is not a v1 track.                                                                                                                                                  |
+| D7  | English only.                                                                                                                                                                                                                                                                                                                                  |
+| D8  | Local Pakistani CV extras (photo, CNIC, father's name, DOB, marital status) are not used in any CV. If a base CV has them, they are dropped.                                                                                                                                                                                                   |
+| D9  | The owner reviews every step (spec → plan → tasks → each change).                                                                                                                                                                                                                                                                              |
+| D10 | Each friend uses **their own Claude account, Pro or higher** (Claude Code is not on the Free plan; sharing one login breaks Anthropic's terms). They install the plugin from the GitHub repo once and get the owner's updates automatically.                                                                                                   |
+| D11 | Works on **Pro**: a "light" usage setting (fewer jobs judged by Claude per day, more left to the free scripts) is the default; Max users can raise it.                                                                                                                                                                                         |
+| D12 | Daily run 9:00 PKT + catch-up when the app opens.                                                                                                                                                                                                                                                                                              |
+| D13 | Group-shared items (added sites, employer learnings, scam reports, company watch-list) live in the GitHub repo's `plugin/shared/` folder. Code on GitHub is fine; no hosting or database.                                                                                                                                                      |
+| D14 | The plugin ships with **zero runtime dependencies** (decided 21 Oct 2026, T2). Installing or updating downloads only Job Hunter's own files, never a `node_modules`. Found in T2: otherwise every install pulled 131 MB of dev tools, with a 60-second limit.                                                                                  |
+| D15 | **CVs are made as PDF only** for now (T7). Word (.docx) CVs can be _read_, but writing them would need a hand-built zip/XML writer (D14). Revisit if a site the group uses insists on Word.                                                                                                                                                    |
+| D16 | **Gaps are asked about, never filled in** (21 Oct 2026). When a job or a job search needs experience the profile doesn't show, Job Hunter asks the user whether they have it; what they describe becomes profile entries only after they approve the wording, tagged "added by you" with a date. If the answer is no, it stays a gap. See R5b. |
 
 ## Problem / motivation
 
@@ -100,6 +101,9 @@ LinkedIn is always C.
   industries, must-have skills, Pakistani cities, work modes (on-site / hybrid / remote),
   minimum salary (PKR or USD), employment type, notice period, night shifts OK?,
   companies to skip.
+- When a job or search needs experience my CV doesn't show (say client-facing work for a
+  forward deployed engineer role), it asks me whether I have it, turns my answer into
+  profile entries I approve, and never adds anything I didn't say (D16, R5b).
 - It reads back "who you are and what I'll look for", and lists gaps it spotted
   ("no numbers in your achievements", "most senior remote roles ask for X — do you have
   it?"). Nothing outward happens until I confirm.
@@ -212,6 +216,26 @@ Workable, SmartRecruiters, Recruitee, BambooHR and Workday.
 - ATS check per version: keyword coverage vs the job, parseability, with suggested fixes.
 - Output PDF (D15), named `Firstname-Lastname-CV-<Company>.pdf`.
 
+### R5b — Gap questions (D16)
+
+- **When:** (a) at setup, for a job search aimed at a role the CV doesn't show (e.g.
+  software engineer → forward deployed engineer, teacher → operations); (b) when
+  tailoring for a job that asks for something the profile lacks.
+- **Ask, don't assume:** name the missing area and give 3–5 concrete prompts the user
+  can answer ("Have you joined client calls? Demoed to a client? Deployed at a client
+  site?"). One round of questions per gap area, not per job.
+- **Turn answers into entries:** draft profile entries from the user's own words, placed
+  under the right role (or projects/skills). Wording may be made professional; scale may
+  not grow: no added numbers, titles, tools, clients or frequency the user didn't state.
+- **Approval:** each drafted entry is shown and approved, edited or rejected. Only
+  approved entries are saved, tagged `source: user` with the date. CV-extracted entries
+  are `source: cv`.
+- **No:** a "no" or "not really" is respected. The gap is reported and the job's match
+  reflects it. Tailoring may lean on related true entries but never implies the
+  missing one.
+- **Reuse:** approved entries serve every later CV, cover letter and screening answer.
+  The same gap is never asked again unless the user wants to add more.
+
 ### R6 — Applying
 
 - Level B: fill from master profile + tailored CV + answer bank; stop and ask on
@@ -257,26 +281,28 @@ on LinkedIn uses only public, logged-out listings.
 
 ## Use cases (coverage check)
 
-| #   | Use case                                                  | Covered by                                      |
-| --- | --------------------------------------------------------- | ----------------------------------------------- |
-| U1  | Fresh grad, 0 years, wants trainee/intern roles in Lahore | R1 exp range, R2 city, R5 projects-first CV     |
-| U2  | Mid-level dev wants remote USD roles worldwide            | R2 remote, R6 level B on ATS sites              |
-| U3  | Designer wants hybrid in Islamabad only                   | R1 mode + city, R2 office days                  |
-| U4  | Career switcher (teacher → ops)                           | R1 gaps, R5 transferable framing, no invention  |
-| U5  | Senior wants a few good roles only                        | Shortlist-only, R8 outreach first               |
-| U6  | User currently abroad, moving back to Pakistan            | R1 current location ≠ target city               |
-| U7  | Happy to work US hours                                    | R2 night-shift preference                       |
-| U8  | Employment gap                                            | R5 honest gap handling, no date fudging         |
-| U9  | Same job on five boards                                   | R4/R6 dedup                                     |
-| U10 | Fee-charging "work from home" job                         | R3                                              |
-| U11 | Form asks "Are you authorised to work in the US?"         | R6 ask, never guess                             |
-| U12 | CAPTCHA/login during level-B fill                         | R6 hand over                                    |
-| U13 | Site we don't search (niche Pakistani board)              | R4 add a site                                   |
-| U14 | Recruiter replies on LinkedIn                             | User marks "Replied" (chat or dashboard)        |
-| U15 | User changes direction mid-search                         | R1 gate re-opens, cards cancelled               |
-| U16 | User's laptop was off at run time                         | Next run catches up; nothing lost               |
-| U17 | Platform blocks the public listing reader                 | R4 connector marked broken; web-search fallback |
-| U18 | User wants to stop everything                             | R9/R10 pause                                    |
+| #   | Use case                                                                                         | Covered by                                                                 |
+| --- | ------------------------------------------------------------------------------------------------ | -------------------------------------------------------------------------- |
+| U1  | Fresh grad, 0 years, wants trainee/intern roles in Lahore                                        | R1 exp range, R2 city, R5 projects-first CV                                |
+| U2  | Mid-level dev wants remote USD roles worldwide                                                   | R2 remote, R6 level B on ATS sites                                         |
+| U3  | Designer wants hybrid in Islamabad only                                                          | R1 mode + city, R2 office days                                             |
+| U4  | Career switcher (teacher → ops)                                                                  | R1 gaps, R5b gap questions at setup, R5 transferable framing, no invention |
+| U5  | Senior wants a few good roles only                                                               | Shortlist-only, R8 outreach first                                          |
+| U6  | User currently abroad, moving back to Pakistan                                                   | R1 current location ≠ target city                                          |
+| U7  | Happy to work US hours                                                                           | R2 night-shift preference                                                  |
+| U8  | Employment gap                                                                                   | R5 honest gap handling, no date fudging                                    |
+| U9  | Same job on five boards                                                                          | R4/R6 dedup                                                                |
+| U10 | Fee-charging "work from home" job                                                                | R3                                                                         |
+| U11 | Form asks "Are you authorised to work in the US?"                                                | R6 ask, never guess                                                        |
+| U12 | CAPTCHA/login during level-B fill                                                                | R6 hand over                                                               |
+| U13 | Site we don't search (niche Pakistani board)                                                     | R4 add a site                                                              |
+| U14 | Recruiter replies on LinkedIn                                                                    | User marks "Replied" (chat or dashboard)                                   |
+| U15 | User changes direction mid-search                                                                | R1 gate re-opens, cards cancelled                                          |
+| U16 | User's laptop was off at run time                                                                | Next run catches up; nothing lost                                          |
+| U17 | Platform blocks the public listing reader                                                        | R4 connector marked broken; web-search fallback                            |
+| U18 | User wants to stop everything                                                                    | R9/R10 pause                                                               |
+| U19 | Software engineer applying for a forward deployed engineer role; client work missing from the CV | R5b: asked once, approved entries added, reused for every similar job      |
+| U20 | User says they don't have the missing experience                                                 | R5b: stays a gap, match lowered, nothing implied                           |
 
 ## Edge cases
 
@@ -301,6 +327,10 @@ on LinkedIn uses only public, logged-out listings.
 - [ ] Every job has a verdict + reason; on 100 hand-labelled remote jobs, "Eligible /
       Likely" is right ≥ 90% of the time.
 - [ ] A new site can be added by URL and returns jobs for at least 3 of 5 test sites.
+- [ ] A gap question produces profile entries only after approval; approved entries are
+      tagged `source: user` with a date; a "no" adds nothing (tested on 5 gap cases).
+- [ ] Gap-question entries never add numbers, titles, tools or scale the user didn't
+      state (checked against their answers).
 - [ ] Tailored CVs contain no fact missing from the master profile (checked on 20 CVs),
       and never contain photo/CNIC/father's name/DOB/marital status.
 - [ ] Tailored CVs are read correctly by at least one free ATS-style parser check.

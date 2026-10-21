@@ -84,12 +84,18 @@
 
 ## P1 — Set up & find _(to be broken down)_
 
+Includes gap questions at setup for job searches aimed at a role the CV doesn't show
+(R5b).
+
 Setup skill + gate, all v1 connectors + fallbacks (Rozee via web search / pasted
 alert links), daily FX-rate refresh from a free
 source, add-a-site, Claude eligibility/match
 step with usage caps, dashboard (Matches, Settings), daily run.
 
 ## P2 — Tailor & apply _(to be broken down)_
+
+Includes gap questions while tailoring, profile schema v2 (`source`, `addedAt`) with
+its migration, and `gaps.json` (R5b, D16).
 
 Tailoring + honesty check + ATS check, answer bank, level B on Greenhouse / Lever /
 Ashby / Workable, level-C action cards, pipeline.
