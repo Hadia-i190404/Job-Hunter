@@ -96,9 +96,13 @@ real one through Job Hunter.
       migrations before every writing command, status reports loop counts. 244 tests.
 - [ ] `[skill]` **S1.2 Setup interview** (`/job-hunter:setup`): CV (reuses cv), profile
       check incl. drafts, targets, recurring screening answers, gap questions, read-back + confirm, schedule offer. Asked once (D20).
-- [ ] `[core]` **S1.3 Matching.** Score jobs against the user's searches (titles and
+- [x] `[core]` **S1.3 Matching.** Score jobs against the user's searches (titles and
       synonyms, seniority, skills, mode, city, salary floor, skipped companies); rules
-      first, Claude for the top candidates.
+      first, Claude for the top candidates. ✔ `pipeline/match.ts`: title 0–50 (role
+      words with developer≈engineer, front end≈frontend…), seniority 0–15 (read from the
+      title), skills 0–25, pay 0–10; blockers (not open to Pakistan, mode, city, skip
+      list, US hours) → fit `no`; bands strong ≥75, good ≥55, stretch ≥35; low pay ranks
+      lower, never hidden. `bestMatch` across searches. 267 tests.
 - [ ] `[core]` `[skill]` **S1.4 Daily hunt** (`hunt.ts` + `/job-hunter:hunt`): all
       sources for confirmed searches → save → eligibility, scams, dedup, match → top jobs.
 - [ ] `[core]` `[skill]` **S1.5 Tailoring.** Per top job: tailored CV JSON citing profile
