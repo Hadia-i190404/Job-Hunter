@@ -121,9 +121,15 @@ real one through Job Hunter.
       `cv/tailor.ts` (apply + keyword coverage: covered / true-but-missing / gaps),
       `tailor.ts context|render` (PDF in `cv/tailored/`, page count, gaps → `gaps.json`
       pending), `/job-hunter:tailor` skill with the R5 rules. 285 tests.
-- [ ] `[core]` **S1.6 Prepared applications.** Greenhouse form questions from the public
+- [x] `[core]` **S1.6 Prepared applications.** Greenhouse form questions from the public
       API, answers from profile + answer bank, unknowns and D19 forms routed to the
-      to-do list; `applications.json`.
+      to-do list; `applications.json`. ✔ `apply/questions.ts` (`?questions=true`),
+      `apply/prepare.ts` (profile fields, answer-bank keys, exact select options,
+      demographic only from demographic answers, declarations always the user's, no-AI
+      forms detected), `apply/applications.ts`, `apply.ts prepare|list|show|answer|status`
+      (Claude can't answer on no-AI forms). Level-C jobs get a to-do card. Live 22 Oct on
+      Canonical's real form (fake profile, empty bank): 5/24 filled, 15 clear to-dos,
+      no-AI spotted. 295 tests.
 - [ ] `[skill]` **S1.7 Review & apply** (`/job-hunter:review`): today's batch, one
       approval (D21), then fill + submit each approved Greenhouse form in the browser.
 - [ ] `[skill]` **S1.8 Daily run + notification.** Scheduled task at 09:00 PKT runs the

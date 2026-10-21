@@ -118,10 +118,17 @@ export const applicationsSchema = object({
           question: text,
           answer: optional(string()),
           // todo: the user must answer (unknown, legal, or the employer forbids AI help, D19).
-          from: oneOf(['profile', 'answers', 'todo'] as const),
+          // claude: drafted by Claude from profile facts, shown to the user before approval.
+          from: oneOf(['profile', 'answers', 'user', 'claude', 'todo'] as const),
         }),
       ),
       todo: arrayOf(text),
+      // Forms that forbid AI-written content (D19).
+      noAi: optional(boolean()),
+      jobTitle: optional(string()),
+      company: optional(string()),
+      url: optional(string()),
+      applyLevel: optional(oneOf(['B', 'C'] as const)),
       note: optional(string()),
       preparedAt: isoDate(),
       updatedAt: isoDate(),
