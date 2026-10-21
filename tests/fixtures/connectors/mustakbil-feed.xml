@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/">
+  <channel>
+    <title>Jobs in Pakistan</title>
+    <item>
+      <title><![CDATA[ Accountant Jobs in Lahore, Pakistan]]></title>
+      <description><![CDATA[ Keep the books.<br><br>2 years experience.]]></description>
+      <guid>https://www.mustakbil.com/jobs/job/1000001</guid>
+      <link>https://www.mustakbil.com/jobs/job/1000001</link>
+      <pubdate><![CDATA[Mon, 19 Oct 2026 21:37:21 &#x2B;0000]]></pubdate>
+      <category><![CDATA[Accounting]]></category>
+      <company><![CDATA[ Example Traders]]></company>
+      <city><![CDATA[Lahore]]></city>
+      <country><![CDATA[Pakistan]]></country>
+    </item>
+    <item>
+      <title><![CDATA[ Senior Accountant Jobs in Karachi, Pakistan]]></title>
+      <description><![CDATA[ Lead the finance team.]]></description>
+      <link>https://www.mustakbil.com/jobs/job/1000002</link>
+      <pubdate><![CDATA[Sun, 18 Oct 2026 10:00:00 &#x2B;0000]]></pubdate>
+      <company><![CDATA[Example Foods]]></company>
+      <city><![CDATA[Karachi]]></city>
+      <country><![CDATA[Pakistan]]></country>
+    </item>
+    <item>
+      <title><![CDATA[ Video Editor Jobs in Islamabad, Pakistan]]></title>
+      <description><![CDATA[ Edit videos.]]></description>
+      <link>https://www.mustakbil.com/jobs/job/1000003</link>
+      <company><![CDATA[Example Media]]></company>
+      <city><![CDATA[Islamabad]]></city>
+      <country><![CDATA[Pakistan]]></country>
+    </item>
+    <item>
+      <title><![CDATA[ Broken item without a link]]></title>
+    </item>
+  </channel>
+</rss>

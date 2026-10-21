@@ -222,17 +222,19 @@ You can also just talk to it in plain English. The commands are shortcuts.
 
 ## Job sites covered
 
-| Site                                                                                   | How it searches                                                   | How you apply                |
-| -------------------------------------------------------------------------------------- | ----------------------------------------------------------------- | ---------------------------- |
-| Remotive, Remote OK, Himalayas, Jobicy, Working Nomads                                 | Official public feed                                              | On the employer's site       |
-| We Work Remotely                                                                       | RSS feed                                                          | On the employer's site       |
-| Company career sites on Greenhouse, Lever, Ashby, Workable, SmartRecruiters, Recruitee | Public job-board feeds                                            | **B**: it fills, you submit  |
-| BambooHR, Workday career sites                                                         | Public pages                                                      | B, or C if a login is needed |
-| Rozee.pk, Bayt, GulfTalent, NaukriGulf                                                 | Public listings (Gulf sites: Pakistan-based and remote jobs only) | **C**: action card           |
-| LinkedIn Jobs                                                                          | Public, logged-out listings only                                  | **C**: always                |
-| Indeed, Glassdoor                                                                      | Public pages, or web search if they block it                      | C                            |
-| Wellfound, Arc.dev, Turing                                                             | Public pages                                                      | C                            |
-| **Any site you add**                                                                   | `/job-hunter:add-site <url>`                                      | B or C                       |
+| Site                                                                                   | How it searches                                                                       | How you apply                |
+| -------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------- | ---------------------------- |
+| Remotive, Remote OK, Himalayas, Jobicy, Working Nomads                                 | Official public feed                                                                  | On the employer's site       |
+| We Work Remotely                                                                       | RSS feed                                                                              | On the employer's site       |
+| Company career sites on Greenhouse, Lever, Ashby, Workable, SmartRecruiters, Recruitee | Public job-board feeds                                                                | **B**: it fills, you submit  |
+| BambooHR, Workday career sites                                                         | Public pages                                                                          | B, or C if a login is needed |
+| Mustakbil.com                                                                          | Its RSS feed (Pakistani jobs, with salaries)                                          | **C**: action card           |
+| Rozee.pk                                                                               | Web search, or links you paste from Rozee job alerts (Rozee blocks automated reading) | **C**: action card           |
+| Bayt, GulfTalent, NaukriGulf                                                           | Public listings (Pakistan-based and remote jobs only)                                 | **C**: action card           |
+| LinkedIn Jobs                                                                          | Public, logged-out listings only                                                      | **C**: always                |
+| Indeed, Glassdoor                                                                      | Public pages, or web search if they block it                                          | C                            |
+| Wellfound, Arc.dev, Turing                                                             | Public pages                                                                          | C                            |
+| **Any site you add**                                                                   | `/job-hunter:add-site <url>`                                                          | B or C                       |
 
 Some big sites block automated reading even when you're logged out. When that happens,
 Job Hunter finds their listings through web search, or you paste links from your
@@ -375,7 +377,7 @@ Phase **P0 (spike)**. See [tasks.md](specs/0001-job-hunter/tasks.md).
 - [x] Plugin ships with zero dependencies
 - [x] Data folder and store (safe writes, recovery, upgrades, pause/resume)
 - [x] One job format: cities, work mode, salary in PKR and USD per month
-- [ ] First three job sources (Remotive, Greenhouse, Rozee.pk)
+- [x] First three job sources (Remotive, Greenhouse career sites, Mustakbil.com)
 - [ ] Eligibility and scam rules
 - [ ] CV read → tailored PDF/Word round trip
 - [ ] Career-site form filling (level B) test

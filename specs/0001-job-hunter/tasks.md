@@ -41,9 +41,17 @@
       €, £…; period stated or inferred, else "not stated") → PKR and USD per month.
       FX rates are approximate and dated (`fx.ts`); refreshing them is a P1 job.
       _Done when:_ unit tests on 40 real-world strings pass. ✔ 79 examples.
-- [ ] `[core]` **T5 Three connectors.** Remotive (API), Greenhouse (board API for a
-      watch-list), Rozee.pk (public HTML, polite pacing). `npm run fetch -- --search <id>`.
+- [x] `[core]` **T5 Three connectors.** Remotive (API), Greenhouse (board API per
+      watch-list company, level B), **Mustakbil.com** (RSS + schema.org data on job pages)
+      instead of Rozee.pk, which blocks every script with a Cloudflare check (Rozee →
+      web-search/paste fallback in P1). Shared parts: polite per-host HTTP client
+      (one at a time, pause, identifies itself, reports bot checks as "blocked"),
+      HTML→text, RSS reader, schema.org JobPosting reader (the base for "add a site"),
+      title keyword matching. CLI: `fetch.ts --source … --q … --city … --board …`.
+      Remotive's free API caps at 10 jobs per request, so 1 request per phrase, max 3.
       _Done when:_ each returns real jobs; parsers tested against saved fixtures.
+      ✔ Live 21 Oct: Remotive 1 React job; Mustakbil 14 accountant jobs with PKR
+      salaries; Greenhouse 73 GitLab engineering jobs. 164 tests.
 - [ ] `[core]` **T6 Dedup + rule eligibility + scam rules.** Plus a hand-labelled set of
       100 remote jobs and 20 scam posts (`tests/fixtures/labelled/`, no personal data).
       _Done when:_ report shows rule-only precision/recall; ambiguous ones listed for
@@ -64,7 +72,8 @@
 
 ## P1 — Set up & find _(to be broken down)_
 
-Setup skill + gate, all v1 connectors + fallbacks, daily FX-rate refresh from a free
+Setup skill + gate, all v1 connectors + fallbacks (Rozee via web search / pasted
+alert links), daily FX-rate refresh from a free
 source, add-a-site, Claude eligibility/match
 step with usage caps, dashboard (Matches, Settings), daily run.
 

@@ -1,0 +1,24 @@
+{
+  "jobs": [
+    {
+      "absolute_url": "https://job-boards.greenhouse.io/examplecorp/jobs/1001",
+      "id": 1001,
+      "title": "Backend Engineer (Go)",
+      "company_name": "ExampleCorp",
+      "location": { "name": "Remote, EMEA" },
+      "first_published": "2026-10-02T11:31:50-04:00",
+      "updated_at": "2026-10-15T15:24:46-04:00",
+      "content": "&lt;p&gt;Work on &lt;strong&gt;APIs&lt;/strong&gt; &amp;amp; services.&lt;/p&gt;"
+    },
+    {
+      "absolute_url": "https://job-boards.greenhouse.io/examplecorp/jobs/1002",
+      "id": 1002,
+      "title": "Office Manager",
+      "company_name": "ExampleCorp",
+      "location": { "name": "Berlin, Germany" },
+      "updated_at": "2026-10-15T15:24:46-04:00",
+      "content": "&lt;p&gt;Run the office.&lt;/p&gt;"
+    }
+  ],
+  "meta": { "total": 2 }
+}

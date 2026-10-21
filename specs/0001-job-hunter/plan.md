@@ -96,19 +96,26 @@ interface Connector {
 }
 ```
 
-| Platform                                                       | First way in                                          | Fallback                                  | Apply level                |
-| -------------------------------------------------------------- | ----------------------------------------------------- | ----------------------------------------- | -------------------------- |
-| Remotive, Remote OK, Himalayas, Jobicy, Working Nomads         | Public API / JSON                                     | —                                         | via employer's site        |
-| We Work Remotely                                               | RSS                                                   | —                                         | via employer's site        |
-| Greenhouse, Lever, Ashby, Workable, SmartRecruiters, Recruitee | Public job-board APIs for companies on the watch-list | web search                                | **B**                      |
-| BambooHR, Workday                                              | Public career pages                                   | web search                                | B where no login, else C   |
-| Rozee.pk, Bayt, GulfTalent, NaukriGulf                         | Public listing pages, low volume                      | web search (`site:`)                      | C                          |
-| LinkedIn Jobs                                                  | Public logged-out job search, low volume              | web search; user pastes links             | **C always**               |
-| Indeed, Glassdoor                                              | Public pages (often blocked by bot checks)            | web search; user forwards job-alert links | C                          |
-| Wellfound, Arc.dev, Turing                                     | Public pages                                          | web search                                | C                          |
-| Added sites                                                    | `generic` reader (Claude reads the page)              | —                                         | B if no-login form, else C |
+| Platform                                                       | First way in                                                                         | Fallback                                                        | Apply level                |
+| -------------------------------------------------------------- | ------------------------------------------------------------------------------------ | --------------------------------------------------------------- | -------------------------- |
+| Remotive, Remote OK, Himalayas, Jobicy, Working Nomads         | Public API / JSON                                                                    | —                                                               | via employer's site        |
+| We Work Remotely                                               | RSS                                                                                  | —                                                               | via employer's site        |
+| Greenhouse, Lever, Ashby, Workable, SmartRecruiters, Recruitee | Public job-board APIs for companies on the watch-list                                | web search                                                      | **B**                      |
+| BambooHR, Workday                                              | Public career pages                                                                  | web search                                                      | B where no login, else C   |
+| Mustakbil.com                                                  | RSS feed (~500 PK jobs, one request) + schema.org data on job pages for matches (T5) | —                                                               | C                          |
+| Rozee.pk                                                       | **Blocked by a Cloudflare bot check** (T5), so no script access                      | web search (`site:rozee.pk`); user pastes Rozee job-alert links | C                          |
+| Bayt, GulfTalent, NaukriGulf                                   | Public listing pages, low volume                                                     | web search (`site:`)                                            | C                          |
+| LinkedIn Jobs                                                  | Public logged-out job search, low volume                                             | web search; user pastes links                                   | **C always**               |
+| Indeed, Glassdoor                                              | Public pages (often blocked by bot checks)                                           | web search; user forwards job-alert links                       | C                          |
+| Wellfound, Arc.dev, Turing                                     | Public pages                                                                         | web search                                                      | C                          |
+| Added sites                                                    | `generic` reader (Claude reads the page)                                             | —                                                               | B if no-login form, else C |
 
 Honest expectation: some big boards block automated reading even when logged out.
+Confirmed in T5: Rozee.pk answers every script request with a Cloudflare check. Remotive's
+free API returns at most 10 jobs per request, so it's a small source.
+
+**schema.org JobPosting** (`plugin/src/connectors/jsonld.ts`) is the general reader: many
+job pages embed it for Google Jobs, so it serves added sites ("add a site") too.
 For those, the fallback (web search for their listings, or the user pasting links from
 job-alert emails) is the realistic main route. The dashboard shows which way each
 platform is working.
@@ -193,13 +200,13 @@ top matches).
 
 ## Phases
 
-| Phase                        | Ships                                                                                                                                                                                                                                 | Done when                              |
-| ---------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------- |
-| **P0 — Spike**               | Plugin skeleton, data folder, 3 connectors (Remotive, Greenhouse, Rozee), rule eligibility on 100 jobs, CV parse → render → text-back on 3 real CVs, level-B fill of one Greenhouse form, scheduled run + notification, install steps | Each risky piece works once end to end |
-| **P1 — Set up & find**       | Setup skill + gate, all v1 connectors with fallbacks, dedup, eligibility, scams, matching, add-a-site, dashboard (Matches + Settings), daily run                                                                                      | Owner gets a useful daily list         |
-| **P2 — Tailor & apply**      | Tailoring + honesty check + ATS check, answer bank, level B on Greenhouse/Lever/Ashby/Workable, level-C cards, pipeline                                                                                                               | Owner applies to real jobs with it     |
-| **P3 — LinkedIn & outreach** | LinkedIn rewrite → cards, hiring-team finder, message cards, follow-ups                                                                                                                                                               | Profile updated, messages going out    |
-| **P4 — Group**               | Shared sites/employers/scams via repo, thumbs learning, onboarding friends                                                                                                                                                            | Friends running it on their machines   |
+| Phase                        | Ships                                                                                                                                                                                                                                                                             | Done when                              |
+| ---------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------- |
+| **P0 — Spike**               | Plugin skeleton, data folder, 3 connectors (Remotive, Greenhouse, Mustakbil; Rozee is blocked, see connectors table), rule eligibility on 100 jobs, CV parse → render → text-back on 3 real CVs, level-B fill of one Greenhouse form, scheduled run + notification, install steps | Each risky piece works once end to end |
+| **P1 — Set up & find**       | Setup skill + gate, all v1 connectors with fallbacks, dedup, eligibility, scams, matching, add-a-site, dashboard (Matches + Settings), daily run                                                                                                                                  | Owner gets a useful daily list         |
+| **P2 — Tailor & apply**      | Tailoring + honesty check + ATS check, answer bank, level B on Greenhouse/Lever/Ashby/Workable, level-C cards, pipeline                                                                                                                                                           | Owner applies to real jobs with it     |
+| **P3 — LinkedIn & outreach** | LinkedIn rewrite → cards, hiring-team finder, message cards, follow-ups                                                                                                                                                                                                           | Profile updated, messages going out    |
+| **P4 — Group**               | Shared sites/employers/scams via repo, thumbs learning, onboarding friends                                                                                                                                                                                                        | Friends running it on their machines   |
 
 ## Risks & trade-offs
 

@@ -1,0 +1,30 @@
+{
+  "00-warning": "Remotive main domain moved to remotive.com",
+  "0-legal-notice": "Please link back to the URL found on Remotive AND mention Remotive as a source.",
+  "job-count": 2,
+  "total-job-count": 2,
+  "jobs": [
+    {
+      "id": 2091133,
+      "url": "https://remotive.com/remote-jobs/software-development/senior-react-developer-2091133",
+      "title": "Senior React Developer",
+      "company_name": "Example Labs",
+      "category": "Software Development",
+      "job_type": "full_time",
+      "publication_date": "2026-10-17T16:04:29",
+      "candidate_required_location": "Worldwide",
+      "salary": "$60k - $80k",
+      "description": "<p>Build <strong>things</strong> with React &amp; TypeScript.</p><ul><li>5 years</li></ul>"
+    },
+    {
+      "id": 2091200,
+      "url": "https://remotive.com/remote-jobs/sales/account-executive-2091200",
+      "title": "Account Executive",
+      "company_name": "Example Sales Co",
+      "publication_date": "2026-10-16T09:00:00",
+      "candidate_required_location": "USA Only",
+      "salary": "",
+      "description": "<p>Sell.</p>"
+    }
+  ]
+}

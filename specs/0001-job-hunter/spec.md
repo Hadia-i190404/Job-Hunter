@@ -182,7 +182,8 @@ remembered for the group.
 
 ### R4 — Platforms (none cut — D5)
 
-LinkedIn Jobs, Indeed (Pakistan + global), Rozee.pk, Bayt, GulfTalent, NaukriGulf,
+LinkedIn Jobs, Indeed (Pakistan + global), Rozee.pk, Mustakbil.com (added in T5), Bayt,
+GulfTalent, NaukriGulf,
 Glassdoor, Wellfound, Remote OK, We Work Remotely, Remotive, Himalayas, Jobicy, Working
 Nomads, Arc.dev, Turing, plus company career pages on Greenhouse, Lever, Ashby,
 Workable, SmartRecruiters, Recruitee, BambooHR and Workday.
