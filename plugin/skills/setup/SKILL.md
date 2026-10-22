@@ -1,6 +1,6 @@
 ---
 description: Job Hunter's one-time setup interview. Collects everything once (CV and profile check, target roles, answers employers keep asking, gaps) so the daily hunt can run quietly. Use when the user says "set up job hunter", runs it for the first time, or wants to change what they're looking for.
-allowed-tools: Read, Write(~/JobHunter/**), Bash(sh ${CLAUDE_PLUGIN_ROOT}/scripts/run.sh ${CLAUDE_PLUGIN_ROOT}/scripts/setup.ts *), Bash(sh ${CLAUDE_PLUGIN_ROOT}/scripts/run.sh ${CLAUDE_PLUGIN_ROOT}/scripts/cv.ts *), Bash(sh ${CLAUDE_PLUGIN_ROOT}/scripts/run.sh ${CLAUDE_PLUGIN_ROOT}/scripts/store.ts *)
+allowed-tools: Read, Write(~/JobHunter/**), ToolSearch, mcp__scheduled-tasks__create_scheduled_task, mcp__scheduled-tasks__list_scheduled_tasks, Bash(sh ${CLAUDE_PLUGIN_ROOT}/scripts/run.sh ${CLAUDE_PLUGIN_ROOT}/scripts/setup.ts *), Bash(sh ${CLAUDE_PLUGIN_ROOT}/scripts/run.sh ${CLAUDE_PLUGIN_ROOT}/scripts/cv.ts *), Bash(sh ${CLAUDE_PLUGIN_ROOT}/scripts/run.sh ${CLAUDE_PLUGIN_ROOT}/scripts/store.ts *)
 ---
 
 # Job Hunter: setup interview
@@ -99,11 +99,22 @@ Summarise in a short block: who they are (one line), each search, how many answe
 saved, what's still unanswered, gaps added. Ask: **"Shall I start hunting with this?"**
 Yes → `setup.ts confirm`. Edits → fix, save, read back again.
 
-## 6. What happens next
+## 6. Daily run
 
-Say exactly this, nothing more: "You're set up. Run `/job-hunter:hunt` to find, rank and
-prepare applications, then `/job-hunter:review` to answer what's left, approve the batch
-and submit. (The automatic 09:00 daily run isn't built yet.)"
+Ask: "Shall I set up the daily run? Every morning at 09:00 Job Hunter will hunt, prepare
+the best applications and send you one notification. It runs while the Claude app is
+open; if the app is closed at 09:00 it runs when you next open it."
+
+- Yes → create it with the `mcp__scheduled-tasks__create_scheduled_task` tool (load it
+  with ToolSearch if it's deferred): `taskId: "job-hunter-daily"`, `title: "Job Hunter
+daily run"`, `cronExpression: "0 9 * * *"` (or their chosen time, local), `description:
+"Hunt, prepare applications, notify"`, `prompt: "Run /job-hunter:daily"`. If a task
+  with that id already exists, leave it. If the tool isn't available, tell them to add a
+  daily scheduled task in the Claude app with the prompt `Run /job-hunter:daily`.
+- No → fine; they can run `/job-hunter:hunt` themselves.
+
+Then say exactly: "You're set up. Each day: check the notification, then run
+`/job-hunter:review` to answer what's left, approve the batch and submit."
 
 ## Rules
 

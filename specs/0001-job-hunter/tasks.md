@@ -94,7 +94,7 @@ real one through Job Hunter.
       `store/doc.ts` (validated load/save), `store/loop.ts` (gate re-opens on any edit,
       answers keyed once), migration v1→v2 tags entries `cv`, `openDataFolder` runs
       migrations before every writing command, status reports loop counts. 244 tests.
-- [ ] `[skill]` **S1.2 Setup interview** (`/job-hunter:setup`): CV (reuses cv), profile
+- [x] `[skill]` **S1.2 Setup interview** (`/job-hunter:setup`): CV (reuses cv), profile
       check incl. drafts, targets, recurring screening answers, gap questions, read-back + confirm, schedule offer. Asked once (D20).
 - [x] `[core]` **S1.3 Matching.** Score jobs against the user's searches (titles and
       synonyms, seniority, skills, mode, city, salary floor, skipped companies); rules
@@ -139,7 +139,12 @@ real one through Job Hunter.
       notification line. Every skill now says only what Job Hunter does.
       ⏳ Done when the owner submits one real application through it.
 - [ ] `[skill]` **S1.8 Daily run + notification.** Scheduled task at 09:00 PKT runs the
-      hunt and notifies "N ready, M questions".
+      hunt and notifies "N ready, M questions". ✔ Built: `/job-hunter:daily` (unattended:
+      never submits or asks; stops silently when paused or unconfirmed; hunts, prepares,
+      one `PushNotification` with fixed wording); setup step 6 creates the Claude app
+      scheduled task `job-hunter-daily` (`0 9 * * *` local, prompt "Run
+      /job-hunter:daily"); missed runs happen on next app launch (app behaviour).
+      ⏳ Done when the owner gets the 09:00 notification once.
 - [ ] `[repo]` **S1.9 Slice review.** Walk the whole flow with the owner; fix what hurts.
 
 ## Later slices
