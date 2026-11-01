@@ -1,0 +1,6 @@
+{
+  "_about": "Company job boards Job Hunter checks every day (the watch-list, D13). Ids are the part after the board's address: job-boards.greenhouse.io/<id>, jobs.lever.co/<id>, jobs.ashbyhq.com/<id>. Kept to companies with jobs open to Pakistan (checked 1 Nov 2026). Group members add more.",
+  "greenhouse": ["canonical", "gomotive", "careem", "gitlab", "cloudflare", "mongodb"],
+  "lever": ["toptal", "binance"],
+  "ashby": ["supabase", "railway", "elevenlabs", "posthog"]
+}

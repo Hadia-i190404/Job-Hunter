@@ -47,11 +47,13 @@ async function hunt(): Promise<unknown> {
   if (!isConfirmed(searches))
     return { error: 'not-confirmed', hint: 'run /job-hunter:setup first' };
   const boards = JSON.parse(
-    await readFile(new URL('../shared/greenhouse-boards.json', import.meta.url), 'utf8'),
-  ) as { boards: string[] };
-  const enabled = connectors({ greenhouseBoards: boards.boards }).filter(
-    (c) => settings.platforms[c.id] !== false,
-  );
+    await readFile(new URL('../shared/boards.json', import.meta.url), 'utf8'),
+  ) as { greenhouse: string[]; lever: string[]; ashby: string[] };
+  const enabled = connectors({
+    greenhouseBoards: boards.greenhouse,
+    leverBoards: boards.lever,
+    ashbyBoards: boards.ashby,
+  }).filter((c) => settings.platforms[c.id] !== false);
   const result = await runHunt(dir, searches.searches, {
     http: createHttpClient(),
     connectors: enabled,

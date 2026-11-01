@@ -143,8 +143,15 @@ describe('registry', () => {
     const list = connectors({ greenhouseBoards: [] }).map((c) => [c.id, c.applyLevel]);
     expect(list).toEqual([
       ['remotive', 'C'],
+      ['remoteok', 'C'],
+      ['weworkremotely', 'C'],
+      ['himalayas', 'C'],
+      ['jobicy', 'C'],
+      ['workingnomads', 'C'],
       ['mustakbil', 'C'],
       ['greenhouse', 'B'],
+      ['lever', 'C'],
+      ['ashby', 'C'],
     ]);
   });
 });

@@ -107,7 +107,7 @@ real one through Job Hunter.
       sources for confirmed searches → save → eligibility, scams, dedup, match → top jobs.
       ✔ `hunt/run.ts`, `hunt.ts run|list|job|judge`, skill (Claude reads unclear jobs up
       to the usage budget and records a quoted verdict), Greenhouse watch-list in
-      `plugin/shared/greenhouse-boards.json`, `matches.json`. Live 22 Oct (sample search,
+      `plugin/shared/boards.json`, `matches.json`. Live 22 Oct (sample search,
       temp folder): 1,537 jobs in ~20 s → 97 matches; Canonical Web Frontend #1, an
       Islamabad full-stack role #3. Fixes from the live run: office/hybrid jobs with no
       Pakistani location are abroad (Cloudflare "Hybrid", MongoDB "Gurugram"); generic
@@ -158,6 +158,25 @@ real one through Job Hunter.
       /job-hunter:daily"); missed runs happen on next app launch (app behaviour).
       ⏳ Done when the owner gets the 09:00 notification once.
 - [ ] `[repo]` **S1.9 Slice review.** Walk the whole flow with the owner; fix what hurts.
+
+## Slice 2 — Daily-use pack (1 Nov 2026)
+
+The owner wants to use Job Hunter daily from today; these seven, in order.
+
+- [x] `[core]` **S2.1 More sources.** Remote OK, We Work Remotely (RSS), Himalayas, Jobicy,
+      Working Nomads (`connectors/feeds.ts`), Lever and Ashby company boards
+      (`connectors/boards.ts`); one watch-list `plugin/shared/boards.json` (Greenhouse,
+      Lever, Ashby; kept to companies with Pakistan-open jobs: Supabase 59/68, Railway,
+      ElevenLabs, PostHog, Toptal, Binance). Live 1 Nov on the owner's searches: 1,851
+      jobs from 10 sources in 24 s → 204 matches, 82 strong. 314 tests.
+- [ ] `[core]` **S2.2 Lever and Ashby application forms** (like Greenhouse).
+- [ ] `[core]` `[skill]` **S2.3 Blocked sites + pasted links** (Rozee, LinkedIn, Indeed… via
+      web search; "add this job" from any link).
+- [ ] `[skill]` **S2.4 Action cards** for sites the user applies on.
+- [ ] `[core]` `[skill]` **S2.5 Tracking after applying** (replied, interview, offer, rejected,
+      one follow-up).
+- [ ] `[skill]` **S2.6 LinkedIn profile rewrite** (before/after cards).
+- [ ] `[skill]` **S2.7 Hiring-team messages** (draft cards + one follow-up).
 
 ## Later slices
 
