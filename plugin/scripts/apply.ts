@@ -6,12 +6,15 @@
 //   answer <appId> <index> <user|claude> <text…>   fill one question
 //   status <appId> <approved|submitted|skipped|failed> [note…]
 //   plan <appId>                           what to fill in the browser, field by field
+//   card <appId>                           action card for sites the user applies on
+import { readFile } from 'node:fs/promises';
 import {
   addApplication,
   setAnswer,
   setStatus,
   updateApplication,
 } from '../src/apply/applications.ts';
+import { buildCard } from '../src/apply/card.ts';
 import { prepareAnswers, type Prepared } from '../src/apply/prepare.ts';
 import { greenhouseQuestions } from '../src/apply/questions.ts';
 import { EXTRA_QUESTIONS_NOTE, STANDARD_FORMS } from '../src/apply/standard-forms.ts';
@@ -52,6 +55,8 @@ async function run(): Promise<unknown> {
       return status(args[0], args[1], args.slice(2).join(' '));
     case 'plan':
       return plan(args[0]);
+    case 'card':
+      return card(args[0]);
     default:
       return { error: 'usage', commands: 'prepare | list | show | answer | status' };
   }
@@ -133,6 +138,40 @@ async function plan(id: string | undefined): Promise<unknown> {
       'Press Submit',
     ],
   };
+}
+
+async function card(id: string | undefined): Promise<unknown> {
+  const app = (await loadDoc(dir, APPLICATIONS)).applications.find((a) => a.id === id);
+  if (app === undefined) return { error: 'no such application' };
+  const [jobs, profile, bank] = await Promise.all([
+    loadJobs(dir),
+    loadProfile(dir),
+    loadDoc(dir, ANSWERS),
+  ]);
+  if (profile === undefined) return { error: 'no-profile' };
+  const job = jobs.get(app.jobId);
+  const summary = await tailoredSummary(app.cvPath);
+  return buildCard({
+    app,
+    source: job?.source ?? '',
+    profile,
+    bank: bank.answers,
+    inPakistan: job?.inPakistan ?? false,
+    ...(summary === undefined ? {} : { summary }),
+  });
+}
+
+// The tailored CV's summary, saved beside its PDF by tailor.ts render.
+async function tailoredSummary(cvPath: string | undefined): Promise<string | undefined> {
+  if (cvPath === undefined) return undefined;
+  try {
+    const saved = JSON.parse(await readFile(cvPath.replace(/\.pdf$/, '.json'), 'utf8')) as {
+      summary?: unknown;
+    };
+    return typeof saved.summary === 'string' && saved.summary !== '' ? saved.summary : undefined;
+  } catch {
+    return undefined;
+  }
 }
 
 async function list(): Promise<unknown> {

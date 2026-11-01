@@ -182,7 +182,12 @@ The owner wants to use Job Hunter daily from today; these seven, in order.
       `/job-hunter:add` (paste a link or the job text; blocked pages are never worked
       around), hunt step 3b: web search `site:rozee.pk` / LinkedIn / Indeed per title
       (8 a run light, 16 full), snippets only, added as action-card jobs. 319 tests.
-- [ ] `[skill]` **S2.4 Action cards** for sites the user applies on.
+- [x] `[skill]` **S2.4 Action cards** for sites the user applies on. ✔ `apply/card.ts` +
+      `apply.ts card <id>`: link, tailored CV path, site-specific steps (Rozee profile,
+      LinkedIn Easy Apply, Indeed, Mustakbil), copy-ready answers in order (name, email,
+      phone, LinkedIn, city, current company/title, years, notice, expected salary in
+      PKR or USD by job location, start date, tailored summary); review shows each as
+      its own code block (copy buttons in the app). 321 tests.
 - [ ] `[core]` `[skill]` **S2.5 Tracking after applying** (replied, interview, offer, rejected,
       one follow-up).
 - [ ] `[skill]` **S2.6 LinkedIn profile rewrite** (before/after cards).

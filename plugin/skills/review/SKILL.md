@@ -7,7 +7,7 @@ allowed-tools: Read, Write(~/JobHunter/**), Bash(sh ${CLAUDE_PLUGIN_ROOT}/script
 
 ```
 RUN="sh ${CLAUDE_PLUGIN_ROOT}/scripts/run.sh ${CLAUDE_PLUGIN_ROOT}/scripts"
-$RUN/apply.ts list | show <id> | answer <id> <index> <user|claude> <text> | plan <id>
+$RUN/apply.ts list | show <id> | answer <id> <index> <user|claude> <text> | plan <id> | card <id>
              | status <id> <approved|submitted|skipped|failed> [note]
 $RUN/setup.ts save-answers <file>
 ```
@@ -65,8 +65,15 @@ For each approved **B** application:
 - Stop and hand over on any CAPTCHA, login, test or unexpected step. Never get around
   one.
 
-For each **C** application: show the card (link + CV path) and ask the user to say
-"done" once they've applied. Then mark it `submitted`.
+For each **C** application (sites the user applies on themselves), run
+`apply.ts card <id>` and show it as an **action card**:
+
+- **title at company**, the link, and the tailored CV file path;
+- the `steps` as a short numbered list;
+- each `copy` item as its own fenced code block under its label, so each gets a copy
+  button in the app.
+  Ask the user to say "done" once they've applied, then mark it `submitted`. If they
+  skip it, mark it `skipped`.
 
 ## 4. Wrap up
 
