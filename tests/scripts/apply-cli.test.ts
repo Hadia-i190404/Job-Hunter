@@ -56,7 +56,14 @@ describe('apply CLI', { timeout: 60_000 }, () => {
       status: 'submitted',
     });
     expect(apply(home, 'list').json).toMatchObject({ waiting: [], submitted: 1 });
-    expect(apply(home, 'show', 'app-1').json).toMatchObject({ status: 'submitted' });
+    expect(apply(home, 'pipeline').json).toEqual({ counts: { submitted: 1 }, followUpsDue: [] });
+    expect(apply(home, 'followed-up', 'app-1').json).toHaveProperty('followedUpAt');
+    expect(apply(home, 'status', 'app-1', 'interview').json).toEqual({
+      id: 'app-1',
+      status: 'interview',
+    });
+    expect(apply(home, 'followed-up').json).toMatchObject({ error: 'usage' });
+    expect(apply(home, 'show', 'app-1').json).toMatchObject({ status: 'interview' });
   });
 
   it('gives a fill plan only for approved applications, leaving the CV and to-dos to the user', async () => {

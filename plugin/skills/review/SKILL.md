@@ -8,9 +8,24 @@ allowed-tools: Read, Write(~/JobHunter/**), Bash(sh ${CLAUDE_PLUGIN_ROOT}/script
 ```
 RUN="sh ${CLAUDE_PLUGIN_ROOT}/scripts/run.sh ${CLAUDE_PLUGIN_ROOT}/scripts"
 $RUN/apply.ts list | show <id> | answer <id> <index> <user|claude> <text> | plan <id> | card <id>
-             | status <id> <approved|submitted|skipped|failed> [note]
+             | status <id> <approved|submitted|replied|interview|offer|rejected|withdrawn|skipped|failed> [note]
+             | pipeline | followed-up <id> | card <id>
 $RUN/setup.ts save-answers <file>
 ```
+
+## 0. Where things stand
+
+Run `apply.ts pipeline`. In one line, show the counts (submitted, replied, interview,
+offer, rejected). Then:
+
+- **Follow-ups due** (`followUpsDue`): for each one, offer a short follow-up of 2–3
+  lines. It mentions the role, the date they applied, one relevant fact from the
+  profile, and a polite question about next steps. The user sends it themselves (email
+  or the site's messages). When they say it's sent: `apply.ts followed-up <id>`. Only
+  one follow-up per application, ever.
+- **News from the user** ("Acme replied", "interview with X", "rejected by Y"): find
+  the application in `apply.ts list` or `show`, then `apply.ts status <id>
+<replied|interview|offer|rejected|withdrawn>`.
 
 ## 1. Today's batch, in one message
 

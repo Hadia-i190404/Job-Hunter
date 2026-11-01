@@ -7,14 +7,18 @@
 //   status <appId> <approved|submitted|skipped|failed> [note…]
 //   plan <appId>                           what to fill in the browser, field by field
 //   card <appId>                           action card for sites the user applies on
+//   pipeline                               counts by status + follow-ups due
+//   followed-up <appId>                    the user sent their one follow-up
 import { readFile } from 'node:fs/promises';
 import {
   addApplication,
   setAnswer,
   setStatus,
   updateApplication,
+  pipeline,
 } from '../src/apply/applications.ts';
 import { buildCard } from '../src/apply/card.ts';
+import { loadSettings } from '../src/store/settings.ts';
 import { prepareAnswers, type Prepared } from '../src/apply/prepare.ts';
 import { greenhouseQuestions } from '../src/apply/questions.ts';
 import { EXTRA_QUESTIONS_NOTE, STANDARD_FORMS } from '../src/apply/standard-forms.ts';
@@ -31,7 +35,27 @@ import { loadProfile } from '../src/store/profile.ts';
 
 const dir = dataDir();
 const [command = '', ...args] = process.argv.slice(2);
-const STATUSES = ['approved', 'submitted', 'skipped', 'failed'] as const;
+const STATUSES = [
+  'approved',
+  'submitted',
+  'replied',
+  'interview',
+  'offer',
+  'rejected',
+  'withdrawn',
+  'skipped',
+  'failed',
+] as const;
+// Moved by the user (news they got, or their decision); the rest by the agent while the user watches.
+const USER_STATUSES = new Set([
+  'approved',
+  'skipped',
+  'replied',
+  'interview',
+  'offer',
+  'rejected',
+  'withdrawn',
+]);
 // Company career sites whose forms Job Hunter fills (level B).
 const FILLABLE = new Set(['greenhouse', 'lever', 'ashby']);
 
@@ -57,6 +81,12 @@ async function run(): Promise<unknown> {
       return plan(args[0]);
     case 'card':
       return card(args[0]);
+    case 'pipeline': {
+      const settings = await loadSettings(dir);
+      return pipeline((await loadDoc(dir, APPLICATIONS)).applications, settings.followUpDays);
+    }
+    case 'followed-up':
+      return followedUp(args[0]);
     default:
       return { error: 'usage', commands: 'prepare | list | show | answer | status' };
   }
@@ -174,6 +204,15 @@ async function tailoredSummary(cvPath: string | undefined): Promise<string | und
   }
 }
 
+async function followedUp(id: string | undefined): Promise<unknown> {
+  if (id === undefined) return { error: 'usage', usage: 'followed-up <appId>' };
+  const app = await updateApplication(dir, id, (a) => ({
+    ...a,
+    followedUpAt: new Date().toISOString(),
+  }));
+  return { id: app.id, followedUpAt: app.followedUpAt };
+}
+
 async function list(): Promise<unknown> {
   const apps = (await loadDoc(dir, APPLICATIONS)).applications;
   const waiting = apps.filter(
@@ -223,7 +262,7 @@ async function status(
   const value = STATUSES.find((s) => s === next);
   if (id === undefined || value === undefined)
     return { error: 'usage', usage: `status <appId> <${STATUSES.join('|')}> [note]` };
-  const actor = value === 'approved' || value === 'skipped' ? 'user' : 'agent';
+  const actor = USER_STATUSES.has(value) ? 'user' : 'agent';
   const app = await setStatus(dir, id, { status: value, actor, ...(note === '' ? {} : { note }) });
   return { id: app.id, status: app.status };
 }

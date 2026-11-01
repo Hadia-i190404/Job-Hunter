@@ -96,11 +96,17 @@ export const draftsSchema = object({
 });
 export type DraftsFile = Infer<typeof draftsSchema>;
 
+// After submitting, the user moves an application on as news comes in (S2.5).
 const APPLICATION_STATUS = [
   'prepared',
   'needs-you',
   'approved',
   'submitted',
+  'replied',
+  'interview',
+  'offer',
+  'rejected',
+  'withdrawn',
   'skipped',
   'failed',
 ] as const;
@@ -131,6 +137,9 @@ export const applicationsSchema = object({
       applyLevel: optional(oneOf(['B', 'C'] as const)),
       note: optional(string()),
       preparedAt: isoDate(),
+      submittedAt: optional(isoDate()),
+      // One follow-up at most (spec R8), recorded when the user says they sent it.
+      followedUpAt: optional(isoDate()),
       updatedAt: isoDate(),
     }),
   ),

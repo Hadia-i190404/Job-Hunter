@@ -1,6 +1,6 @@
 ---
 description: Show Job Hunter's status (set up or not, paused or not, which data files exist) and pause or resume it. Use when the user asks "what's waiting for me?", "job hunter status", "pause job hunter", "resume job hunter", or similar.
-allowed-tools: Bash(sh ${CLAUDE_PLUGIN_ROOT}/scripts/run.sh ${CLAUDE_PLUGIN_ROOT}/scripts/store.ts *)
+allowed-tools: Bash(sh ${CLAUDE_PLUGIN_ROOT}/scripts/run.sh ${CLAUDE_PLUGIN_ROOT}/scripts/store.ts *), Bash(sh ${CLAUDE_PLUGIN_ROOT}/scripts/run.sh ${CLAUDE_PLUGIN_ROOT}/scripts/apply.ts pipeline), Bash(sh ${CLAUDE_PLUGIN_ROOT}/scripts/run.sh ${CLAUDE_PLUGIN_ROOT}/scripts/apply.ts list)
 ---
 
 # Job Hunter: status
@@ -40,6 +40,9 @@ Don't run `init`. Creating the data folder is setup's job.
     `files`). Missing ones are normal before those features exist.
   - Anything in `problems`, word for word. Say the file may be damaged and that Job
     Hunter kept a copy. Don't try to fix it.
+- **Applications**: run `apply.ts pipeline` and show one line of counts (waiting,
+  submitted, replied, interview, offer, rejected) plus any follow-ups due, and point to
+  `/job-hunter:review`.
 - **Pause / resume**: confirm in one line ("Job Hunter is paused.").
 - Any other `error`: show it and stop.
 

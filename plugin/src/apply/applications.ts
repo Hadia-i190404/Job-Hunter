@@ -91,6 +91,9 @@ export async function setStatus(
     ...a,
     status,
     ...(note === undefined ? {} : { note }),
+    ...(status === 'submitted' && a.submittedAt === undefined
+      ? { submittedAt: new Date().toISOString() }
+      : {}),
   }));
   await logEvent(dir, { actor, action: `application-${status}`, detail: { id } });
   return app;
@@ -109,4 +112,38 @@ export function setAnswer(
   const todo = app.todo.filter((t) => !t.includes(label));
   const status: Status = app.status === 'needs-you' && todo.length === 0 ? 'prepared' : app.status;
   return { ...app, answers, todo, status };
+}
+
+export interface Pipeline {
+  counts: Partial<Record<Status, number>>;
+  followUpsDue: { id: string; title: string; company: string; daysSince: number }[];
+}
+
+// Where everything stands, and which submitted applications are due their one follow-up
+// (no reply after `followUpDays`, not followed up yet). Spec R8, S2.5.
+export function pipeline(
+  apps: readonly Application[],
+  followUpDays: number,
+  now = new Date(),
+): Pipeline {
+  const counts: Partial<Record<Status, number>> = {};
+  for (const app of apps) counts[app.status] = (counts[app.status] ?? 0) + 1;
+  const day = 24 * 60 * 60 * 1000;
+  const followUpsDue = apps
+    .filter(
+      (a) =>
+        a.status === 'submitted' && a.followedUpAt === undefined && a.submittedAt !== undefined,
+    )
+    .map((a) => ({
+      app: a,
+      days: Math.floor((now.getTime() - Date.parse(a.submittedAt ?? '')) / day),
+    }))
+    .filter(({ days }) => days >= followUpDays)
+    .map(({ app, days }) => ({
+      id: app.id,
+      title: app.jobTitle ?? '',
+      company: app.company ?? '',
+      daysSince: days,
+    }));
+  return { counts, followUpsDue };
 }

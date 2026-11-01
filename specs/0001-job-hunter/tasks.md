@@ -188,8 +188,13 @@ The owner wants to use Job Hunter daily from today; these seven, in order.
       phone, LinkedIn, city, current company/title, years, notice, expected salary in
       PKR or USD by job location, start date, tailored summary); review shows each as
       its own code block (copy buttons in the app). 321 tests.
-- [ ] `[core]` `[skill]` **S2.5 Tracking after applying** (replied, interview, offer, rejected,
-      one follow-up).
+- [x] `[core]` `[skill]` **S2.5 Tracking after applying** (replied, interview, offer, rejected,
+      one follow-up). ✔ Statuses replied / interview / offer / rejected / withdrawn
+      (moved by the user); `submittedAt` stamped once; `followedUpAt`; `apply.ts
+pipeline` (counts + follow-ups due after `followUpDays`, never twice) and
+      `followed-up`; review shows where things stand, drafts the one follow-up for the
+      user to send, records news; status shows counts; the daily notification adds
+      "F follow-ups due". 323 tests.
 - [ ] `[skill]` **S2.6 LinkedIn profile rewrite** (before/after cards).
 - [ ] `[skill]` **S2.7 Hiring-team messages** (draft cards + one follow-up).
 

@@ -18,9 +18,12 @@ This runs while the user is away. **Nobody is watching**, so:
    within the budget, web search for the blocked sites, prepare the top matches with
    tailored CVs).
 3. `apply.ts list`: count `waiting` applications (N) and their to-dos (M).
+   `apply.ts pipeline`: count `followUpsDue` (F).
 4. **Notify once.** Load the `PushNotification` tool with ToolSearch if needed, then send
    exactly one notification with `status: "proactive"`:
    - N > 0: `Job Hunter: N applications ready, M things need you. Run /job-hunter:review`
+     (add ` · F follow-ups due` when F > 0)
+   - N = 0 and F > 0: `Job Hunter: F follow-ups due. Run /job-hunter:review`
    - N = 0 and the hunt worked: `Job Hunter: no new matches today (X jobs checked)`
    - A source broken for the run: add ` · <source> unavailable` at the end.
      If the tool isn't available, end with that same line as your final message.
