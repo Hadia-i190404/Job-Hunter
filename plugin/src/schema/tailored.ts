@@ -1,7 +1,7 @@
 // A CV tailored to one job (S1.5, R5): which profile facts to show, in what order, and
 // how each line is worded. Every line cites the profile entries it comes from, so the
 // honesty check can prove nothing was added (D16, R5).
-import { arrayOf, boolean, object, string, type Infer } from './core.ts';
+import { arrayOf, boolean, object, optional, string, type Infer } from './core.ts';
 
 const text = string({ minLength: 1 });
 const cited = object({ text, cites: arrayOf(text) });
@@ -12,8 +12,11 @@ export const tailoredSchema = object({
   summary: string(),
   experience: arrayOf(object({ roleId: text, bullets: arrayOf(cited) })),
   projects: arrayOf(object({ projectId: text, bullets: arrayOf(cited) })),
-  skills: arrayOf(cited),
+  // Grouped under headings like "Frontend" or "Databases" when `group` is set (D23).
+  skills: arrayOf(object({ text, cites: arrayOf(text), group: optional(string()) })),
   educationIds: arrayOf(text),
+  // Grades and other education details only when the job or form asks (D23).
+  educationDetails: optional(boolean()),
   certificationIds: arrayOf(text),
   languages: boolean(),
 });

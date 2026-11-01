@@ -44,10 +44,9 @@ describe('renderCvHtml', () => {
     const headings = [...html.matchAll(/<h2>(.*?)<\/h2>/g)].map((m) => m[1]);
     expect(headings).toEqual([
       'Summary',
+      'Technical Skills',
       'Experience',
-      'Education',
-      'Skills',
-      'Certifications',
+      'Education &amp; Certifications',
       'Languages',
     ]);
   });
@@ -81,7 +80,7 @@ describe('renderCvHtml', () => {
     };
     const out = renderCvHtml(withMore, '');
     expect(out).toContain('<h3>Ledger app</h3>');
-    expect(out).toContain('<p>Gold medal</p>');
+    expect(out).toContain('Gold medal');
     expect(out).not.toContain('<h2>Summary</h2>');
   });
 });

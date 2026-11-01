@@ -123,6 +123,7 @@ async function plan(id: string | undefined): Promise<unknown> {
     userDoes: [
       ...(app.cvPath === undefined ? [] : [`Attach your CV: ${app.cvPath}`]),
       ...app.todo,
+      'Check any fields the form filled in from your CV (ATS parsing)',
       'Press Submit',
     ],
   };

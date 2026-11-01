@@ -48,8 +48,12 @@ export function applyTailoring(profile: Profile, tailored: Tailored): Profile {
       id: `skill-t${String(i)}`,
       name: s.text,
       source: 'cv' as const,
+      ...(s.group === undefined ? {} : { group: s.group }),
     })),
-    education: keep(profile.education, tailored.educationIds),
+    // Grades and details only when asked for (D23).
+    education: keep(profile.education, tailored.educationIds).map((e) =>
+      tailored.educationDetails === true ? e : withoutDetails(e),
+    ),
     certifications: keep(profile.certifications, tailored.certificationIds),
     languages: tailored.languages ? profile.languages : [],
   };
@@ -85,4 +89,10 @@ export function keywordCoverage(
 function mentions(text: string, term: string): boolean {
   const escaped = term.toLowerCase().replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
   return new RegExp(`(^|[^a-z0-9])${escaped}([^a-z0-9]|$)`).test(text.toLowerCase());
+}
+
+function withoutDetails<T extends { details?: string }>(item: T): Omit<T, 'details'> {
+  const copy: Partial<T> = { ...item };
+  delete copy.details;
+  return copy as Omit<T, 'details'>;
 }

@@ -6,6 +6,7 @@ import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import { countPdfPages, findChrome, printToPdf } from '../src/cv/chrome.ts';
 import { checkHonesty } from '../src/cv/honesty.ts';
+import { checkQuality, pageTarget, professionalYears } from '../src/cv/quality.ts';
 import { renderCvHtml } from '../src/cv/render.ts';
 import { applyTailoring, keywordCoverage } from '../src/cv/tailor.ts';
 import type { Profile } from '../src/schema/profile.ts';
@@ -59,6 +60,8 @@ async function render(path: string): Promise<unknown> {
 
   const honesty = checkHonesty(tailored, profile, settings.clientNames ?? []);
   if (!honesty.ok) return { error: 'honesty', problems: honesty.problems };
+  const quality = checkQuality(tailored, profile);
+  if (!quality.ok) return { error: 'quality', problems: quality.problems };
   const chrome = await findChrome();
   if (chrome === undefined) return { error: 'no-chrome' };
   const { pdf, html } = await print(chrome, profile, tailored, job.company);
@@ -70,7 +73,8 @@ async function render(path: string): Promise<unknown> {
   );
   await recordGaps(coverage.gaps);
   const pages = await countPdfPages(pdf);
-  return { pdf, pages, tooLong: pages > 2, coverage };
+  const target = pageTarget(professionalYears(profile));
+  return { pdf, pages, targetPages: target, tooLong: pages > target, coverage };
 }
 
 async function print(

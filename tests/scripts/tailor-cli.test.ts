@@ -54,7 +54,11 @@ const tailored = (bulletText: string) => ({
   summary: 'Accountant focused on payroll.',
   experience: [{ roleId: 'exp-1', bullets: [{ text: bulletText, cites: ['exp-1-b2'] }] }],
   projects: [],
-  skills: [{ text: 'QuickBooks', cites: ['skill-1'] }],
+  skills: [
+    { text: 'QuickBooks', cites: ['skill-1'] },
+    { text: 'MS Excel', cites: ['skill-2'] },
+    { text: 'Payroll', cites: ['skill-3'] },
+  ],
   educationIds: ['edu-1'],
   certificationIds: [],
   languages: false,

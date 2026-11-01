@@ -9,30 +9,31 @@
 
 ## Decisions so far (20 Oct 2026)
 
-| #   | Decision                                                                                                                                                                                                                                                                                                                                                                             |
-| --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| D1  | Name: **Job Hunter**. Personal project, own GitHub repo, no link to any employer account or email.                                                                                                                                                                                                                                                                                   |
-| D2  | Users: the owner and a few friends, using it for real job hunts. Treat them as real users.                                                                                                                                                                                                                                                                                           |
-| D3  | **Hybrid actions.** Anything on a site where the user is logged in (LinkedIn, Indeed, Rozee, …) is _prepared_ by the agent and _performed_ by the user: the agent notifies, hands over ready-to-paste text, the right file and a direct link; the user clicks. This keeps accounts safe from bans.                                                                                   |
-| D4  | **No running cost** beyond each user's Claude plan. No servers, no paid APIs, no hosting. It runs where the user already is: the Claude desktop app.                                                                                                                                                                                                                                 |
-| D5  | **No platform is cut** from the first list.                                                                                                                                                                                                                                                                                                                                          |
-| D6  | **Focus:** on-site and hybrid jobs **in Pakistan**, and **remote jobs from any country** that a person in Pakistan can actually take. Relocating abroad for an on-site job is not a v1 track.                                                                                                                                                                                        |
-| D7  | English only.                                                                                                                                                                                                                                                                                                                                                                        |
-| D8  | Local Pakistani CV extras (photo, CNIC, father's name, DOB, marital status) are not used in any CV. If a base CV has them, they are dropped.                                                                                                                                                                                                                                         |
-| D9  | The owner reviews every step (spec → plan → tasks → each change).                                                                                                                                                                                                                                                                                                                    |
-| D10 | Each friend uses **their own Claude account, Pro or higher** (Claude Code is not on the Free plan; sharing one login breaks Anthropic's terms). They install the plugin from the GitHub repo once and get the owner's updates automatically.                                                                                                                                         |
-| D11 | Works on **Pro**: a "light" usage setting (fewer jobs judged by Claude per day, more left to the free scripts) is the default; Max users can raise it.                                                                                                                                                                                                                               |
-| D12 | Daily run 9:00 PKT + catch-up when the app opens.                                                                                                                                                                                                                                                                                                                                    |
-| D13 | Group-shared items (added sites, employer learnings, scam reports, company watch-list) live in the GitHub repo's `plugin/shared/` folder. Code on GitHub is fine; no hosting or database.                                                                                                                                                                                            |
-| D14 | The plugin ships with **zero runtime dependencies** (decided 21 Oct 2026, T2). Installing or updating downloads only Job Hunter's own files, never a `node_modules`. Found in T2: otherwise every install pulled 131 MB of dev tools, with a 60-second limit.                                                                                                                        |
-| D15 | **CVs are made as PDF only** for now (T7). Word (.docx) CVs can be _read_, but writing them would need a hand-built zip/XML writer (D14). Revisit if a site the group uses insists on Word.                                                                                                                                                                                          |
-| D16 | **Gaps are asked about, never filled in** (21 Oct 2026). When a job or a job search needs experience the profile doesn't show, Job Hunter asks the user whether they have it; what they describe becomes profile entries only after they approve the wording, tagged "added by you" with a date. If the answer is no, it stays a gap. See R5b.                                       |
-| D17 | **CV content policy** (21 Oct 2026). Client names never appear: describe the client by type ("a global executive search firm"). True figures **should** appear wherever they show scale or impact (document counts, %, users, batch sizes): recruiters and ATS ranking reward measurable results. Vendor and tool names (CRMs, APIs, frameworks) are fine and help keyword matching. |
-| D18 | **Master profile vs sent CV** (21 Oct 2026). The master profile holds every true fact, however long. A CV that gets sent is always tailored to one job with the ATS rules in R5 and fits on 1–2 pages. The untailored "clean CV" is a review copy, not something to send.                                                                                                            |
-| D19 | **Employer rules win** (22 Oct 2026). If an application form forbids AI-written content (e.g. Canonical: "use only my own words … the use of AI … will disqualify"), Job Hunter writes nothing for it: it fills facts only and puts every free-text answer, and the declaration itself, on the user's to-do list with the reason.                                                    |
-| D20 | **One setup, then quiet** (22 Oct 2026). Everything Job Hunter needs is asked once in the setup interview (profile check, targets, recurring screening answers, gaps). After that it only interrupts for something it truly can't know, and gathers those into the daily notification. Each answer is saved and never asked again.                                                   |
-| D21 | **Batch approval** (22 Oct 2026). Applications are prepared automatically; the user approves the day's batch, listed by name, in one step, then Job Hunter fills and submits each approved career-site application while the user is present. Nothing is submitted without that approval (D3).                                                                                       |
-| D22 | **Built as product slices** (22 Oct 2026). Work is delivered as end-to-end slices of the real flow, widened slice by slice, not as isolated components. Remaining P0 spikes fold into Slice 1.                                                                                                                                                                                       |
+| #   | Decision                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
+| --- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| D1  | Name: **Job Hunter**. Personal project, own GitHub repo, no link to any employer account or email.                                                                                                                                                                                                                                                                                                                                                                                             |
+| D2  | Users: the owner and a few friends, using it for real job hunts. Treat them as real users.                                                                                                                                                                                                                                                                                                                                                                                                     |
+| D3  | **Hybrid actions.** Anything on a site where the user is logged in (LinkedIn, Indeed, Rozee, …) is _prepared_ by the agent and _performed_ by the user: the agent notifies, hands over ready-to-paste text, the right file and a direct link; the user clicks. This keeps accounts safe from bans.                                                                                                                                                                                             |
+| D4  | **No running cost** beyond each user's Claude plan. No servers, no paid APIs, no hosting. It runs where the user already is: the Claude desktop app.                                                                                                                                                                                                                                                                                                                                           |
+| D5  | **No platform is cut** from the first list.                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
+| D6  | **Focus:** on-site and hybrid jobs **in Pakistan**, and **remote jobs from any country** that a person in Pakistan can actually take. Relocating abroad for an on-site job is not a v1 track.                                                                                                                                                                                                                                                                                                  |
+| D7  | English only.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
+| D8  | Local Pakistani CV extras (photo, CNIC, father's name, DOB, marital status) are not used in any CV. If a base CV has them, they are dropped.                                                                                                                                                                                                                                                                                                                                                   |
+| D9  | The owner reviews every step (spec → plan → tasks → each change).                                                                                                                                                                                                                                                                                                                                                                                                                              |
+| D10 | Each friend uses **their own Claude account, Pro or higher** (Claude Code is not on the Free plan; sharing one login breaks Anthropic's terms). They install the plugin from the GitHub repo once and get the owner's updates automatically.                                                                                                                                                                                                                                                   |
+| D11 | Works on **Pro**: a "light" usage setting (fewer jobs judged by Claude per day, more left to the free scripts) is the default; Max users can raise it.                                                                                                                                                                                                                                                                                                                                         |
+| D12 | Daily run 9:00 PKT + catch-up when the app opens.                                                                                                                                                                                                                                                                                                                                                                                                                                              |
+| D13 | Group-shared items (added sites, employer learnings, scam reports, company watch-list) live in the GitHub repo's `plugin/shared/` folder. Code on GitHub is fine; no hosting or database.                                                                                                                                                                                                                                                                                                      |
+| D14 | The plugin ships with **zero runtime dependencies** (decided 21 Oct 2026, T2). Installing or updating downloads only Job Hunter's own files, never a `node_modules`. Found in T2: otherwise every install pulled 131 MB of dev tools, with a 60-second limit.                                                                                                                                                                                                                                  |
+| D15 | **CVs are made as PDF only** for now (T7). Word (.docx) CVs can be _read_, but writing them would need a hand-built zip/XML writer (D14). Revisit if a site the group uses insists on Word.                                                                                                                                                                                                                                                                                                    |
+| D16 | **Gaps are asked about, never filled in** (21 Oct 2026). When a job or a job search needs experience the profile doesn't show, Job Hunter asks the user whether they have it; what they describe becomes profile entries only after they approve the wording, tagged "added by you" with a date. If the answer is no, it stays a gap. See R5b.                                                                                                                                                 |
+| D17 | **CV content policy** (21 Oct 2026). Client names never appear: describe the client by type ("a global executive search firm"). True figures **should** appear wherever they show scale or impact (document counts, %, users, batch sizes): recruiters and ATS ranking reward measurable results. Vendor and tool names (CRMs, APIs, frameworks) are fine and help keyword matching.                                                                                                           |
+| D18 | **Master profile vs sent CV** (21 Oct 2026). The master profile holds every true fact, however long. A CV that gets sent is always tailored to one job with the ATS rules in R5 and fits on 1–2 pages. The untailored "clean CV" is a review copy, not something to send.                                                                                                                                                                                                                      |
+| D19 | **Employer rules win** (22 Oct 2026). If an application form forbids AI-written content (e.g. Canonical: "use only my own words … the use of AI … will disqualify"), Job Hunter writes nothing for it: it fills facts only and puts every free-text answer, and the declaration itself, on the user's to-do list with the reason.                                                                                                                                                              |
+| D20 | **One setup, then quiet** (22 Oct 2026). Everything Job Hunter needs is asked once in the setup interview (profile check, targets, recurring screening answers, gaps). After that it only interrupts for something it truly can't know, and gathers those into the daily notification. Each answer is saved and never asked again.                                                                                                                                                             |
+| D21 | **Batch approval** (22 Oct 2026). Applications are prepared automatically; the user approves the day's batch, listed by name, in one step, then Job Hunter fills and submits each approved career-site application while the user is present. Nothing is submitted without that approval (D3).                                                                                                                                                                                                 |
+| D22 | **Built as product slices** (22 Oct 2026). Work is delivered as end-to-end slices of the real flow, widened slice by slice, not as isolated components. Remaining P0 spikes fold into Slice 1.                                                                                                                                                                                                                                                                                                 |
+| D23 | **Recruiter rules for every CV** (1 Nov 2026, from the owner's recruiter review of three generated CVs). Fixed section order with skills near the top, roles at one company combined, clickable links, no CGPA unless asked, 2–3 line summary, bullet limits, few defensible percentages, 1 page at ≤ 3 years, and a recruiter pass before a CV is used. Vague claims (scope of ownership, own work vs team work, how a metric was measured) become one-time questions, never guesses. See R5. |
 
 ## Problem / motivation
 
@@ -212,25 +213,59 @@ Workable, SmartRecruiters, Recruitee, BambooHR and Workday.
 
 ### R5 — CV tailoring (truthful)
 
-**ATS and recruiter rules every tailored CV follows (D17, D18):**
+**ATS and recruiter rules every tailored CV follows (D17, D18, D23):**
 
-- **Keywords from the job:** use the job's own words for skills, tools and duties where
-  the profile supports them (e.g. "forward deployed", "customer-facing", "solutions
-  engineering"). Exact phrases, not synonyms, because ATS filters match literally.
-- **Title line and summary aimed at the job:** the headline under the name and a 3–4
-  line summary say why this person fits _this_ role, using its key terms.
-- **Most relevant first:** within each role, the bullets that match the job go first.
-  Weakly relevant bullets are cut, not shortened into vagueness. 3–6 bullets for recent
-  roles, 1–3 for older ones.
-- **Results, not duties:** each bullet reads "did X, using Y, achieving Z", with the real
-  figure when the profile has one.
-- **Skills list built for the job:** 12–25 skills, the job's required ones first, grouped
-  if that reads better. Never the whole master list.
-- **Length and layout:** 1–2 pages (≤ 3 years' experience: aim for 1 if it fits without
-  losing key results); one column; standard headings; no tables, images, icons or
-  text in headers and footers.
-- **Truth stays fixed:** tailoring selects, orders and rephrases. It never adds a fact,
-  raises a figure, or upgrades a title.
+_Structure (enforced by the renderer and the quality check):_
+
+- **Section order:** name, headline, contact line → Summary → Technical Skills → Experience
+  → Projects (only when they add something) → Education & Certifications → Languages
+  (only when the job asks).
+- **Technical skills grouped** by kind (e.g. Frontend, Backend, Databases, Integrations &
+  Tools), 8–25 skills, the job's required ones first.
+- **One block per company:** consecutive roles at the same company show under one
+  company heading with the full date span, then each title with its own dates, so
+  progression reads at a glance.
+- **Clickable links:** email, LinkedIn and GitHub are real links in the PDF.
+- **No grades:** CGPA/GPA only when the job or form asks for it.
+- **Summary:** at most 3 sentences: role + years + core stack + the 1–2 strongest
+  results.
+- **Bullets per role:** most recent role up to 5; the earlier role at the same company
+  up to 3; other roles up to 2; the oldest roles one line.
+- **Percentages:** at most one per bullet and at most 5 per CV. Too many precise
+  percentages look artificial.
+- **Length:** 1 page at ≤ 3 years' experience, otherwise 2. A second page must be
+  substantially full. Never a near-empty page.
+
+_Content (the tailor skill's rules):_
+
+- **Aimed at the job:** the headline names the job's role family only when the chosen
+  bullets support it. The first summary sentence and the first 3 achievements match the
+  vacancy.
+- **Bullet formula:** action (what you built or improved) + technical detail (how) +
+  outcome (what changed: a real figure, or scale, reliability, security, adoption).
+- **Most distinctive work first:** routine tasks never sit above signature achievements.
+- **Tools in context:** a tool appears only where it fits the target role (no mobile
+  release tooling on a web CV without saying it was mobile).
+- **Keywords only from real work:** job terms are used inside bullets that show the work,
+  not stuffed into the skills list.
+- **Projects** only when they show something the professional experience doesn't.
+  Student MVPs are dropped for experienced roles unless the job calls for that stack.
+- **Ownership and team work stated precisely:** broad claims ("sole full-stack engineer",
+  "owned the product cycle") say what was owned (product, module, workstream) when the
+  profile knows. Your own work is kept separate from the team's.
+- **Defensible metrics:** prefer figures the user can explain (what, how measured,
+  baseline). If the profile can't back a figure that clearly, use the specific
+  engineering outcome instead.
+- **Recruiter pass:** before a CV is used, check it against the ATS checklist and the
+  three questions a recruiter asks in seconds: what kind of engineer is this, what hard
+  problems have they solved, what results have they delivered.
+
+_Questions instead of guesses (R5b):_ when the profile is too vague to meet these rules
+(the scope of an ownership claim, own work vs the team's, how a metric was measured),
+Job Hunter records a one-time question for the daily list.
+
+_Always:_ tailoring selects, orders and rephrases. It never adds a fact, raises a figure,
+or upgrades a title.
 
 - Built from the master profile only: reorders and rewrites bullets towards the job's
   wording, picks relevant skills, adjusts the summary, 1–2 pages, ATS-safe layout

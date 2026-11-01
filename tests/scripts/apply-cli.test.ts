@@ -92,6 +92,7 @@ describe('apply CLI', { timeout: 60_000 }, () => {
       userDoes: [
         'Attach your CV: /cv.pdf',
         'Tick yourself: "I agree to the privacy notice"',
+        'Check any fields the form filled in from your CV (ATS parsing)',
         'Press Submit',
       ],
     });

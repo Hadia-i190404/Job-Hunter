@@ -48,7 +48,8 @@ export const profileSchema = object({
       details: optional(string()),
     }),
   ),
-  skills: arrayOf(object({ id, name: text, ...provenance })),
+  // group: optional heading for the skills section ("Frontend", "Databases"…), D23.
+  skills: arrayOf(object({ id, name: text, group: optional(string()), ...provenance })),
   certifications: arrayOf(
     object({
       id,

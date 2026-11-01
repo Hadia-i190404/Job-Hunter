@@ -121,6 +121,18 @@ real one through Job Hunter.
       `cv/tailor.ts` (apply + keyword coverage: covered / true-but-missing / gaps),
       `tailor.ts context|render` (PDF in `cv/tailored/`, page count, gaps → `gaps.json`
       pending), `/job-hunter:tailor` skill with the R5 rules. 285 tests.
+- [x] `[core]` `[skill]` **S1.5b Recruiter rules (D23)**, from the owner's recruiter review
+      of three generated CVs (1 Nov). Renderer: Summary → Technical Skills (grouped) →
+      Experience (roles at one company in one block) → Projects → Education &
+      Certifications → Languages; clickable email/links; no grades unless
+      `educationDetails`; tighter margins. `cv/quality.ts` blocks printing on: summary > 3 sentences / 480 chars, bullets over 5 / 3 / 2 by role position, > 1
+      percentage per bullet or > 5 per CV, skills outside 8–25. Page target 1 at ≤ 3
+      professional years (internships/TA excluded). Tailor skill: headline backed by
+      bullets, first 3 achievements on target, action + detail + outcome, ownership
+      precise, tools in context, projects only when they add, recruiter pass;
+      vague claims → one-time questions. Review asks the user to check the form's
+      CV parsing. The three existing CVs now fail the check on exactly the issues the
+      review flagged (6–12 percentages, too many bullets). 306 tests.
 - [x] `[core]` **S1.6 Prepared applications.** Greenhouse form questions from the public
       API, answers from profile + answer bank, unknowns and D19 forms routed to the
       to-do list; `applications.json`. ✔ `apply/questions.ts` (`?questions=true`),
