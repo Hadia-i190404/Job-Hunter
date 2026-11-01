@@ -13,8 +13,9 @@ day it:
 
 You stay in control of everything that goes out in your name.
 
-> **Status: in development (phase P0).** This README describes the planned product.
-> The checklist under [Status](#status) shows what works today.
+> **Status: in daily use.** The full loop (setup → daily hunt → tailored CVs → applications
+> → tracking) has been running for real since 1 Nov 2026. [Status](#status) lists what's
+> built and what's next.
 
 ---
 
@@ -23,6 +24,7 @@ You stay in control of everything that goes out in your name.
 - [Why Job Hunter](#why-job-hunter)
 - [What it looks for](#what-it-looks-for)
 - [How it works](#how-it-works)
+- [How it's built: the agent design](#how-its-built-the-agent-design)
 - [What it will and won't do for you](#what-it-will-and-wont-do-for-you)
 - [What you need](#what-you-need)
 - [Install](#install)
@@ -49,7 +51,7 @@ Job hunting from Pakistan usually means:
 - auto-apply bots that spray applications everywhere and get LinkedIn accounts banned.
 
 Job Hunter knows which jobs a person in Pakistan can really get. It does the repetitive
-work and **never touches your logged-in accounts**.
+work and **nothing goes out in your name without your OK**.
 
 ## What it looks for
 
@@ -101,11 +103,11 @@ too good to be true) are hidden, and the reason is shown.
 
 ### The three action levels
 
-| Level                                 | Who does it                                                                        | Where                                                                        |
-| ------------------------------------- | ---------------------------------------------------------------------------------- | ---------------------------------------------------------------------------- |
-| **A: Job Hunter does it**             | Job Hunter, fully                                                                  | Searching public listings, reading job pages, writing CVs and messages       |
-| **B: Job Hunter fills, you submit**   | Job Hunter fills the form in the app's browser. **You check it and press Submit.** | Company career sites with no login (Greenhouse, Lever, Ashby, Workable, …)   |
-| **C: Job Hunter prepares, you do it** | You, using an **action card**                                                      | LinkedIn (always), Indeed, Rozee, Glassdoor and any site you're logged in to |
+| Level                                 | Who does it                                                                        | Where                                                                      |
+| ------------------------------------- | ---------------------------------------------------------------------------------- | -------------------------------------------------------------------------- |
+| **A: Job Hunter does it**             | Job Hunter, fully                                                                  | Searching public listings, reading job pages, writing CVs and messages     |
+| **B: Job Hunter fills, you submit**   | Job Hunter fills the form in the app's browser. **You check it and press Submit.** | Company career sites with no login (Greenhouse, Lever, Ashby, Workable, …) |
+| **C: Job Hunter prepares, you do it** | You, using an **action card**                                                      | LinkedIn, Indeed, Rozee, Mustakbil and any site you're logged in to        |
 
 An **action card** has:
 
@@ -113,10 +115,25 @@ An **action card** has:
 - a link to the exact page;
 - each piece of text with a **Copy** button, in the order the site asks for it;
 - the right CV file;
-- answers to the screening questions you can expect;
-- **Done**, **Skip** and **Snooze** buttons.
+- answers to the screening questions you can expect.
 
 It turns a 15-minute task into about a minute, and your account only ever sees you.
+
+## How it's built: the agent design
+
+Job Hunter is an agent built on Claude Code. The split is deliberate: **plain local
+scripts do everything that has to be exact and repeatable, and Claude is used only for
+judgement.** That keeps runs cheap enough for a Pro plan, and makes behaviour testable.
+
+| Concern                           | How it's handled                                                                                                                                                                                                                                                                                                       |
+| --------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Deterministic vs model work**   | TypeScript scripts (zero runtime dependencies) fetch jobs, normalise them, judge Pakistan eligibility with rules, score scams, dedupe and match. Claude only reads the jobs the rules mark _unclear_, tailors CVs and drafts answers.                                                                                  |
+| **Human approval as a hard gate** | Every application moves through a status machine (`prepared → needs-you → approved → submitted → replied → interview …`). The script that plans a form fill refuses anything not `approved`. One batch approval a day, not one ping per job.                                                                           |
+| **Permissions by site**           | Three action levels (below): public pages it reads itself; no-login career forms it fills and **you** press Submit; logged-in sites only in a session you started and are watching, stopping at any CAPTCHA or warning and handing back to you.                                                                        |
+| **Handovers when it needs you**   | Anything only you can answer (work permit, salary, declarations, a missing fact) becomes a to-do on the application instead of a guess. On employer forms that ban AI-written answers, the code refuses free-text answers from Claude.                                                                                 |
+| **Honesty checks**                | Every tailored CV line must trace back to your master profile. An honesty check, then a recruiter-rules quality check, run before the PDF is made; a failure blocks the PDF. Unconfirmed claims live in a drafts list until you approve them.                                                                          |
+| **Failure handling**              | Network calls time out and return errors instead of throwing, with a polite per-site delay; one broken source doesn't stop the run; daily limits per source. Data files are written atomically with a `.bak` copy, validated against a schema on every read, and upgraded by migrations. Everything it does is logged. |
+| **Quality gates**                 | Strict TypeScript, type-aware lint with size/complexity limits, 330 tests with ≥ 80% coverage, a privacy guard that blocks personal data from the repo, and CI on every push.                                                                                                                                          |
 
 ## What it will and won't do for you
 
@@ -134,7 +151,8 @@ It turns a 15-minute task into about a minute, and your account only ever sees y
 **It won't, ever:**
 
 - add anything to your CV that isn't true;
-- click, type or send anything on LinkedIn or any site you're logged in to;
+- act on LinkedIn or any site you're logged in to on its own: only in a session you
+  started and are watching, at a normal pace, stopping at any warning (see the FAQ);
 - press Submit on an application for you;
 - answer work-permission, visa, legal or demographic questions without asking you;
 - ask for, store or type your passwords, or solve CAPTCHAs;
@@ -191,14 +209,15 @@ change once they're confirmed.)_
 ## Daily use
 
 - **Morning:** you get a notification like "7 new matches, 3 things waiting for you".
-- **Review:** say _"show me today's matches"_, or open the dashboard
-  (`/job-hunter:status` → _"open the dashboard"_).
-- **Pick jobs:** 👍 / 👎 teaches it your taste. _"Prepare this one"_ makes the tailored CV,
-  the application and the message.
-- **Send:** for a career-site form, check what it filled and press Submit. For an action
-  card, follow it and press **Done**.
-- **Replies:** when someone replies or invites you to interview, tell it (_"Acme replied"_)
-  or move the card on the dashboard.
+- **Review:** run `/job-hunter:review` (or say _"what's waiting for me?"_): today's
+  prepared applications and the few things only you can answer, with one approval for
+  the batch.
+- **Send:** for a career-site form, it fills the form and you check it and press Submit.
+  For an action card, follow it and say _"done"_.
+- **Friends' links:** say _"check my LinkedIn messages"_ and it reads the jobs friends sent
+  you (in your own signed-in Chrome, while you watch) and adds them.
+- **Replies:** when someone replies or invites you to interview, tell it
+  (_"Acme replied"_).
 - **Pause:** _"pause job hunter"_ stops the daily run and any form filling straight away.
 
 The daily run only happens while your computer is on and the Claude app is open. If you
@@ -213,35 +232,31 @@ miss a day, it catches up the next time you open the app.
 | `/job-hunter:hunt`     | Run a search now (the daily run uses this too)                                                    |
 | `/job-hunter:review`   | Where things stand, today's applications and to-dos, one approval, submit, follow-ups             |
 | `/job-hunter:tailor`   | Tailored CV (and cover letter) for one job                                                        |
-| `/job-hunter:apply`    | Fill a career-site form (level B) or make an action card (level C)                                |
 | `/job-hunter:linkedin` | Rewrite your LinkedIn (headline, About, roles, skills, Open to Work) as before/after you paste in |
 | `/job-hunter:outreach` | Find who is hiring and draft short messages you send yourself; one follow-up                      |
 | `/job-hunter:add`      | Add a job from any link or pasted job text (Rozee, LinkedIn, Indeed…)                             |
+| `/job-hunter:inbox`    | Read jobs friends sent you in LinkedIn messages (attended, in your own Chrome) and add them       |
 | `/job-hunter:daily`    | The unattended daily run (the 09:00 scheduled task calls it): hunt, prepare, one notification     |
-| `/job-hunter:status`   | What's waiting for you, the pipeline, the dashboard, pause/resume                                 |
+| `/job-hunter:status`   | What's waiting for you, the pipeline counts, pause/resume                                         |
 
 You can also just talk to it in plain English. The commands are shortcuts.
 
 ## Job sites covered
 
-| Site                                                                                   | How it searches                                                                       | How you apply                |
-| -------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------- | ---------------------------- |
-| Remotive, Remote OK, Himalayas, Jobicy, Working Nomads                                 | Official public feed                                                                  | On the employer's site       |
-| We Work Remotely                                                                       | RSS feed                                                                              | On the employer's site       |
-| Company career sites on Greenhouse, Lever, Ashby, Workable, SmartRecruiters, Recruitee | Public job-board feeds                                                                | **B**: it fills, you submit  |
-| BambooHR, Workday career sites                                                         | Public pages                                                                          | B, or C if a login is needed |
-| Mustakbil.com                                                                          | Its RSS feed (Pakistani jobs, with salaries)                                          | **C**: action card           |
-| Rozee.pk                                                                               | Web search, or links you paste from Rozee job alerts (Rozee blocks automated reading) | **C**: action card           |
-| Bayt, GulfTalent, NaukriGulf                                                           | Public listings (Pakistan-based and remote jobs only)                                 | **C**: action card           |
-| LinkedIn Jobs                                                                          | Public, logged-out listings only                                                      | **C**: always                |
-| Indeed, Glassdoor                                                                      | Public pages, or web search if they block it                                          | C                            |
-| Wellfound, Arc.dev, Turing                                                             | Public pages                                                                          | C                            |
-| **Any site you add**                                                                   | `/job-hunter:add-site <url>`                                                          | B or C                       |
+| Site                                                   | How it searches                                                                      | How you apply                                       |
+| ------------------------------------------------------ | ------------------------------------------------------------------------------------ | --------------------------------------------------- |
+| Remotive, Remote OK, Himalayas, Jobicy, Working Nomads | Official public feed                                                                 | On the employer's site                              |
+| We Work Remotely                                       | RSS feed                                                                             | On the employer's site                              |
+| Company career sites on Greenhouse, Lever, Ashby       | Public job-board feeds (a shared watch-list of companies)                            | **B**: it fills, you submit                         |
+| Mustakbil.com                                          | Its RSS feed (Pakistani jobs, with salaries)                                         | **C**: action card (needs a free Mustakbil account) |
+| Rozee.pk, LinkedIn Jobs, Indeed                        | Web search, or links you paste or friends send (these sites block automated reading) | **C**: action card                                  |
+| **Any job link or pasted job text**                    | `/job-hunter:add`                                                                    | B or C                                              |
 
-Some big sites block automated reading even when you're logged out. When that happens,
-Job Hunter finds their listings through web search, or you paste links from your
-job-alert emails. The dashboard shows how each site is working: **working**,
-**fallback** or **broken**.
+Planned next: Workable, SmartRecruiters and other public career-site feeds, and a
+generic reader for any site you add.
+
+Job Hunter never gets around a site that blocks automated reading. It finds those
+listings through web search, or you paste the link.
 
 ## Your data and privacy
 
@@ -257,17 +272,18 @@ job-alert emails. The dashboard shows how each site is working: **working**,
   profiles or answers.
 - Your Claude conversations are covered by your own Claude account's privacy settings.
 
-| File in `~/JobHunter/`            | Holds                                                         |
-| --------------------------------- | ------------------------------------------------------------- |
-| `profile.json`                    | Your master profile, the only source of facts it uses         |
-| `searches.json`                   | What you're looking for                                       |
-| `answers.json`                    | Your saved screening-question answers                         |
-| `jobs.jsonl`, `assessments.jsonl` | Jobs found, and how each was judged                           |
-| `pipeline.json`, `cards.json`     | Where each application is; action cards                       |
-| `cv/`                             | Your clean CV and tailored CVs (PDF) and what changed in each |
-| `log.jsonl`                       | Everything Job Hunter did, and everything you marked done     |
-| `settings.json`                   | Paused, sites on/off, usage setting                           |
-| `meta.json`                       | Data-folder version, so updates can upgrade your files safely |
+| File in `~/JobHunter/`             | Holds                                                         |
+| ---------------------------------- | ------------------------------------------------------------- |
+| `profile.json`                     | Your master profile, the only source of facts it uses         |
+| `searches.json`                    | What you're looking for                                       |
+| `answers.json`                     | Your saved screening-question answers                         |
+| `jobs.jsonl`, `matches.json`       | Jobs found, and how each was judged and ranked                |
+| `applications.json`                | Every application, its answers, to-dos and status             |
+| `profile.drafts.json`, `gaps.json` | Claims waiting for your OK; questions still open              |
+| `cv/`                              | Your clean CV and tailored CVs (PDF) and what changed in each |
+| `log.jsonl`                        | Everything Job Hunter did, and everything you marked done     |
+| `settings.json`                    | Paused, sites on/off, usage setting                           |
+| `meta.json`                        | Data-folder version, so updates can upgrade your files safely |
 
 ## Usage settings (Pro vs Max)
 
@@ -285,9 +301,10 @@ finishes what it can and continues on the next run.
 ## FAQ
 
 **Will my LinkedIn get banned?**
-Job Hunter never logs in to LinkedIn, never clicks there and never sends anything. You
-do every LinkedIn action yourself from an action card, so your account only ever sees
-you.
+Job Hunter never logs in for you and never runs on LinkedIn by itself. It only reads your
+LinkedIn messages (or fills a form) in your own signed-in Chrome, in a session you
+started and are watching, at a normal human pace. It stops and hands back to you at any
+CAPTCHA, "unusual activity" notice or warning, and never tries to get around one.
 
 **Can my friend use my Claude plan?**
 No. Anthropic's terms don't allow sharing an account. Each person needs their own Pro
@@ -306,8 +323,8 @@ Not in this version. It covers on-site and hybrid jobs in Pakistan, and remote j
 anywhere.
 
 **It missed a job site I use.**
-`/job-hunter:add-site` and paste the site's search page. If it can read the jobs there,
-it'll search it every day from then on.
+Paste any job link or the job text with `/job-hunter:add`. Adding whole sites to the
+daily search is planned.
 
 ---
 
@@ -322,7 +339,7 @@ Every change goes **spec → plan → tasks → code**, and the owner reviews ea
 
 | Doc                                                                |                                                     |
 | ------------------------------------------------------------------ | --------------------------------------------------- |
-| [`specs/0001-job-hunter/spec.md`](specs/0001-job-hunter/spec.md)   | What and why; decisions D1–D13; acceptance criteria |
+| [`specs/0001-job-hunter/spec.md`](specs/0001-job-hunter/spec.md)   | What and why; decisions D1–D25; acceptance criteria |
 | [`specs/0001-job-hunter/plan.md`](specs/0001-job-hunter/plan.md)   | Architecture, data folder, connectors, phases       |
 | [`specs/0001-job-hunter/tasks.md`](specs/0001-job-hunter/tasks.md) | Ordered tasks, each with "Done when"                |
 
@@ -357,7 +374,7 @@ format and tests. A failing check blocks the commit.
 .claude-plugin/   marketplace manifest → ./plugin
 plugin/           the plugin itself: the only folder users install
   skills/         one folder per slash command (SKILL.md)
-  src/            schema/, store/, connectors/, pipeline/, cv/, dashboard/
+  src/            schema/, store/, connectors/, pipeline/, hunt/, cv/, apply/
   scripts/        command-line entry points the skills run
   templates/      ATS-safe CV and cover-letter templates
   shared/         group-shared data (no personal data)
@@ -372,19 +389,18 @@ never shipped.
 
 ## Status
 
-**Foundations done; building Slice 1, the first full loop.** See
-[tasks.md](specs/0001-job-hunter/tasks.md).
+**In daily use since 1 Nov 2026.** See [tasks.md](specs/0001-job-hunter/tasks.md).
 
-- [x] Foundations: data folder, 3 job sources, Pakistan-eligibility, scam and duplicate
+- [x] Foundations: data folder, 10 job sources, Pakistan eligibility, scam and duplicate
       rules, CV → profile → clean PDF
-- [x] **Slice 1 built:** setup interview → daily hunt → matching → tailored CVs →
-      prepared Greenhouse applications → one daily notification → batch approval → submit
-      (signing off with the owner's first real application)
-- [x] Daily-use pack: 10 sources + Rozee/LinkedIn/Indeed via search and pasted links,
-      Lever/Ashby forms, action cards, tracking and follow-ups, LinkedIn rewrite,
-      hiring-team messages
-- [ ] Later: local dashboard, daily exchange rates, generic site reader, thumbs learning
-- [ ] Slice 4: friends' onboarding and shared learning
+- [x] Full loop: setup interview → daily hunt → matching → tailored CVs (honesty and
+      recruiter-rules checks) → prepared applications → one notification → batch
+      approval → form fill → submit → tracking and follow-ups
+- [x] Lever/Ashby/Greenhouse forms, action cards, LinkedIn rewrite, hiring-team messages,
+      jobs from LinkedIn messages (attended)
+- [ ] Next: fixes from the first live run, morning update with open asks, more career-site
+      feeds, daily exchange rates
+- [ ] Later: local dashboard, learning from your picks, friends' onboarding
 
 ## License
 
