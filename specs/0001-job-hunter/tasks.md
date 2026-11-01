@@ -195,7 +195,12 @@ pipeline` (counts + follow-ups due after `followUpDays`, never twice) and
       `followed-up`; review shows where things stand, drafts the one follow-up for the
       user to send, records news; status shows counts; the daily notification adds
       "F follow-ups due". 323 tests.
-- [ ] `[skill]` **S2.6 LinkedIn profile rewrite** (before/after cards).
+- [x] `[skill]` **S2.6 LinkedIn profile rewrite** (before/after cards). ✔ `/job-hunter:linkedin`:
+      current profile from the user's LinkedIn PDF or pasted text (Job Hunter never opens
+      LinkedIn); headline, About, experience, skills, Open to Work (recruiters only),
+      custom URL; master-profile facts only with the CV rules; before/after per section
+      with copy blocks; `linkedin.ts save|list|mark` tracks pending → approved → done.
+      324 tests.
 - [ ] `[skill]` **S2.7 Hiring-team messages** (draft cards + one follow-up).
 
 ## Later slices

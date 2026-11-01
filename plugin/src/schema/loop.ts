@@ -171,3 +171,22 @@ export const matchesSchema = object({
   ),
 });
 export type MatchesFile = Infer<typeof matchesSchema>;
+
+// LinkedIn rewrite (S2.6, R7): one entry per profile section, before → after. The user
+// pastes approved text into LinkedIn themselves (D3: Job Hunter never acts on LinkedIn).
+export const linkedinSchema = object({
+  sections: arrayOf(
+    object({
+      // e.g. "headline", "about", "experience:exp-1", "skills", "open-to", "custom-url"
+      section: text,
+      label: text,
+      before: string(),
+      after: text,
+      // Profile entries the new text comes from (honesty, R5).
+      cites: arrayOf(string()),
+      status: oneOf(['pending', 'approved', 'done', 'skipped'] as const),
+      updatedAt: isoDate(),
+    }),
+  ),
+});
+export type LinkedinFile = Infer<typeof linkedinSchema>;

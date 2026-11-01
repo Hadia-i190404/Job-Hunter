@@ -22,6 +22,7 @@ export const FILES = {
   drafts: 'profile.drafts.json',
   applications: 'applications.json',
   matches: 'matches.json',
+  linkedin: 'linkedin.json',
   cards: 'cards.json',
 } as const;
 
