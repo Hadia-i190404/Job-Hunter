@@ -209,6 +209,16 @@ pipeline` (counts + follow-ups due after `followUpDays`, never twice) and
       one follow-up after the wait, none after a reply; review offers it after
       submitting. 329 tests.
 
+- [x] `[core]` `[skill]` **S2.8 Attended LinkedIn mode + three runs a day (D24, D25).**
+      `/job-hunter:inbox`: in a session the user started, read LinkedIn DMs (last 3 days)
+      in their own Chrome for job links, read each job, add it (external Greenhouse/
+      Lever/Ashby links become fillable); the review runs it first and fills Easy Apply
+      for approved LinkedIn jobs (CV upload, answers from the card), stopping at the
+      final screen for the user's Submit, and at any CAPTCHA, warning or sign-in.
+      Never scheduled. Daily runs at 09:00 / 13:00 / 18:00 (morning / midday /
+      evening), notifying only when new; `runs.json` holds each source to its daily
+      limit (Remotive 1 run/day). 330 tests.
+
 ## Later slices
 
 S2 wider net · S3 LinkedIn & outreach · S4 group (see plan "Delivery: product slices").

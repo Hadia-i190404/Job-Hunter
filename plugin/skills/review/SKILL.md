@@ -1,6 +1,6 @@
 ---
 description: Job Hunter's daily review - show today's prepared applications and the few things only the user can do, take one approval for the batch, then fill each approved company-site form in the browser for the user to finish and submit. Use when the user says "review my applications", "what's waiting for me", or opens the daily notification.
-allowed-tools: Read, Write(~/JobHunter/**), Bash(sh ${CLAUDE_PLUGIN_ROOT}/scripts/run.sh ${CLAUDE_PLUGIN_ROOT}/scripts/outreach.ts list), Bash(sh ${CLAUDE_PLUGIN_ROOT}/scripts/run.sh ${CLAUDE_PLUGIN_ROOT}/scripts/apply.ts *), Bash(sh ${CLAUDE_PLUGIN_ROOT}/scripts/run.sh ${CLAUDE_PLUGIN_ROOT}/scripts/setup.ts save-answers *), Bash(sh ${CLAUDE_PLUGIN_ROOT}/scripts/run.sh ${CLAUDE_PLUGIN_ROOT}/scripts/store.ts status)
+allowed-tools: Read, Write(~/JobHunter/**), Skill, ToolSearch, mcp__claude-in-chrome__tabs_context_mcp, mcp__claude-in-chrome__tabs_create_mcp, mcp__claude-in-chrome__navigate, mcp__claude-in-chrome__get_page_text, mcp__claude-in-chrome__read_page, mcp__claude-in-chrome__find, mcp__claude-in-chrome__computer, mcp__claude-in-chrome__form_input, mcp__claude-in-chrome__file_upload, Bash(sh ${CLAUDE_PLUGIN_ROOT}/scripts/run.sh ${CLAUDE_PLUGIN_ROOT}/scripts/add-job.ts *), Bash(sh ${CLAUDE_PLUGIN_ROOT}/scripts/run.sh ${CLAUDE_PLUGIN_ROOT}/scripts/tailor.ts *), Bash(sh ${CLAUDE_PLUGIN_ROOT}/scripts/run.sh ${CLAUDE_PLUGIN_ROOT}/scripts/outreach.ts list), Bash(sh ${CLAUDE_PLUGIN_ROOT}/scripts/run.sh ${CLAUDE_PLUGIN_ROOT}/scripts/apply.ts *), Bash(sh ${CLAUDE_PLUGIN_ROOT}/scripts/run.sh ${CLAUDE_PLUGIN_ROOT}/scripts/setup.ts save-answers *), Bash(sh ${CLAUDE_PLUGIN_ROOT}/scripts/run.sh ${CLAUDE_PLUGIN_ROOT}/scripts/store.ts status)
 ---
 
 # Job Hunter: daily review and submit
@@ -12,6 +12,13 @@ $RUN/apply.ts list | show <id> | answer <id> <index> <user|claude> <text> | plan
              | pipeline | followed-up <id> | card <id>
 $RUN/setup.ts save-answers <file>
 ```
+
+## 0a. LinkedIn messages first (D24)
+
+Unless the user says to skip it, follow the `/job-hunter:inbox` skill to add jobs from
+their LinkedIn DMs. Then, for each new job that matched, make the tailored CV
+(`/job-hunter:tailor`) and run `apply.ts prepare <jobId> <pdf>`, so it joins today's
+batch.
 
 ## 0. Where things stand
 
@@ -80,7 +87,20 @@ For each approved **B** application:
 - Stop and hand over on any CAPTCHA, login, test or unexpected step. Never get around
   one.
 
-For each **C** application (sites the user applies on themselves), run
+For each approved **LinkedIn** application (source `linkedin`; attended, D24): in the
+user's Chrome (Claude in Chrome), open the job.
+
+- **Easy Apply:** click it and fill each step from `apply.ts card <id>`: contact
+  details, upload the tailored CV with the file-upload tool, and screening answers from
+  the card or answer bank. Never guess a work-permission, salary, legal or demographic
+  answer: ask. Stop on the final review screen and let the user press **Submit**, or
+  submit only if they say so for that application. Then mark it `submitted`.
+- **External Apply** to Greenhouse, Lever or Ashby: add that link (`add-job.ts url`),
+  prepare it, and fill it like any other B application.
+- Stop and hand over at any CAPTCHA, sign-in, warning or unusual screen. One
+  application at a time, normal pace, no timing tricks.
+
+For each other **C** application (sites the user applies on themselves), run
 `apply.ts card <id>` and show it as an **action card**:
 
 - **title at company**, the link, and the tailored CV file path;

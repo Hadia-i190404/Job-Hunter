@@ -64,6 +64,7 @@ const DATA_FILE_NAMES = new Set([
   'matches.json',
   'linkedin.json',
   'contacts.json',
+  'runs.json',
   'assessments.jsonl',
   'jobs.jsonl',
   'log.jsonl',

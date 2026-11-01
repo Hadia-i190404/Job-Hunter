@@ -7,6 +7,7 @@ import {
   matchesSchema,
   linkedinSchema,
   contactsSchema,
+  runsSchema,
   searchesSchema,
   type AnswersFile,
   type ApplicationsFile,
@@ -15,6 +16,7 @@ import {
   type MatchesFile,
   type LinkedinFile,
   type ContactsFile,
+  type RunsFile,
   type SearchesFile,
 } from '../schema/loop.ts';
 import { loadDoc, saveDoc, type Doc } from './doc.ts';
@@ -62,6 +64,12 @@ export const CONTACTS: Doc<ContactsFile> = {
   file: FILES.contacts,
   schema: contactsSchema,
   empty: () => ({ contacts: [] }),
+};
+
+export const RUNS: Doc<RunsFile> = {
+  file: FILES.runs,
+  schema: runsSchema,
+  empty: () => ({ date: '1970-01-01', counts: {} }),
 };
 
 // The direction gate (R1): nothing outward happens until the current searches are confirmed.

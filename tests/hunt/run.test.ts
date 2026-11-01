@@ -98,6 +98,30 @@ describe('runHunt', () => {
     expect((await loadJobs(dir)).size).toBe(result.jobsSeen);
   });
 
+  it('holds each source to its daily limit across runs', async () => {
+    const dir = await tempDir();
+    const now = new Date(Date.UTC(2026, 10, 1, 4));
+    await runHunt(dir, searches, { http: http(), connectors: sources, now });
+    const second = await runHunt(dir, searches, {
+      http: http(),
+      connectors: sources,
+      now: new Date(Date.UTC(2026, 10, 1, 8)),
+    });
+    // Remotive allows one run a day (its 4-requests limit); the others run again.
+    expect(second.sources.find((s) => s.source === 'Remotive')?.notes[0]).toMatch(
+      /skipped: already ran 1× today/,
+    );
+    expect(second.sources.find((s) => s.source === 'Mustakbil.com')?.notes).toEqual([]);
+    const nextDay = await runHunt(dir, searches, {
+      http: http(),
+      connectors: sources,
+      now: new Date(Date.UTC(2026, 10, 2, 4)),
+    });
+    expect(nextDay.sources.find((s) => s.source === 'Remotive')?.notes[0] ?? '').not.toMatch(
+      /skipped/,
+    );
+  });
+
   it('skips jobs that already have an application', async () => {
     const dir = await tempDir();
     const now = new Date(0).toISOString();

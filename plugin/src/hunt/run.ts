@@ -13,7 +13,7 @@ import type { MatchesFile, Search } from '../schema/loop.ts';
 import { loadDoc, saveDoc } from '../store/doc.ts';
 import { loadJobs, saveJobs } from '../store/jobs.ts';
 import { logEvent } from '../store/log.ts';
-import { APPLICATIONS, MATCHES } from '../store/loop.ts';
+import { APPLICATIONS, MATCHES, RUNS } from '../store/loop.ts';
 
 interface SourceReport {
   source: string;
@@ -39,13 +39,14 @@ export async function runHunt(
   deps: { http: HttpClient; connectors: readonly Connector[]; now?: Date },
 ): Promise<HuntResult> {
   const now = deps.now ?? new Date();
+  const { allowed, skipped } = await withinDailyLimits(dir, deps.connectors, now);
   const known = await loadJobs(dir);
   const query = {
     keywords: expandTitles(searches.flatMap((s) => s.titles)),
     cities: [...new Set(searches.flatMap((s) => s.cities))],
   };
   const results = await Promise.all(
-    deps.connectors.map(async (connector) => ({
+    allowed.map(async (connector) => ({
       connector,
       result: await connector.search(
         // Company boards are one request each whatever the filter: take everything and
@@ -62,12 +63,22 @@ export async function runHunt(
   await saveDoc(dir, MATCHES, { runAt: now.toISOString(), items });
 
   const result: HuntResult = {
-    sources: results.map(({ connector, result: r }) => ({
-      source: connector.label,
-      status: r.status,
-      found: r.jobs.length,
-      notes: r.notes,
-    })),
+    sources: [
+      ...results.map(({ connector, result: r }) => ({
+        source: connector.label,
+        status: r.status,
+        found: r.jobs.length,
+        notes: r.notes,
+      })),
+      ...skipped.map((connector) => ({
+        source: connector.label,
+        status: 'ok' as const,
+        found: 0,
+        notes: [
+          `skipped: already ran ${String(connector.maxRunsPerDay)}× today (the site's daily limit)`,
+        ],
+      })),
+    ],
     jobsSeen: jobs.length,
     newJobs: saved.added,
     matched: items.length,
@@ -84,6 +95,23 @@ export async function runHunt(
     now,
   );
   return result;
+}
+
+// Each source runs at most `maxRunsPerDay` times per UTC day, across all runs (D25).
+async function withinDailyLimits(
+  dir: string,
+  connectors: readonly Connector[],
+  now: Date,
+): Promise<{ allowed: Connector[]; skipped: Connector[] }> {
+  const today = now.toISOString().slice(0, 10);
+  const file = await loadDoc(dir, RUNS);
+  const counts = file.date === today ? file.counts : {};
+  const allowed = connectors.filter((c) => (counts[c.id] ?? 0) < c.maxRunsPerDay);
+  const skipped = connectors.filter((c) => !allowed.includes(c));
+  const next = { ...counts };
+  for (const c of allowed) next[c.id] = (next[c.id] ?? 0) + 1;
+  await saveDoc(dir, RUNS, { date: today, counts: next });
+  return { allowed, skipped };
 }
 
 async function rank(

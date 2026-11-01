@@ -26,7 +26,8 @@ export const remotive: Connector = {
   label: 'Remotive',
   kind: 'api',
   applyLevel: 'C',
-  maxRunsPerDay: 4,
+  // Up to 3 requests a run against a 4-requests-a-day limit: one run a day.
+  maxRunsPerDay: 1,
   search: async (query, { http }) => {
     const phrases = query.keywords.slice(0, MAX_PHRASES);
     const urls =

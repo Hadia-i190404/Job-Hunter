@@ -8,6 +8,7 @@ import {
   object,
   oneOf,
   optional,
+  recordOf,
   string,
   type Infer,
 } from './core.ts';
@@ -215,3 +216,11 @@ export const contactsSchema = object({
   ),
 });
 export type ContactsFile = Infer<typeof contactsSchema>;
+
+// How many times each source ran today, so its daily limit holds across the 3 daily
+// runs (D25). `date` is the UTC day; a new day starts the counts again.
+export const runsSchema = object({
+  date: string({ pattern: /^\d{4}-\d{2}-\d{2}$/, hint: 'YYYY-MM-DD' }),
+  counts: recordOf(number({ integer: true, min: 0 })),
+});
+export type RunsFile = Infer<typeof runsSchema>;
