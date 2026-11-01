@@ -169,7 +169,12 @@ The owner wants to use Job Hunter daily from today; these seven, in order.
       Lever, Ashby; kept to companies with Pakistan-open jobs: Supabase 59/68, Railway,
       ElevenLabs, PostHog, Toptal, Binance). Live 1 Nov on the owner's searches: 1,851
       jobs from 10 sources in 24 s → 204 matches, 82 strong. 314 tests.
-- [ ] `[core]` **S2.2 Lever and Ashby application forms** (like Greenhouse).
+- [x] `[core]` **S2.2 Lever and Ashby application forms** (like Greenhouse). Neither has
+      a public form API, so applications start from their standard fields
+      (`apply/standard-forms.ts`: name, email, phone, current company, CV, LinkedIn,
+      GitHub, portfolio) and are level B; at review Claude reads extra questions on
+      the page, answers from the profile/answer bank, asks the user the rest and saves
+      them; declarations, demographics and no-AI forms stay the user's. 315 tests.
 - [ ] `[core]` `[skill]` **S2.3 Blocked sites + pasted links** (Rozee, LinkedIn, Indeed… via
       web search; "add this job" from any link).
 - [ ] `[skill]` **S2.4 Action cards** for sites the user applies on.

@@ -17,6 +17,7 @@ export interface NewApplication {
   url: string;
   applyLevel: 'B' | 'C';
   cvPath?: string;
+  note?: string;
   prepared: Prepared;
 }
 
@@ -45,6 +46,7 @@ export async function addApplication(
     updatedAt: stamp,
   };
   if (input.cvPath !== undefined) application.cvPath = input.cvPath;
+  if (input.note !== undefined) application.note = input.note;
   if (input.prepared.noAi)
     application.note =
       'This employer forbids AI-written answers: every free-text answer is yours to write (D19).';

@@ -150,8 +150,8 @@ describe('registry', () => {
       ['workingnomads', 'C'],
       ['mustakbil', 'C'],
       ['greenhouse', 'B'],
-      ['lever', 'C'],
-      ['ashby', 'C'],
+      ['lever', 'B'],
+      ['ashby', 'B'],
     ]);
   });
 });

@@ -99,6 +99,43 @@ describe('apply CLI', { timeout: 60_000 }, () => {
     expect(apply(home, 'plan', 'app-9').json).toEqual({ error: 'no such application' });
   });
 
+  it('prepares Lever and Ashby jobs from their standard fields, noting extra questions', async () => {
+    const home = await tempDir();
+    await initDataFolder(home);
+    const checked = checkProfile(
+      JSON.parse(
+        readFileSync(new URL('../fixtures/cv/fake-profile.json', import.meta.url), 'utf8'),
+      ) as unknown,
+    );
+    if (!checked.ok) throw new Error('bad fixture');
+    await saveProfile(home, checked.profile);
+    await saveJobs(home, [
+      normalizeJob({
+        source: 'lever',
+        sourceId: 'example-a1',
+        url: 'https://jobs.lever.co/example/a1',
+        title: 'Engineer',
+        company: 'example',
+      }),
+    ]);
+    expect(apply(home, 'prepare', 'lever:example-a1', '/cv.pdf').json).toMatchObject({
+      status: 'prepared',
+      todo: [],
+      questions: 8,
+    });
+    const app = apply(home, 'show', 'app-1').json as {
+      applyLevel: string;
+      note: string;
+      answers: { question: string; answer?: string }[];
+    };
+    expect(app.applyLevel).toBe('B');
+    expect(app.note).toMatch(/may ask more questions/);
+    expect(app.answers.find((a) => a.question === 'Current company')?.answer).toBe(
+      'Example Traders (Pvt.) Ltd',
+    );
+    expect(app.answers.find((a) => a.question === 'Full name')?.answer).toBe('Ayesha Example');
+  });
+
   it('keeps Claude out of no-AI forms and rejects bad input', async () => {
     const home = await tempDir();
     await initDataFolder(home);

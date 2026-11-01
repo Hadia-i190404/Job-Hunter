@@ -73,6 +73,7 @@ const PROFILE_FIELDS: readonly (readonly [RegExp, Getter])[] = [
   [/linkedin/, (p) => link(p, /linkedin\.com/i)],
   [/github/, (p) => link(p, /github\.com/i)],
   [/^(location|city)\b/, (p) => p.contact.city],
+  [/^current company/, (p) => p.experience.find((e) => e.end === 'present')?.company],
 ];
 
 function profileAnswer(q: FormQuestion, profile: Profile, cvPath: string): string | undefined {

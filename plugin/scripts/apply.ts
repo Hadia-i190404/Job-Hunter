@@ -14,6 +14,7 @@ import {
 } from '../src/apply/applications.ts';
 import { prepareAnswers, type Prepared } from '../src/apply/prepare.ts';
 import { greenhouseQuestions } from '../src/apply/questions.ts';
+import { EXTRA_QUESTIONS_NOTE, STANDARD_FORMS } from '../src/apply/standard-forms.ts';
 import { createHttpClient } from '../src/connectors/http.ts';
 import type { Job } from '../src/pipeline/job.ts';
 import type { AnswersFile } from '../src/schema/loop.ts';
@@ -28,6 +29,8 @@ import { loadProfile } from '../src/store/profile.ts';
 const dir = dataDir();
 const [command = '', ...args] = process.argv.slice(2);
 const STATUSES = ['approved', 'submitted', 'skipped', 'failed'] as const;
+// Company career sites whose forms Job Hunter fills (level B).
+const FILLABLE = new Set(['greenhouse', 'lever', 'ashby']);
 
 async function run(): Promise<unknown> {
   const opened = await openDataFolder(dir);
@@ -75,7 +78,8 @@ async function prepare(jobId: string | undefined, cvPath: string | undefined): P
     jobTitle: job.title,
     company: job.company,
     url: job.url,
-    applyLevel: job.source === 'greenhouse' ? 'B' : 'C',
+    applyLevel: FILLABLE.has(job.source) ? 'B' : 'C',
+    ...(STANDARD_FORMS[job.source] === undefined ? {} : { note: EXTRA_QUESTIONS_NOTE }),
     cvPath,
     prepared,
   });
@@ -95,6 +99,8 @@ async function prepareFor(
   bank: AnswersFile['answers'],
   cvPath: string,
 ): Promise<Prepared | undefined> {
+  const standard = STANDARD_FORMS[job.source];
+  if (standard !== undefined) return prepareAnswers(standard, profile, bank, cvPath);
   if (job.source !== 'greenhouse') {
     // Sites Job Hunter can't fill (level C): the user applies from a ready card.
     return {

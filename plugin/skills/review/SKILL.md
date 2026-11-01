@@ -44,7 +44,17 @@ For each approved **B** application:
 2. Open `url` in the built-in browser (load the `anthropic-skills:built-in-browser` skill
    first). Find the application form (often lower on the same page).
 3. Fill every field in `fill` exactly as given. For selects, choose the listed option
-   exactly. If a field's label doesn't match anything in the plan, leave it.
+   exactly.
+   **Questions not in the plan** (Lever and Ashby forms list only standard fields, and
+   any form can change): read each one on the page.
+   - If it asks something the answer bank or profile already answers (same meaning),
+     fill it with that exact answer.
+   - Declarations, consents and demographic questions are the user's: leave them.
+   - If the page says AI-written answers are not allowed (D19), leave every free-text
+     answer to the user.
+   - Anything else: ask the user now, fill their answer, and save it with
+     `setup.ts save-answers` if it will come up again.
+     Never invent an answer.
 4. Stop and hand over to the user with the `userDoes` list: attach the CV file (the
    built-in browser can't attach files), tick the declarations, answer anything left,
    and **press Submit themselves**. Then wait.

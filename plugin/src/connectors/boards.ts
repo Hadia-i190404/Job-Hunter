@@ -10,7 +10,8 @@ function boardConnector(id: string, label: string, url: (board: string) => strin
     id,
     label,
     kind: 'api',
-    applyLevel: 'C',
+    // Job Hunter fills these forms (S2.2); extra questions are read on the page.
+    applyLevel: 'B',
     maxRunsPerDay: 24,
     search: async (_query, { http }) => {
       const results = await Promise.all(
