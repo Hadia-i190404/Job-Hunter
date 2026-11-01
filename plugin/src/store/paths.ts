@@ -23,6 +23,7 @@ export const FILES = {
   applications: 'applications.json',
   matches: 'matches.json',
   linkedin: 'linkedin.json',
+  contacts: 'contacts.json',
   cards: 'cards.json',
 } as const;
 

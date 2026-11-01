@@ -190,3 +190,28 @@ export const linkedinSchema = object({
   ),
 });
 export type LinkedinFile = Infer<typeof linkedinSchema>;
+
+// Hiring-team outreach (S2.7, R8). The user sends every message themselves (D3).
+export const contactsSchema = object({
+  contacts: arrayOf(
+    object({
+      id,
+      name: text,
+      role: string(),
+      company: text,
+      // Public profile or page where the person was found, if any.
+      url: optional(string()),
+      // How sure we are they're involved: posted the job > recruiter there > likely manager.
+      confidence: oneOf(['posted-the-job', 'recruiter', 'likely-manager'] as const),
+      source: oneOf(['job-post', 'team-page', 'web-search', 'user'] as const),
+      jobIds: arrayOf(text),
+      channel: oneOf(['linkedin-note', 'linkedin-message', 'email'] as const),
+      message: text,
+      status: oneOf(['drafted', 'sent', 'replied', 'skipped'] as const),
+      sentAt: optional(isoDate()),
+      followedUpAt: optional(isoDate()),
+      updatedAt: isoDate(),
+    }),
+  ),
+});
+export type ContactsFile = Infer<typeof contactsSchema>;

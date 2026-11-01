@@ -201,7 +201,13 @@ pipeline` (counts + follow-ups due after `followUpDays`, never twice) and
       custom URL; master-profile facts only with the CV rules; before/after per section
       with copy blocks; `linkedin.ts save|list|mark` tracks pending → approved → done.
       324 tests.
-- [ ] `[skill]` **S2.7 Hiring-team messages** (draft cards + one follow-up).
+- [x] `[skill]` **S2.7 Hiring-team messages** (draft cards + one follow-up). ✔
+      `/job-hunter:outreach`: people from the job post, names the user pastes from
+      LinkedIn, or public web search (snippets only, never a guessed name or email),
+      with confidence; one message per person across jobs; LinkedIn notes ≤ 300
+      characters (enforced); `contacts.json` + `outreach.ts save|list|mark|followed-up`;
+      one follow-up after the wait, none after a reply; review offers it after
+      submitting. 329 tests.
 
 ## Later slices
 

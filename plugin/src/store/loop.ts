@@ -6,6 +6,7 @@ import {
   gapsSchema,
   matchesSchema,
   linkedinSchema,
+  contactsSchema,
   searchesSchema,
   type AnswersFile,
   type ApplicationsFile,
@@ -13,6 +14,7 @@ import {
   type GapsFile,
   type MatchesFile,
   type LinkedinFile,
+  type ContactsFile,
   type SearchesFile,
 } from '../schema/loop.ts';
 import { loadDoc, saveDoc, type Doc } from './doc.ts';
@@ -54,6 +56,12 @@ export const LINKEDIN: Doc<LinkedinFile> = {
   file: FILES.linkedin,
   schema: linkedinSchema,
   empty: () => ({ sections: [] }),
+};
+
+export const CONTACTS: Doc<ContactsFile> = {
+  file: FILES.contacts,
+  schema: contactsSchema,
+  empty: () => ({ contacts: [] }),
 };
 
 // The direction gate (R1): nothing outward happens until the current searches are confirmed.

@@ -1,6 +1,6 @@
 ---
 description: Job Hunter's daily review - show today's prepared applications and the few things only the user can do, take one approval for the batch, then fill each approved company-site form in the browser for the user to finish and submit. Use when the user says "review my applications", "what's waiting for me", or opens the daily notification.
-allowed-tools: Read, Write(~/JobHunter/**), Bash(sh ${CLAUDE_PLUGIN_ROOT}/scripts/run.sh ${CLAUDE_PLUGIN_ROOT}/scripts/apply.ts *), Bash(sh ${CLAUDE_PLUGIN_ROOT}/scripts/run.sh ${CLAUDE_PLUGIN_ROOT}/scripts/setup.ts save-answers *), Bash(sh ${CLAUDE_PLUGIN_ROOT}/scripts/run.sh ${CLAUDE_PLUGIN_ROOT}/scripts/store.ts status)
+allowed-tools: Read, Write(~/JobHunter/**), Bash(sh ${CLAUDE_PLUGIN_ROOT}/scripts/run.sh ${CLAUDE_PLUGIN_ROOT}/scripts/outreach.ts list), Bash(sh ${CLAUDE_PLUGIN_ROOT}/scripts/run.sh ${CLAUDE_PLUGIN_ROOT}/scripts/apply.ts *), Bash(sh ${CLAUDE_PLUGIN_ROOT}/scripts/run.sh ${CLAUDE_PLUGIN_ROOT}/scripts/setup.ts save-answers *), Bash(sh ${CLAUDE_PLUGIN_ROOT}/scripts/run.sh ${CLAUDE_PLUGIN_ROOT}/scripts/store.ts status)
 ---
 
 # Job Hunter: daily review and submit
@@ -92,7 +92,10 @@ For each **C** application (sites the user applies on themselves), run
 
 ## 4. Wrap up
 
-One line: N submitted, N skipped, anything that failed and why.
+One line: N submitted, N skipped, anything that failed and why. Then offer: "Want me to
+find the hiring team for today's applications and draft messages?" → the
+`/job-hunter:outreach` skill. Also mention any outreach follow-ups due
+(`outreach.ts list`).
 
 ## Say only what Job Hunter does
 
