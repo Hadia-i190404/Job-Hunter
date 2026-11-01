@@ -216,7 +216,7 @@ miss a day, it catches up the next time you open the app.
 | `/job-hunter:apply`    | Fill a career-site form (level B) or make an action card (level C)                            |
 | `/job-hunter:linkedin` | LinkedIn profile rewrite, as before/after cards                                               |
 | `/job-hunter:outreach` | Find the hiring team, draft messages, follow-up reminders                                     |
-| `/job-hunter:add-site` | Add a job site it doesn't search yet, by pasting a URL                                        |
+| `/job-hunter:add`      | Add a job from any link or pasted job text (Rozee, LinkedIn, Indeed…)                         |
 | `/job-hunter:daily`    | The unattended daily run (the 09:00 scheduled task calls it): hunt, prepare, one notification |
 | `/job-hunter:status`   | What's waiting for you, the pipeline, the dashboard, pause/resume                             |
 

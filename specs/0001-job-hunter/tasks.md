@@ -175,8 +175,13 @@ The owner wants to use Job Hunter daily from today; these seven, in order.
       GitHub, portfolio) and are level B; at review Claude reads extra questions on
       the page, answers from the profile/answer bank, asks the user the rest and saves
       them; declarations, demographics and no-AI forms stay the user's. 315 tests.
-- [ ] `[core]` `[skill]` **S2.3 Blocked sites + pasted links** (Rozee, LinkedIn, Indeed… via
-      web search; "add this job" from any link).
+- [x] `[core]` `[skill]` **S2.3 Blocked sites + pasted links** (Rozee, LinkedIn, Indeed… via
+      web search; "add this job" from any link). ✔ `hunt/add-job.ts` (Greenhouse/Lever/
+      Ashby links become fillable jobs; other sites named by host with a stable id;
+      same scam/eligibility/match checks; joins matches.json), `add-job.ts url|manual`,
+      `/job-hunter:add` (paste a link or the job text; blocked pages are never worked
+      around), hunt step 3b: web search `site:rozee.pk` / LinkedIn / Indeed per title
+      (8 a run light, 16 full), snippets only, added as action-card jobs. 319 tests.
 - [ ] `[skill]` **S2.4 Action cards** for sites the user applies on.
 - [ ] `[core]` `[skill]` **S2.5 Tracking after applying** (replied, interview, offer, rejected,
       one follow-up).

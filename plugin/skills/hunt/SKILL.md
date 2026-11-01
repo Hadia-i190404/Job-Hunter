@@ -1,6 +1,6 @@
 ---
 description: Run Job Hunter's daily hunt now - search every job source for the user's confirmed targets, rank what fits, and check the jobs the rules weren't sure about. Use when the user says "find me jobs", "run the hunt", or for the scheduled daily run.
-allowed-tools: Read, Write(~/JobHunter/**), Bash(sh ${CLAUDE_PLUGIN_ROOT}/scripts/run.sh ${CLAUDE_PLUGIN_ROOT}/scripts/hunt.ts *), Bash(sh ${CLAUDE_PLUGIN_ROOT}/scripts/run.sh ${CLAUDE_PLUGIN_ROOT}/scripts/tailor.ts *), Bash(sh ${CLAUDE_PLUGIN_ROOT}/scripts/run.sh ${CLAUDE_PLUGIN_ROOT}/scripts/apply.ts prepare *), Bash(sh ${CLAUDE_PLUGIN_ROOT}/scripts/run.sh ${CLAUDE_PLUGIN_ROOT}/scripts/setup.ts gap *), Bash(sh ${CLAUDE_PLUGIN_ROOT}/scripts/run.sh ${CLAUDE_PLUGIN_ROOT}/scripts/store.ts status)
+allowed-tools: Read, Write(~/JobHunter/**), ToolSearch, WebSearch, Bash(sh ${CLAUDE_PLUGIN_ROOT}/scripts/run.sh ${CLAUDE_PLUGIN_ROOT}/scripts/add-job.ts manual *), Bash(sh ${CLAUDE_PLUGIN_ROOT}/scripts/run.sh ${CLAUDE_PLUGIN_ROOT}/scripts/hunt.ts *), Bash(sh ${CLAUDE_PLUGIN_ROOT}/scripts/run.sh ${CLAUDE_PLUGIN_ROOT}/scripts/tailor.ts *), Bash(sh ${CLAUDE_PLUGIN_ROOT}/scripts/run.sh ${CLAUDE_PLUGIN_ROOT}/scripts/apply.ts prepare *), Bash(sh ${CLAUDE_PLUGIN_ROOT}/scripts/run.sh ${CLAUDE_PLUGIN_ROOT}/scripts/setup.ts gap *), Bash(sh ${CLAUDE_PLUGIN_ROOT}/scripts/run.sh ${CLAUDE_PLUGIN_ROOT}/scripts/store.ts status)
 ---
 
 # Job Hunter: daily hunt
@@ -28,6 +28,19 @@ Exit code 3 = Node.js too old.
 3. **Report** in a few lines: jobs seen, new, matched, strong fits, any source that was
    `broken` or `fallback` (one line each), then the top matches as a short list (title,
    company, where, fit, the main reason, link).
+   3b. **Sites that block scripts** (Rozee, LinkedIn, Indeed, Bayt): find their listings
+   with **web search** (the WebSearch tool; load it with ToolSearch if needed). Up to
+   8 searches a run on the `light` setting, 16 on `full`. For each confirmed search and
+   its first one or two titles:
+   - on-site/hybrid searches: `site:rozee.pk "<title>" <city>` and
+     `site:pk.linkedin.com/jobs/view "<title>" <city>`;
+   - remote searches: `site:linkedin.com/jobs/view "<title>" remote Pakistan` and
+     `site:pk.indeed.com "<title>" remote`.
+     For each result that is **one job posting** (not a list or search page), write
+     `{url, title, company, location, description: <the snippet>, source}` from the
+     result's title and snippet only, without opening the page, to
+     `~/JobHunter/add-job.json`, then run `add-job.ts manual ~/JobHunter/add-job.json`.
+     These come as action cards (the user applies on that site).
 4. **Prepare the best ones** (D20): for the top `strong` and `good` items whose search
    is in `review` mode (up to 5 a day on the `light` usage setting, 10 on `full`):
    follow the `/job-hunter:tailor` skill to make a tailored CV, then run
